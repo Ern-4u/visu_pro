@@ -1,4 +1,16 @@
+<?php
+require_once '../database/config.php';
+$authority = @$_SESSION['peran'];
 
+if ($authority != 'A') {
+  echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!");
+  window.location.href="../logout.php" </script>';
+}
+
+else {
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +18,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_admin/css.php'
+    include '../layout_admin/css.php';
+    $hal = 'home_admin';
   ?>
   
 </head>
@@ -15,7 +28,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="../assets/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__wobble" src="../assets/logo/visupro.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -31,6 +44,7 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
@@ -61,3 +75,7 @@ include '../layout_admin/js.php'
 ?>
 </body>
 </html>
+
+<?php
+}
+?>

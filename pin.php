@@ -16,7 +16,8 @@ $result_web = mysqli_fetch_array($query_web);
     <!-- SweetAlert2 -->
     <style type="text/css">
 body{
-    margin-top:20px;
+    
+    margin-top:150px;
     background: #f6f9fc;
 }
 .account-block {
@@ -70,20 +71,16 @@ body{
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="mb-5">
-                                    <h3 class="h4 font-weight-bold text-theme">Login</h3>
+                                    <h3 class="h4 font-weight-bold text-theme">Login 2FA</h3>
                                 </div>
 
                                 <h6 class="h5 mb-0">VISU Pro</h6>
-                                <p class="text-muted mt-2 mb-5">Masukan Username dan Password Untuk masuk ke sistem</p>
+                                <p class="text-muted mt-2 mb-5">Masukan PIN Untuk masuk ke sistem</p>
 
                                 <form action="" method="post">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Username</label>
-                                        <input type="text" name="username" class="form-control" id="exampleInputEmail1">
-                                    </div>
-                                    <div class="form-group mb-5">
-                                        <label for="exampleInputPassword1">Password</label>
-                                        <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                                        <label for="exampleInputEmail1">Pin</label>
+                                        <input type="number" name="pin" class="form-control" id="exampleInputEmail1" placeholder="Masukan Pin Anda">
                                     </div>
                                     <button type="submit" name="btn_login" class="btn btn-theme">Login</button>
                                     <a href="#l" class="forgot-link float-right text-primary">Forgot password?</a>
@@ -93,7 +90,8 @@ body{
 
                         <div class="col-lg-6 d-none d-lg-inline-block">
                             <div class="account-block rounded-right">
-                                <div class="overlay rounded-right"></div>
+                                <div class="overlay rounded-right">
+                                </div>
                                 <div class="account-testimonial">
                                     <h2 class="text-white mb-4"><?= $result_web['nama_proyek'] ?></h2>
                                     <p class="text-white"><?= $result_web['alamat'] ?></p>
@@ -118,36 +116,59 @@ body{
     
 
     <?php 
-    if (isset($_POST['btn_login'])) {
-    $username = trim(mysqli_escape_string($conn, $_POST['username']));
-    $sandi = sha1(trim(mysqli_escape_string($conn, $_POST['password'])));
+if (isset($_POST['pin'])) {
+  $pin = trim(mysqli_escape_string($conn, $_POST['pin']));
+  $username = $_SESSION['username'];
+  $peran =$_SESSION['peran'];
+  $query = "SELECT * FROM users WHERE username='$username' AND pin='$pin'";
+  $result = mysqli_query($conn, $query);
 
-    $query = "SELECT * FROM users WHERE username='$username' AND sandi='$sandi'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) == 1) {
+  if (mysqli_num_rows($result) == 1) {
       $data_user = mysqli_fetch_assoc($result);
-      $_SESSION['temp_login'] = true;
-      $_SESSION['username']   = $data_user['username'];
-      $_SESSION['peran']      = $data_user['peran'];
-      $_SESSION['nama']       = $data_user['nama'];
-      $_SESSION['sandi']      = $data_user['sandi'];
 
-      //redirect ke modal untuk memasukkan PIN
+      if ($peran == 'A') {
+        
+        $_SESSION['username'] = $data_user['username'];
+        $_SESSION['pin'] = $data_user['pin'];
+        $_SESSION['peran'] = $data_user['peran'];
+        $_SESSION['nama'] = $data_user['nama'];
+        $_SESSION['sandi'] = $data_user['sandi'];
+            header("Location: admin_home");
+        exit();
+      } elseif ($peran == 'D') {
+        $_SESSION['username'] = $data_user['username'];
+        $_SESSION['pin'] = $data_user['pin'];
+        $_SESSION['peran'] = $data_user['peran'];
+        $_SESSION['nama'] = $data_user['nama'];
+        $_SESSION['sandi'] = $data_user['sandi'];
+        header("Location: home_dosen");
+        exit();
+      } elseif ($peran == 'M') {
+        $_SESSION['username'] = $data_user['username'];
+        $_SESSION['pin'] = $data_user['pin'];
+        $_SESSION['peran'] = $data_user['peran'];
+        $_SESSION['nama'] = $data_user['nama'];
+        $_SESSION['sandi'] = $data_user['sandi'];
+        header("Location: home_mahasiswa");
+        exit();
+      } else {
+        echo "
+        <script>
+            alert('Peran Tidak VAlid!!');
+            window.location.href='login.php';
+        </script>";
+      }
+
+  } else {
+      // Jika PIN salah
       echo "
       <script>
-          window.location.href='pin.php'
-      </script>" ;
-      
-    } else {
-      // Jika Login Gagal
-      echo "
-      <script>
-          alert('Username ata Password SALAH!!')
+          alert('PIN Salah!!!')
       </script>";
-      
-    }
-} 
+  }
+}
+
+    
     ?>
 </div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

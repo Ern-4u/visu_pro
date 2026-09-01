@@ -2,6 +2,6 @@
     <strong>Copyright &copy; 2026 <b>VISU Pro</b></strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Ern</b>-Project
+      <b>Visu</b>Pro
     </div>
-  </footer>
+</footer>
