@@ -67,14 +67,14 @@ else {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>No</th>
+                    <th class="text-center">No</th>
                     <th>ID Karyawan</th>
                     <th>Nama Karyawan</th>
                     <th>Kontak</th>
                     <th>Email</th>
                     <th>Kelamin</th>
-                    <th>Foto</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Foto</th>
+                    <th class="text-center">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -82,7 +82,7 @@ else {
                   $no = 1; 
                   while ($d = mysqli_fetch_array($data_marketing)) { ?>
                     <tr>
-                      <td width="5%"><?=  $no++ ; ?></td>
+                      <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['id_karyawan']; ?></td>
                       <td><?= $d['nama']; ?></td>
                       <td><?= $d['kontak']; ?></td>
@@ -99,7 +99,7 @@ else {
                         }
                         ?>
                       </td>
-                      <td>
+                      <td class="text-center">
                       <?php
                       if ($d['foto'] == '') {    
                         if ($d['kelamin'] == 'L') { ?>
@@ -118,9 +118,9 @@ else {
                       <?php }
                       ?>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_karyawan']; ?>" 
-                        class="btn btn-danger btn-xs" onclick="return confirm('YAKIN LU?')"
+                        class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
                         <button class="btn btn-warning btn-xs" type="submit" 
                         data-target="#modal-edit" 

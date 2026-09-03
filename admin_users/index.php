@@ -67,11 +67,11 @@ else {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>No</th>
+                    <th class="text-center" width="5%">No</th>
                     <th>Username</th>
                     <th>Nama</th>
                     <th>Peran</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -79,7 +79,7 @@ else {
                   $no = 1; 
                   while ($admin = mysqli_fetch_array($data_user)) { ?>
                     <tr>
-                      <td><?=  $no++ ; ?></td>
+                      <td class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $admin['username']; ?></td>
                       <td><?= $admin['nama']; ?></td>
                       <td>
@@ -94,9 +94,9 @@ else {
                         }
                         ?>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <a href="hapus.php?user=<?= $admin['username']; ?>" 
-                        class="btn btn-danger btn-xs" onclick="return confirm('YAKIN LU?')"
+                        class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
                         <button class="btn btn-warning btn-xs" type="submit" data-target="#modal-edit" data-username="<?= $admin['username'] ?>" 
                         data-nama="<?= $admin['nama']?>" data-peran="<?= $admin['peran']?> " data-toggle="modal">

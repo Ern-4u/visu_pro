@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="../assets/logo/visupro.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light"><b>Visu</b>Pro</span>
+      <span class="brand-text font-weight-teal"><b>Visu</b>Pro</span>
     </a>
 
     <!-- Sidebar -->
@@ -41,6 +41,12 @@
             <a href="../admin_kategori_rumah/" class="nav-link <?=  ($hal == "kategori_rumah") ? "active" : "" ?>">
               <i class="nav-icon bi bi-house-gear-fill"></i>
               <p>Kategori Rumah</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../admin_rumah/" class="nav-link <?=  ($hal == "admin_rumah") ? "active" : "" ?>">
+              <i class="nav-icon bi bi-house-gear-fill"></i>
+              <p>Data Rumah</p>
             </a>
           </li>
           <!-- <li class="nav-item menu-open">

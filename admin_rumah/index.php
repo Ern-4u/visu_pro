@@ -19,7 +19,7 @@ else {
   <title>VISU Pro | Dashboard admin</title>
   <?php
     include '../layout_admin/css.php';
-    $hal = 'kategori_rumah';
+    $hal = 'admin_rumah';
   ?>
   
 </head>
@@ -41,7 +41,10 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah")or die(mysqli_error($conn));
+  $query_rumah = mysqli_query($conn, "SELECT rumah.*, kategori_rumah.*
+            FROM rumah 
+            LEFT JOIN kategori_rumah ON rumah.id_kategori = rumah.id_kategori
+            ") or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -68,39 +71,42 @@ else {
                   <thead>
                   <tr>
                     <th class="text-center" width="5%">No</th>
-                    <th>Nama Kategori</th>
-                    <th>Luas Bangunan</th>
-                    <th>Luas Tanah</th>
-                    <th>Jumlah Kamar</th>
-                    <th>Harga</th>
-                    <th>Deskripsi</th>
+                    <th>Kode Blok</th>
+                    <th>Kategori</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
                   $no = 1; 
-                  while ($d = mysqli_fetch_array($data_kategori_rumah)) { ?>
+                  while ($d = mysqli_fetch_array($query_rumah)) { ?>
                     <tr>
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
+                      <td><?= $d['kode_blok']; ?></td>
                       <td><?= $d['nama_kategori']; ?></td>
-                      <td><?= $d['luas_bangunan']; ?></td>
-                      <td><?= $d['luas_tanah']; ?></td>
-                      <td><?= $d['jumlah_kamar']; ?></td>
-                      <td><?= $d['harga']; ?></td>
-                      <td><?= $d['deskripsi']; ?></td>
+                      <td><?php
+                      if ($d['status'] == 0) {
+                        echo 'Tersedia';
+                      } elseif ($d['status'] == 1) {
+                        echo 'Terjual Cash';
+                      } elseif ($d['status'] == 2) {
+                        echo 'Terjual Cash Tempo';
+                      } elseif ($d['status'] == 3) {
+                        echo 'Terjual Kredit';
+                      }
+                      ?>
+                      </td>
                       <td class="text-center">
-                        <a href="hapus.php?id=<?= $d['id_kategori']; ?>" 
+                        <a href="hapus.php?id=<?= $d['id_rumah']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
                         <button class="btn btn-warning btn-xs" type="submit" 
                         data-target="#modal-edit" 
-                        data-id_kategori="<?= $d['id_kategori'] ?>" 
-                        data-nama_kategori="<?= $d['nama_kategori']?>" 
-                        data-luas_bangunan="<?= $d['luas_bangunan']?>"
-                        data-luas_tanah="<?= $d['luas_tanah']?>"
-                        data-harga="<?= $d['harga']?>"
-                        data-deskripsi="<?= $d['deskripsi'] ?>"
+                        data-id_rumah="<?= $d['id_rumah'] ?>" 
+                        data-kode_blok="<?= $d['kode_blok']?>"
+                        data-status="<?= $d['status'] ?>" 
+                        data-id_kategori="<?= $d['id_kategori'] ?>"
                         data-toggle="modal">
                         <i class="fas fa-edit"> </i>
                       </button>
@@ -119,12 +125,18 @@ else {
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <?php 
+  $ambil_data_kategori = mysqli_query($conn, "SELECT id_kategori,nama_kategori FROM kategori_rumah")or die(mysqli_error($conn));
+
+  
+  ?>
   <!-- modal Tambah -->
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Tambah Data Kategori Rumah</h4>
+              <h4 class="modal-title">Tambah Data Rumah</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -132,28 +144,29 @@ else {
             <div class="modal-body">
               <form action="tambah.php" method="post">
                 <div class="form-group">
-                    <label for="nama_kategori">Nama Kategori</label>
-                    <input type="text" name="nama_kategori" class="form-control" id="nama_kategori" placeholder="Masukan Nama Kategori Rumah" required>
+                    <label for="kode_blok">Kode Blok</label>
+                    <input type="text" name="kode_blok" class="form-control" id="kode_blok" placeholder="Masukan Kode Blok Rumah" required>
                 </div>
                 <div class="form-group">
-                    <label for="luas_bangunan">Luas Bangunan</label>
-                    <input type="number" name="luas_bangunan" class="form-control" id="luas_bangunan" placeholder="Masukan Luas Bangunan" required>
+                  <label for="">Masukan Kategori Rumah</label>
+                  <select name="id_kategori" id="" class="form-control">
+                    <option value="">-- Masukan Kategori Rumah --</option>
+                    <?php 
+                    while ($dt_kat = mysqli_fetch_array($ambil_data_kategori)) { ?>
+                      <option value="<?= $dt_kat['id_kategori'] ?>"><?= $dt_kat['nama_kategori'] ?></option>
+                    <?php }
+                    ?>
+                  </select>
                 </div>
                 <div class="form-group">
-                    <label for="luas_tanah">Luas Tanah</label>
-                    <input type="number" name="luas_tanah" class="form-control" id="luas_tanah" placeholder="Masukan Luas Bangunan" required>
-                </div>
-                <div class="form-group">
-                    <label for="jumlah_kamar">Jumlah Kamar</label>
-                    <input type="number" name="jumlah_kamar" class="form-control" id="jumlah_kamar" placeholder="Masukan Jumlah Kamar" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control" id="deskripsi" placeholder="Masukan Deskripsi" required></textarea>
+                  <label for="status">Status Rumah</label>
+                  <select name="status" id="status" class="form-control">
+                    <option value="">-- Pilih Status Rumah --</option>
+                    <option value="0">Tersedia</option>
+                    <option value="1">Terjual Cash</option>
+                    <option value="2">Terjual Cash Tempo</option>
+                    <option value="3">Terjual Kredit</option>
+                  </select>
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -173,7 +186,7 @@ else {
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Data Kategori Rumah</h4>
+              <h4 class="modal-title">Edit Data Rumah</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -181,31 +194,33 @@ else {
             <div class="modal-body">
                <form action="edit.php" method="post">
                 <div class="form-group">
-                    <input type="hidden" name="id_kategori" class="form-control" id="id_kategori" required>
+                    <input type="hidden" name="id_rumah" class="form-control" id="id_rumah" required>
                 </div>
                 <div class="form-group">
-                    <label for="nama_kategori">Nama Kategori</label>
-                    <input type="text" name="nama_kategori" class="form-control" id="nama_kategori" placeholder="Masukan Nama Kategori Rumah" required>
+                    <label for="kode_blok">Kode Blok</label>
+                    <input type="text" name="kode_blok" class="form-control" id="kode_blok" placeholder="Masukan Kode Blok Rumah" required>
                 </div>
                 <div class="form-group">
-                    <label for="luas_bangunan">Luas Bangunan</label>
-                    <input type="number" name="luas_bangunan" class="form-control" id="luas_bangunan" placeholder="Masukan Luas Bangunan" required>
+                  <label for="">Masukan Kategori Rumah</label>
+                  <select name="id_kategori" id="" class="form-control">
+                    <option value="">-- Masukan Kategori Rumah --</option>
+                    <?php 
+                    mysqli_data_seek($ambil_data_kategori, 0);
+                    while ($dt_kat = mysqli_fetch_array($ambil_data_kategori)) { ?>
+                      <option value="<?= $dt_kat['id_kategori'] ?>"><?= $dt_kat['nama_kategori'] ?></option>
+                    <?php }
+                    ?>
+                  </select>
                 </div>
                 <div class="form-group">
-                    <label for="luas_tanah">Luas Tanah</label>
-                    <input type="number" name="luas_tanah" class="form-control" id="luas_tanah" placeholder="Masukan Luas Bangunan" required>
-                </div>
-                <div class="form-group">
-                    <label for="jumlah_kamar">Jumlah Kamar</label>
-                    <input type="number" name="jumlah_kamar" class="form-control" id="jumlah_kamar" placeholder="Masukan Jumlah Kamar" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control" id="deskripsi" placeholder="Masukan Deskripsi" required></textarea>
+                  <label for="status">Status Rumah</label>
+                  <select name="status" id="status" class="form-control">
+                    <option value="">-- Pilih Status Rumah --</option>
+                    <option value="0">Tersedia</option>
+                    <option value="1">Terjual Cash</option>
+                    <option value="2">Terjual Cash Tempo</option>
+                    <option value="3">Terjual Kredit</option>
+                  </select>
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -240,23 +255,15 @@ include '../layout_admin/js.php'
 <script type="text/javascript">
    $('#modal-edit').on('show.bs.modal', function(e) {
 
+   var id_rumah = $(e.relatedTarget).data('id_rumah');
+   var kode_blok = $(e.relatedTarget).data('kode_blok');
+   var status = $(e.relatedTarget).data('status');
    var id_kategori = $(e.relatedTarget).data('id_kategori');
-   var nama_kategori = $(e.relatedTarget).data('nama_kategori');
-   var luas_bangunan = $(e.relatedTarget).data('luas_bangunan');
-   var luas_tanah = $(e.relatedTarget).data('luas_tanah');
-   var jumlah_kamar = $(e.relatedTarget).data('jumlah_kamar');
-   var harga = $(e.relatedTarget).data('harga');
-    var deskripsi = $(e.relatedTarget).data('deskripsi');
-  
-
-  
-    $(e.currentTarget).find('input[name="id_kategori"]').val(id_kategori);
-    $(e.currentTarget).find('input[name="nama_kategori"]').val(nama_kategori);
-    $(e.currentTarget).find('input[name="luas_bangunan"]').val(luas_bangunan);
-    $(e.currentTarget).find('input[name="luas_tanah"]').val(luas_tanah);
-    $(e.currentTarget).find('input[name="jumlah_kamar"]').val(jumlah_kamar);
-    $(e.currentTarget).find('input[name="harga"]').val(harga);
-    $(e.currentTarget).find('textarea[name="deskripsi"]').val(deskripsi);
+   
+    $(e.currentTarget).find('input[name="id_rumah"]').val(id_rumah);
+    $(e.currentTarget).find('input[name="kode_blok"]').val(kode_blok);
+    $(e.currentTarget).find('select[name="status"]').val(status);
+    $(e.currentTarget).find('select[name="id_kategori"]').val(id_kategori);
    
    });
 
