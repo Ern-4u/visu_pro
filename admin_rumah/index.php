@@ -109,7 +109,10 @@ else {
                         data-id_kategori="<?= $d['id_kategori'] ?>"
                         data-toggle="modal">
                         <i class="fas fa-edit"> </i>
-                      </button>
+                        </button>
+                        <a href="detail.php?id=<?= $d['id_rumah']; ?>" 
+                        class="btn btn-danger btn-xs" 
+                        ><i class="fas fa-eye"></i></a>
                       </td>
                     </tr>
                      <?php } ?>

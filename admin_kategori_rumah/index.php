@@ -41,7 +41,10 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah")or die(mysqli_error($conn));
+  $data_kategori_rumah = mysqli_query($conn, "SELECT kategori_rumah.*, site_plan.nama_site_plan
+            FROM kategori_rumah 
+            LEFT JOIN site_plan ON kategori_rumah.id_site_plan = site_plan.id_site_plan
+            ") or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -71,7 +74,7 @@ else {
                     <th>Nama Kategori</th>
                     <th>Luas Bangunan</th>
                     <th>Luas Tanah</th>
-                    <th>Jumlah Kamar</th>
+                    <th>Site Plan</th>
                     <th>Harga</th>
                     <th>Deskripsi</th>
                     <th>Aksi</th>
@@ -86,7 +89,7 @@ else {
                       <td><?= $d['nama_kategori']; ?></td>
                       <td><?= $d['luas_bangunan']; ?></td>
                       <td><?= $d['luas_tanah']; ?></td>
-                      <td><?= $d['jumlah_kamar']; ?></td>
+                      <td><?= $d['nama_site_plan']; ?></td>
                       <td><?= $d['harga']; ?></td>
                       <td><?= $d['deskripsi']; ?></td>
                       <td class="text-center">

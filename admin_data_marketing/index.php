@@ -85,7 +85,9 @@ else {
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['id_karyawan']; ?></td>
                       <td><?= $d['nama']; ?></td>
-                      <td><?= $d['kontak']; ?></td>
+                      <td><a href="https://wa.me/<?= $d['kontak']; ?>?text=Hai, <?= $d['nama']; ?> ?>" target="_blank" type="button" class="btn btn-success btn-xs">
+                           <i class="fas fa-phone"></i><?= $d['kontak'];?>                           
+                      </a></td>
                       <td><?= $d['email']; ?></td>
                       <td>
                         <?php 
