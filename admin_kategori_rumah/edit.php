@@ -11,6 +11,7 @@ if (isset($_POST['btn_edit'])) {
   $jumlah_kamar = trim(mysqli_real_escape_string($conn, $_POST['jumlah_kamar']));
   $harga = trim(mysqli_real_escape_string($conn, $_POST['harga']));
   $deskripsi = trim(mysqli_real_escape_string($conn, $_POST['deskripsi']));
+  $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
 
   $query_cek_kategori = mysqli_query($conn, "SELECT nama_kategori FROM kategori_rumah WHERE nama_kategori = '$nama_kategori' AND id_kategori != '$id_kategori'")
   or die (mysqli_error($conn));
@@ -20,7 +21,7 @@ if (isset($_POST['btn_edit'])) {
     echo '<script> alert("Nama Kategori Sudah Terdaftar! Input yang lain");
     window.location.href="index.php" </script>';
   } else {
-    $query_edit = "UPDATE kategori_rumah SET nama_kategori='$nama_kategori', luas_bangunan='$luas_bangunan', luas_tanah='$luas_tanah', jumlah_kamar='$jumlah_kamar', harga='$harga', deskripsi='$deskripsi' WHERE id_kategori='$id_kategori'";
+    $query_edit = "UPDATE kategori_rumah SET nama_kategori='$nama_kategori', luas_bangunan='$luas_bangunan', luas_tanah='$luas_tanah', jumlah_kamar='$jumlah_kamar', harga='$harga', deskripsi='$deskripsi', id_site_plan='$id_site_plan' WHERE id_kategori='$id_kategori'";
     $result_edit = mysqli_query($conn, $query_edit);
 
     if ($result_edit) {

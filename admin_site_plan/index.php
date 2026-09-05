@@ -64,10 +64,12 @@ else {
               <!-- /.card-header -->
               <div class="card-body">
                 <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                <button class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  <tr>
-                    <th class="text-center" width="5%">No</th>
+                  <tr class="text-center">
+                    <th width="5%">No</th>
                     <th>Nama Perumahan</th>
                     <th>Lokasi</th>
                     <th>Kontak PJ</th>
@@ -85,17 +87,22 @@ else {
                       <td><?= $d['nama_site_plan']; ?></td>
                       <td><?= $d['lokasi']; ?></td>
                       <td><?= $d['penanggung_jawab']; ?></td>
-                      <td> <?php if ($d['brosur']== '') {?>
+                      <td class="text-center"> <?php if ($d['brosur']== '') {?>
                         <button type="button" class="btn btn-danger btn-xs"
                         data-target="#modal-brosur"
                         data-toggle="modal"
                         data-id_site_plan="<?= $d['id_site_plan'] ?>"
                         >Brosur Belum Diupload</button>
                       <?php } else { ?>
+                      <button type="button" class="btn btn-warning btn-xs mb-1"
+                        data-target="#modal-brosur"
+                        data-toggle="modal"
+                        data-id_site_plan="<?= $d['id_site_plan'] ?>"
+                        ><i class="fas fa-edit"></i></button>
                       <a href="../assets/brosur/<?= $d['brosur']; ?>" class="btn btn-success btn-xs" target="_blank">Download Brosur</a>
                       <?php }?>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <a href="https://instagram.com/<?= $d['ig'] ?>" class="btn btn-success btn-xs"><i class="bi bi-instagram"></i> Instagram</a>
                         <a href="https://www.tiktok.com/<?= $d['tiktok'] ?>" class="btn btn-success btn-xs"><i class="bi bi-tiktok"></i> Tiktok</a>
                       </td>
@@ -179,6 +186,35 @@ else {
       </div>
       <!-- /.modal Tambah -->
 
+      <!-- modal Import -->
+      <div class="modal fade" id="modal-import">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Import Data Site Plan</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="import.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file_excel">Pilih File Excel (.xls, .xlsx, .csv)</label>
+                    <input type="file" name="file_excel" class="form-control" id="file_excel" required accept=".xls, .xlsx, .csv">
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_import" class="btn btn-success">Import Data</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Import -->
+
       <!-- modal Edit -->
       <div class="modal fade" id="modal-edit" >
         <div class="modal-dialog">
@@ -244,21 +280,20 @@ else {
                 <div class="form-group">
                     <label for="brosur">Upload Brosur</label>
                     <input type="file" accept=".jpg,.jpeg,.png,.pdf" name="brosur" class="form-control" id="brosur" placeholder="Upload File" required>
-                </div>
-                
+                </div> 
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 <button type="submit" name="btn_brosur" class="btn btn-primary">Simpan</button>
               </div>
               </form>
-            </div>
-            
+            </div>  
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal Brosur -->
+       
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

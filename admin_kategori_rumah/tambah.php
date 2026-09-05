@@ -13,6 +13,7 @@ if (isset($_POST['btn_tambah'])) {
     $harga = trim(mysqli_real_escape_string($conn, $_POST['harga']));
     $deskripsi = trim(mysqli_real_escape_string($conn, $_POST['deskripsi']));
     $jumlah_kamar = trim(mysqli_real_escape_string($conn, $_POST['jumlah_kamar']));
+    $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
     
 
     $cek_kategori = mysqli_query($conn, "SELECT nama_kategori FROM kategori_rumah WHERE nama_kategori = '$nama_kategori' ") 
@@ -33,7 +34,8 @@ if (isset($_POST['btn_tambah'])) {
          '$luas_tanah',
          '$jumlah_kamar',
          '$harga',
-         '$deskripsi'
+         '$deskripsi',
+         '$id_site_plan'
          )
          ") or die (mysqli_error($conn)) ;
 

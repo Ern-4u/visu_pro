@@ -64,6 +64,8 @@ else {
               <!-- /.card-header -->
               <div class="card-body">
                 <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                <button class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -196,6 +198,35 @@ else {
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal Tambah -->
+
+      <!-- modal Import -->
+      <div class="modal fade" id="modal-import">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Import Data Marketing</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="import.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file_excel">Pilih File Excel (.xls, .xlsx, .csv)</label>
+                    <input type="file" name="file_excel" class="form-control" id="file_excel" required accept=".xls, .xlsx, .csv">
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_import" class="btn btn-success">Import Data</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Import -->
 
       <!-- modal Edit -->
       <div class="modal fade" id="modal-edit" >

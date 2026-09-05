@@ -5,6 +5,7 @@ $authority = @$_SESSION['peran'];
 if ($authority != 'A') {
   echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!");
   window.location.href="../logout.php" </script>';
+  
 }
 
 else {
@@ -20,6 +21,11 @@ else {
   <?php
     include '../layout_admin/css.php';
     $hal = 'home_admin';
+    $id_rumah = @$_GET['id'];
+    $query_rumah = mysqli_query($conn, "SELECT rumah.*, kategori_rumah.*
+            FROM rumah 
+            LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
+            WHERE id_rumah = '$id_rumah'") or die(mysqli_error($conn));
   ?>
   
 </head>
@@ -48,6 +54,11 @@ else {
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4">
+
+        </div>
+    </div>
 
     </div>  
     <!--/. container-fluid -->

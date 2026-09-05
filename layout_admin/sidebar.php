@@ -27,7 +27,7 @@
           </li>
            <li class="nav-item">
             <a href="../admin_site_plan/" class="nav-link <?=  ($hal == "site_plan") ? "active" : "" ?>">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon bi bi-pin-map-fill"></i>
               <p>Site Plan</p>
             </a>
           </li>          
@@ -39,7 +39,7 @@
           </li>
           <li class="nav-item">
             <a href="../admin_rumah/" class="nav-link <?=  ($hal == "admin_rumah") ? "active" : "" ?>">
-              <i class="nav-icon bi bi-house-gear-fill"></i>
+              <i class="nav-icon bi bi-house-fill"></i>
               <p>Data Rumah</p>
             </a>
           </li>
@@ -80,7 +80,7 @@
           </li>
           <li class="nav-item">
             <a href="../admin_data_marketing/" class="nav-link <?=  ($hal == "marketing") ? "active" : "" ?>">
-              <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon bi bi-file-earmark-person-fill"></i>
               <p>Tim Marketing</p>
             </a>
           </li>

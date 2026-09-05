@@ -1,0 +1,11 @@
+{
+    "name": "visupro/real_estate",
+    "autoload": {
+        "psr-4": {
+            "Visupro\\RealEstate\\": "src/"
+        }
+    },
+    "require": {
+        "phpoffice/phpspreadsheet": "^5.9"
+    }
+}
