@@ -38,6 +38,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="../admin_pembeli/" class="nav-link <?=  ($hal == "pembeli") ? "active" : "" ?>">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Data Pembeli</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="../admin_rumah/" class="nav-link <?=  ($hal == "admin_rumah") ? "active" : "" ?>">
               <i class="nav-icon bi bi-house-fill"></i>
               <p>Data Rumah</p>

@@ -41,9 +41,7 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_kategori_rumah = mysqli_query($conn, "SELECT kategori_rumah.*, site_plan.nama_site_plan
-            FROM kategori_rumah 
-            LEFT JOIN site_plan ON kategori_rumah.id_site_plan = site_plan.id_site_plan
+  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah
             ") or die(mysqli_error($conn));
   ?>
 
@@ -76,7 +74,6 @@ else {
                     <th>Nama Kategori</th>
                     <th>Luas Bangunan</th>
                     <th>Luas Tanah</th>
-                    <th>Site Plan</th>
                     <th>Harga</th>
                     <th>Deskripsi</th>
                     <th>Aksi</th>
@@ -91,7 +88,6 @@ else {
                       <td><?= $d['nama_kategori']; ?></td>
                       <td><?= $d['luas_bangunan']; ?></td>
                       <td><?= $d['luas_tanah']; ?></td>
-                      <td><?= $d['nama_site_plan']; ?></td>
                       <td><?= $d['harga']; ?></td>
                       <td><?= $d['deskripsi']; ?></td>
                       <td class="text-center">
@@ -105,7 +101,6 @@ else {
                         data-luas_bangunan="<?= $d['luas_bangunan']?>"
                         data-luas_tanah="<?= $d['luas_tanah']?>"
                         data-jumlah_kamar="<?= $d['jumlah_kamar'] ?>"
-                        data-id_site_plan="<?= $d['id_site_plan'] ?>"
                         data-harga="<?= $d['harga']?>"
                         data-deskripsi="<?= $d['deskripsi'] ?>"
                         data-toggle="modal">
@@ -127,9 +122,7 @@ else {
   </div>
   <!-- /.content-wrapper -->
 
-  <?php 
-  $query_data_site_plan = mysqli_query($conn, "SELECT * FROM site_plan") or die(mysqli_error($conn))
-  ?>
+  
   <!-- modal Tambah -->
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
@@ -145,17 +138,6 @@ else {
                 <div class="form-group">
                     <label for="nama_kategori">Nama Kategori</label>
                     <input type="text" name="nama_kategori" class="form-control" id="nama_kategori" placeholder="Masukan Nama Kategori Rumah" required>
-                </div>
-                <div class="from-group">
-                  <label for="id_site_plan">Site Plan</label>
-                  <select class="form-control" name="id_site_plan">
-                  <option value="">-- Pilih Site Plan --</option>
-                  <?php 
-                  while ($st_plan = mysqli_fetch_array($query_data_site_plan)) { ?>
-                    <option value="<?= $st_plan['id_site_plan'] ?>"><?= $st_plan['nama_site_plan'] ?></option>
-                  <?php }
-                  ?>
-                  </select>
                 </div>
                 <div class="form-group">
                     <label for="luas_bangunan">Luas Bangunan</label>
@@ -237,18 +219,6 @@ else {
                 <div class="form-group">
                     <label for="nama_kategori">Nama Kategori</label>
                     <input type="text" name="nama_kategori" class="form-control" id="nama_kategori" placeholder="Masukan Nama Kategori Rumah" required>
-                </div>
-                <div class="from-group">
-                  <label for="id_site_plan">Site Plan</label>
-                  <select class="form-control" name="id_site_plan">
-                  <option value="">-- Pilih Site Plan --</option>
-                  <?php 
-                  mysqli_data_seek($query_data_site_plan, 0);
-                  while ($st_plan = mysqli_fetch_array($query_data_site_plan)) { ?>
-                    <option value="<?= $st_plan['id_site_plan'] ?>"><?= $st_plan['nama_site_plan'] ?></option>
-                  <?php }
-                  ?>
-                  </select>
                 </div>
                 <div class="form-group">
                     <label for="luas_bangunan">Luas Bangunan</label>

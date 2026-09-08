@@ -25,18 +25,30 @@ if (isset($_POST['btn_import'])) {
 
         $berhasil = 0;
         $gagal = 0;
+        $double = 0; // Tambahkan variabel untuk menghitung data ganda
 
         for($i = 1; $i < count($sheetData); $i++) {
-            $kode_blok   = mysqli_real_escape_string($conn, trim($sheetData[$i][0] ?? ''));
-            $id_kategori = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
-            $status      = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
+            $kode_blok    = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
+            $id_kategori  = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
+            $status       = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
+            $id_site_plan = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
 
-            if(empty($kode_blok) || empty($id_kategori)) {
+            if(empty($kode_blok) || empty($id_kategori) || empty($status) || empty($id_site_plan) ) {
                 $gagal++;
                 continue;
             }
 
-            $query = "INSERT INTO rumah (kode_blok, id_kategori, status) VALUES ('$kode_blok', '$id_kategori', '$status')";
+            // CEK DATA GANDA berdasarkan kode_blok dan id_site_plan
+            $cek_data_ganda = mysqli_query($conn, "SELECT * FROM rumah WHERE kode_blok = '$kode_blok' AND id_site_plan = '$id_site_plan'");
+            
+            if (mysqli_num_rows($cek_data_ganda) > 0) {
+                // Jika data sudah ada, lewati proses insert dan tambahkan angka double
+                $double++;
+                continue;
+            }
+
+            // Jika tidak ganda, lakukan insert
+            $query = "INSERT INTO rumah (kode_blok, id_kategori, status, id_site_plan) VALUES ('$kode_blok', '$id_kategori', '$status', '$id_site_plan')";
             if(mysqli_query($conn, $query)) {
                 $berhasil++;
             } else {
@@ -44,8 +56,9 @@ if (isset($_POST['btn_import'])) {
             }
         }
 
+        // Tampilkan juga jumlah data yang terdeteksi ganda pada alert
         echo "<script>
-            alert('Import Data Selesai. Berhasil: $berhasil, Gagal/Skip: $gagal');
+            alert('Import Data Selesai. Berhasil: $berhasil, Gagal/Skip: $gagal, Double: $double');
             window.location.href='index.php';
         </script>";
     } else {
@@ -56,4 +69,3 @@ if (isset($_POST['btn_import'])) {
     }
 }
 ?>
-

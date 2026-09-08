@@ -25,22 +25,36 @@ if (isset($_POST['btn_import'])) {
 
         $berhasil = 0;
         $gagal = 0;
+        $double = 0; // Menambahkan variabel double jika ingin mencegah duplikasi
 
+        // Looping dimulai dari 1 untuk melewati baris header di Excel
         for($i = 1; $i < count($sheetData); $i++) {
-            $nama_kategori = mysqli_real_escape_string($conn, trim($sheetData[$i][0] ?? ''));
-            $id_site_plan  = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
+            
+            // Menyesuaikan index array dengan urutan kolom di Excel
+            $nama_kategori = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
             $luas_bangunan = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
             $luas_tanah    = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
             $jumlah_kamar  = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
             $harga         = mysqli_real_escape_string($conn, trim($sheetData[$i][5] ?? ''));
             $deskripsi     = mysqli_real_escape_string($conn, trim($sheetData[$i][6] ?? ''));
 
-            if(empty($nama_kategori) || empty($id_site_plan)) {
+            // Validasi: Skip jika nama_kategori atau harga kosong
+            if(empty($nama_kategori) || empty($harga)) {
                 $gagal++;
                 continue;
             }
 
-            $query = "INSERT INTO kategori_rumah (nama_kategori, id_site_plan, luas_bangunan, luas_tanah, jumlah_kamar, harga, deskripsi) VALUES ('$nama_kategori', '$id_site_plan', '$luas_bangunan', '$luas_tanah', '$jumlah_kamar', '$harga', '$deskripsi')";
+            // (Opsional) Pengecekan data ganda berdasarkan nama_kategori
+            $cek_ganda = mysqli_query($conn, "SELECT * FROM kategori_rumah WHERE nama_kategori = '$nama_kategori'");
+            if (mysqli_num_rows($cek_ganda) > 0) {
+                $double++;
+                continue;
+            }
+
+            // Eksekusi query INSERT ke tabel kategori_rumah
+            $query = "INSERT INTO kategori_rumah (nama_kategori, luas_bangunan, luas_tanah, jumlah_kamar, harga, deskripsi) 
+                      VALUES ('$nama_kategori', '$luas_bangunan', '$luas_tanah', '$jumlah_kamar', '$harga', '$deskripsi')";
+            
             if(mysqli_query($conn, $query)) {
                 $berhasil++;
             } else {
@@ -49,7 +63,7 @@ if (isset($_POST['btn_import'])) {
         }
 
         echo "<script>
-            alert('Import Data Selesai. Berhasil: $berhasil, Gagal/Skip: $gagal');
+            alert('Import Data Selesai. Berhasil: $berhasil, Gagal/Skip: $gagal, Double: $double');
             window.location.href='index.php';
         </script>";
     } else {
@@ -60,4 +74,3 @@ if (isset($_POST['btn_import'])) {
     }
 }
 ?>
-

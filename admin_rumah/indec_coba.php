@@ -41,7 +41,11 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  
+  $query_rumah = mysqli_query($conn, "SELECT rumah.*, kategori_rumah.*, site_plan.*
+            FROM rumah 
+            LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
+            LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
+            ") or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -57,52 +61,15 @@ else {
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
-      <form action="" method="post">
-                <div class="row">
-                    <div class="col-3">
-                        <?php 
-                        $panggil_data_site_plan = mysqli_query($conn, "SELECT * FROM site_plan" )or die($conn);
-                        ?>
-                        <div class="form-group">                    
-                            <select class="form-control" name="id_site_plan" id="">
-                              <option value="">-- Masukan Lokasi Perumahan --</option>
-                                <?php 
-                                while ($dt_st = mysqli_fetch_array($panggil_data_site_plan)){?>
-                                <option value="<?= $dt_st['id_site_plan']; ?>"><?= $dt_st['nama_site_plan'] ?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-2.5">
-                        <button type="submit" name="btn_cari" class="btn btn-primary"><i class="fas fa-search"></i> Tampilkan Data</button>
-                    </div>
-                    <div class="col-6">
-                    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                    <button class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                    <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>  
-                    </div>
-                </div>
-            </form>
-            <?php 
-            if (isset($_POST['btn_cari'])){
-            $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
-
-            $query_rumah = mysqli_query($conn, "SELECT rumah.*, kategori_rumah.*, site_plan.*
-            FROM rumah 
-            LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
-            LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
-            where rumah.id_site_plan = '$id_site_plan'
-            ") or die(mysqli_error($conn));
-            ?>
-
-            <div class="card">
+      <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Daftar Data Kategori Rumah</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                <button class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -161,11 +128,6 @@ else {
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            <?php 
-            } 
-            ?>
-
-
     </div>  
     <!--/. container-fluid -->
     </section>

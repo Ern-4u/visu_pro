@@ -29,25 +29,26 @@ if (isset($_POST['btn_import'])) {
         $double = 0;
 
         for($i = 1; $i < count($sheetData); $i++) {
-            $nama_site_plan   = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
-            $lokasi           = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
-            $penanggung_jawab = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
-            $ig               = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
-            $tiktok           = mysqli_real_escape_string($conn, trim($sheetData[$i][5] ?? ''));
+            $nik   = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
+            $nama_pembeli           = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
+            $pasangan = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
+            $alamat               = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
+            $kontak           = mysqli_real_escape_string($conn, trim($sheetData[$i][5] ?? ''));
 
             // Skip empty rows
-            if(empty($nama_site_plan) || empty($lokasi) || empty($penanggung_jawab)) {
+            if(empty($nik) || empty($nama_pembeli) || empty($alamat) || empty($kontak)) {
                 $gagal++;
                 continue;
             }
 
-            $cek_data_ganda = mysqli_query($conn, "SELECT * FROM site_plan WHERE 
-            nama_site_plan = '$nama_site_plan'
+            $cek_data_ganda = mysqli_query($conn, "SELECT * FROM pembeli WHERE 
+            nik = '$nik'
             ") or die (mysqli_error($conn));
             $rv = mysqli_num_rows($cek_data_ganda);
 
-            if ($rv==0) {
-               $query = "INSERT INTO site_plan (nama_site_plan, lokasi, penanggung_jawab, ig, tiktok) VALUES ('$nama_site_plan', '$lokasi', '$penanggung_jawab', '$ig', '$tiktok')";
+
+            if ($rv == 0) {
+                $query = "INSERT INTO pembeli (nik, nama_pembeli, pasangan, alamat, kontak) VALUES ('$nik', '$nama_pembeli', '$pasangan', '$alamat', '$kontak')";
                 if(mysqli_query($conn, $query)) {
                     $berhasil++;
                 } else {
@@ -58,10 +59,12 @@ if (isset($_POST['btn_import'])) {
                 continue;
             }
             
+
+
         }
 
         echo "<script>
-            alert('Import Data Selesai. Berhasil: $berhasil, Gagal/Skip: $gagal, Double: $double');
+            alert('Import Data Selesai. Berhasil: $berhasil, Gagal/Skip: $gagal, Data Ganda: $double');
             window.location.href='index.php';
         </script>";
     } else {
@@ -70,6 +73,5 @@ if (isset($_POST['btn_import'])) {
             window.location.href='index.php';
         </script>";
     }
-
 }
 ?>

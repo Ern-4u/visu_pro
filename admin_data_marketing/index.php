@@ -89,6 +89,7 @@ else {
                       <td><?= $d['nama']; ?></td>
                       <td><a href="https://wa.me/<?= $d['kontak']; ?>?text=Hai, <?= $d['nama']; ?> ?>" target="_blank" type="button" class="btn btn-success btn-xs">
                            <i class="fas fa-phone"></i><?= $d['kontak'];?>                           
+                           <i class="bi bi-whatsapp"></i> <?= $d['kontak'];?>                           
                       </a></td>
                       <td><?= $d['email']; ?></td>
                       <td>
