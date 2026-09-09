@@ -17,7 +17,8 @@
 <script src="../assets/AdminLTE/plugins/chart.js/Chart.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="../assets/AdminLTE/plugins/sweetalert2/sweetalert2.min.js"></script>
-
+<!-- Select2 -->
+<script src="../assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="../assets/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../assets/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -49,4 +50,20 @@
       "responsive": true,
     });
   });
+</script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    
+  })
+  
+  // DropzoneJS Demo Code End
 </script>

@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="../assets/AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../assets/AdminLTE/dist/css/adminlte.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../assets/AdminLTE/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="../assets/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="../assets/AdminLTE/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- DataTables -->

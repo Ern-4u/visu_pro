@@ -25,6 +25,12 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="../admin_transaksi/" class="nav-link <?=  ($hal == "transaksi") ? "active" : "" ?>">
+              <i class="nav-icon fas bi bi-credit-card-fill"></i>
+              <p>Transaksi</p>
+            </a>
+          </li>
            <li class="nav-item">
             <a href="../admin_site_plan/" class="nav-link <?=  ($hal == "site_plan") ? "active" : "" ?>">
               <i class="nav-icon bi bi-pin-map-fill"></i>
