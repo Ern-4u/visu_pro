@@ -59,7 +59,7 @@ else {
     <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Daftar Data Kategori Rumah</h3>
+                <h3 class="card-title">Daftar Data Site Plan</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -106,8 +106,8 @@ else {
                       <?php }?>
                       </td>
                       <td class="text-center">
-                        <a href="https://instagram.com/<?= $d['ig'] ?>" class="btn btn-success btn-xs"><i class="bi bi-instagram"></i> Instagram</a>
-                        <a href="https://www.tiktok.com/<?= $d['tiktok'] ?>" class="btn btn-success btn-xs"><i class="bi bi-tiktok"></i> Tiktok</a>
+                        <a href="https://instagram.com/<?= $d['ig'] ?>" target="_blank" class="btn btn-success btn-xs"><i class="bi bi-instagram"></i> Instagram</a>
+                        <a href="https://www.tiktok.com/<?= $d['tiktok'] ?>" target="_blank" class="btn btn-success btn-xs"><i class="bi bi-tiktok"></i> Tiktok</a>
                       </td>
                       <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_site_plan']; ?>" 

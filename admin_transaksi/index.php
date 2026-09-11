@@ -26,7 +26,7 @@ else {
   <title>VISU Pro | Dashboard admin</title>
   <?php
     include '../layout_admin/css.php';
-    $hal = 'home_admin';
+    $hal = 'transaksi';
   ?>
   
 </head>
@@ -58,7 +58,7 @@ else {
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">
-
+            Data Transaksi Rumah
           </h3>
         </div>
         <div class="card-body">
@@ -85,7 +85,17 @@ else {
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['no_transaksi']; ?></td>
                       <td><?= $d['nama_pembeli']; ?></td>
-                      <td><?= $d['kode_blok']; ?> - <?= $d['nama_site_plan'] ?></td>
+                      <?php 
+                      $id_rumah = $d['id_rumah'];
+                      $query_dt_rmh = mysqli_query($conn, "SELECT rumah.* , site_plan.nama_site_plan, kategori_rumah.nama_kategori
+                        FROM rumah
+                        LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
+                        LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
+                        WHERE rumah.id_rumah = '$id_rumah'
+                        ");
+                      $rmh = mysqli_fetch_array($query_dt_rmh);
+                      ?>
+                      <td><?= $rmh['kode_blok']; ?> - <?= $rmh['nama_kategori']  ?> - <?= $rmh['nama_site_plan'] ?></td>
                       <td><?= $d['nama'] ?></td>
                       <td><?= $d['tanggal_transaksi'] ?></td>
                       <td><?= $d['status_transaksi'] ?></td>
@@ -94,14 +104,11 @@ else {
                         <a href="hapus.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
+                        <a href="detail.php?id=<?= $d['id_transaksi']; ?>" 
+                        class="btn btn-success btn-xs"><i class="bi bi-list-ul"></i></a>
                         <button class="btn btn-warning btn-xs" type="submit" 
                         data-target="#modal-edit" 
-                        data-id_site_plan="<?= $d['id_site_plan'] ?>" 
-                        data-nama_site_plan="<?= $d['nama_site_plan']?>" 
-                        data-penanggung_jawab="<?= $d['penanggung_jawab']?>"
-                        data-ig="<?= $d['ig']?>"
-                        data-tiktok="<?= $d['tiktok']?>"
-                        data-lokasi="<?= $d['lokasi'] ?>"
+                        
                         data-toggle="modal">
                         <i class="fas fa-edit"> </i>
                       </button>
@@ -121,9 +128,10 @@ else {
   <!-- /.content-wrapper -->
 
   <?php 
-  $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*
+  $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_rumah.nama_kategori
             FROM rumah 
             LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
+            LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
             ") or die(mysqli_error($conn));
   $ambil_data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli") or die(mysqli_error($conn));
   $ambil_data_marketing = mysqli_query($conn, "SELECT * FROM marketing") or die(mysqli_error($conn));
@@ -148,21 +156,34 @@ else {
                 <div class="form-group">
                   <label for="">Pilih Rumah Yang Akan Di beli</label>
                   <select name="id_rumah" id="" class="form-control select2" style="width: 100%;" >
+                    <option value="">-- Pilih Rumah --</option>
                     <?php 
                     while ($dt_rmh = mysqli_fetch_array($ambil_data_rumah)) { ?>
-                      <option value="<?= $dt_rmh['id_rumah'] ?>"><?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
+                      <option value="<?= $dt_rmh['id_rumah'] ?>"><?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_kategori'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
+                    <?php }
+                    ?>
+                  </select>
+                </div>
+                 <div class="form-group">
+                  <label for="">Pilih Data Pembeli</label>
+                  <select name="id_pembeli" id="" class="form-control select2" style="width: 100%;" >
+                    <option value="">-- Pilih Pembeli --</option>
+                    <?php 
+                    while ($dt_pbl = mysqli_fetch_array($ambil_data_pembeli)) { ?>
+                      <option value="<?= $dt_pbl['id_pembeli'] ?>"><?= $dt_pbl['nama_pembeli'] ?></option>
                     <?php }
                     ?>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="status">Status Rumah</label>
-                  <select name="status" id="status" class="form-control">
-                    <option value="">-- Pilih Status Rumah --</option>
-                    <option value="0">Tersedia</option>
-                    <option value="1">Terjual Cash</option>
-                    <option value="2">Terjual Cash Tempo</option>
-                    <option value="3">Terjual Kredit</option>
+                  <label for="">Pilih Data Marketing</label>
+                  <select name="id_karyawan" id="" class="form-control select2" style="width: 100%;" >
+                    <option value="">-- Pilih Marketing --</option>
+                    <?php 
+                    while ($dt_mkg = mysqli_fetch_array($ambil_data_marketing)) { ?>
+                      <option value="<?= $dt_mkg['id_karyawan'] ?>"><?= $dt_mkg['nama'] ?></option>
+                    <?php }
+                    ?>
                   </select>
                 </div>
                 <div class="modal-footer justify-content-between">
