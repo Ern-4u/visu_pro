@@ -10,7 +10,7 @@ if (isset($_POST['btn_tambah'])) {
     $id_transaksi =trim(mysqli_real_escape_string($conn, $_POST['id_transaksi']));
     $nama_item = trim(mysqli_real_escape_string($conn, $_POST['nama_item']));
     $harga = trim(mysqli_real_escape_string($conn, $_POST['harga']));
-    $status_detail_transaksi = 'Lunas';
+    $status_detail_transaksi = trim(mysqli_real_escape_string($conn, $_POST['status_detail_transaksi']));
 
     $cek_item = mysqli_query($conn, "SELECT nama_item,id_transaksi FROM detail_transaksi WHERE nama_item = '$nama_item' AND id_transaksi ='$id_transaksi' ") 
     or die (mysqli_error($conn));
