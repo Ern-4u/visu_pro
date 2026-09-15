@@ -97,6 +97,9 @@ else {
                       <td><?= $d['booking_fee']; ?></td>
                       <td><?= ($d['status_booking'] == 'lunas') ? 'Lunas' : 'Belum Lunas' ?></td>
                       <td class="text-center">
+                        <a href="jadwal_pembayaran_booking.php?id=<?= $d['id_transaksi'] ?>&jenis_tagihan=rumah" 
+                        class="btn btn-info btn-xs"><i class="bi bi-list-ol"></i> Jadwal Tagihan
+                        </a>
                         <a href="hapus_transaksi_rumah.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
@@ -138,9 +141,13 @@ else {
                       <td><?= $d['tenor'] ?></td>
                       <td><?= $d['tanggal_akad'] ?></td>
                       <td class="text-center">
+                        <a href="jadwal_pembayaran_rumah.php?id=<?= $d['id_transaksi'] ?>&jenis_tagihan=rumah" 
+                        class="btn btn-info btn-xs"><i class="bi bi-list-ol"></i> Jadwal Tagihan
+                        </a>
                         <a href="hapus_transaksi_rumah.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
-                        ><i class="fas fa-trash"></i></a>
+                        ><i class="fas fa-trash"></i>
+                        </a>
                       </td>
                     </tr>
                      <?php } ?>
