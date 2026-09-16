@@ -8,7 +8,7 @@ if ($authority != 'A') {
 }
 
 else {
-  $id_transaksi = @$_GET['id_transaksi'];
+  $id_transaksi = @$_GET['id'];
   $rumah = 'rumah';
 
   $data_jadwal = mysqli_query($conn, "SELECT jadwal_pembayaran.*, transaksi.*
@@ -86,12 +86,7 @@ else {
                       <td><?= $d['jumlah_tagihan'] ?></td>
                       <td><?= $d['status'] ?></td>
                       <td class="text-center">
-                        <button class="btn btn-warning btn-xs" type="submit" 
-                        data-target="#modal-edit" 
-                        
-                        data-toggle="modal">
-                        <i class="fas fa-edit"> </i>
-                      </button>
+                       <a href="pembayaran.php" class="btn btn-info btn-xs">Bayar Tagihan</a>
                       </td>
                     </tr>
                      <?php } ?>
@@ -107,77 +102,6 @@ else {
   </div>
   <!-- /.content-wrapper -->
 
-  <?php 
-  $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_rumah.nama_kategori
-            FROM rumah 
-            LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
-            LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
-            ") or die(mysqli_error($conn));
-  $ambil_data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli") or die(mysqli_error($conn));
-  $ambil_data_marketing = mysqli_query($conn, "SELECT * FROM marketing") or die(mysqli_error($conn));
-  ?>
-
-  <!-- modal Tambah -->
-      <div class="modal fade" id="modal-tambah">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Data Transaksi</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="tambah.php" method="post">
-                <div class="form-group">
-                    <label for="no_transaksi">Nomor Transaksi</label>
-                    <input type="text" name="no_transaksi" class="form-control" id="no_transaksi" placeholder="Masukan Nomor Transaksi" required>
-                </div>
-                <div class="form-group">
-                  <label for="">Pilih Rumah Yang Akan Di beli</label>
-                  <select name="id_rumah" id="" class="form-control select2" style="width: 100%;" >
-                    <option value="">-- Pilih Rumah --</option>
-                    <?php 
-                    while ($dt_rmh = mysqli_fetch_array($ambil_data_rumah)) { ?>
-                      <option value="<?= $dt_rmh['id_rumah'] ?>"><?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_kategori'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
-                    <?php }
-                    ?>
-                  </select>
-                </div>
-                 <div class="form-group">
-                  <label for="">Pilih Data Pembeli</label>
-                  <select name="id_pembeli" id="" class="form-control select2" style="width: 100%;" >
-                    <option value="">-- Pilih Pembeli --</option>
-                    <?php 
-                    while ($dt_pbl = mysqli_fetch_array($ambil_data_pembeli)) { ?>
-                      <option value="<?= $dt_pbl['id_pembeli'] ?>"><?= $dt_pbl['nama_pembeli'] ?></option>
-                    <?php }
-                    ?>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="">Pilih Data Marketing</label>
-                  <select name="id_karyawan" id="" class="form-control select2" style="width: 100%;" >
-                    <option value="">-- Pilih Marketing --</option>
-                    <?php 
-                    while ($dt_mkg = mysqli_fetch_array($ambil_data_marketing)) { ?>
-                      <option value="<?= $dt_mkg['id_karyawan'] ?>"><?= $dt_mkg['nama'] ?></option>
-                    <?php }
-                    ?>
-                  </select>
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_tambah" class="btn btn-primary">Simpan</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Tambah -->
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

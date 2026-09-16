@@ -83,6 +83,7 @@ else {
                     <th width="5%">No</th>
                     <th>Tanggal Booking</th>
                     <th>Booking Fee</th>
+                    <th>Tenor</th>
                     <th>Status Booking</th>
                     <th>Aksi</th>
                   </tr>
@@ -95,12 +96,13 @@ else {
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['tanggal_booking'] ?> </td>
                       <td><?= $d['booking_fee']; ?></td>
+                      <td><?= $d['tenor']; ?></td>
                       <td><?= ($d['status_booking'] == 'lunas') ? 'Lunas' : 'Belum Lunas' ?></td>
                       <td class="text-center">
-                        <a href="jadwal_pembayaran_booking.php?id=<?= $d['id_transaksi'] ?>&jenis_tagihan=rumah" 
+                        <a href="jadwal_pembayaran_booking.php?id=<?= $d['id_transaksi'] ?>&jenis_tagihan=<?= 'booking' ?>" 
                         class="btn btn-info btn-xs"><i class="bi bi-list-ol"></i> Jadwal Tagihan
                         </a>
-                        <a href="hapus_transaksi_rumah.php?id=<?= $d['id_transaksi']; ?>" 
+                        <a href="hapus_booking_rumah.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
                       </td>
@@ -124,7 +126,6 @@ else {
                   <tr class="text-center">
                     <th width="5%">No</th>
                     <th>Metode Pembayaran</th>
-                    <th>DP</th>
                     <th>Tenor</th>
                     <th>Tanggal Akad</th>
                     <th>Aksi</th>
@@ -137,7 +138,6 @@ else {
                     <tr>
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['metode_pembayaran'] ?> </td>
-                      <td><?= $d['dp']; ?></td>
                       <td><?= $d['tenor'] ?></td>
                       <td><?= $d['tanggal_akad'] ?></td>
                       <td class="text-center">
@@ -231,6 +231,10 @@ else {
                     <input type="number" name="booking_fee" class="form-control" id="booking_fee" placeholder="Masukan Jumlah Booking Fee" required>
                 </div>
                 <div class="form-group">
+                    <label for="tenor">Tenor</label>
+                    <input type="number" name="tenor" class="form-control" id="tenor" placeholder="Masukan Jumlah Tenor Angsuran" required>
+                </div>
+                <div class="form-group">
                     <label for="tenor">Status Booking</label>
                     <select name="status_booking" id="status_booking" class="form-control">
                       <option value="">-- Masukan Status Booking --</option>
@@ -272,10 +276,6 @@ else {
                     <input type="hidden" name="id_transaksi" class="form-control" value="<?= $id_transaksi ?>">
                     <label for="metode_pembayaran">Metode Pembayaran Rumah</label>
                     <input type="text" name="metode_pembayaran" class="form-control" id="metode_pembayaran" placeholder="Masukan Metode Pembayaran Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="dp">Deposit</label>
-                    <input type="number" name="dp" class="form-control" id="dp" placeholder="Masukan Jumlah Deposit" required>
                 </div>
                 <div class="form-group">
                     <label for="tenor">Tenor</label>
