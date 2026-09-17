@@ -186,6 +186,7 @@ else {
                       <td><?= $d['harga']; ?></td>
                       <td><?= ($d['status_detail_transaksi'] == 'lunas') ? 'Lunas' : 'Belum Lunas' ?></td>
                       <td class="text-center">
+                        <a href="nota_detail_transaksi.php?id=<?= $d['id_detail_transaksi'] ?>" class="btn btn-xs btn-info"><i class="bi bi-filetype-pdf"></i> Cetak Nota</a>
                         <a href="hapus_detail_transaksi.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>

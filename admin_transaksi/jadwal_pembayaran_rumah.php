@@ -86,7 +86,21 @@ else {
                       <td><?= $d['jumlah_tagihan'] ?></td>
                       <td><?= $d['status'] ?></td>
                       <td class="text-center">
-                       <a href="pembayaran.php" class="btn btn-info btn-xs">Bayar Tagihan</a>
+                        <?php 
+                        $id_jadwal_pembayaran = $d['id_jadwal_pembayaran'];
+                        $query_cek_pembayaran = mysqli_query($conn, "SELECT * FROM pembayaran WHERE id_jadwal_pembayaran = $id_jadwal_pembayaran")or die(mysqli_error($conn));
+                        $rv = mysqli_num_rows($query_cek_pembayaran);
+
+                        if ($rv == 0) { ?>
+                          <button type="submit" class="btn btn-sm btn-info" data-target="#modal_pembayaran" data-toggle="modal"
+                          data-id_jadwal_pembayaran ="<?= $d['id_jadwal_pembayaran'] ?>"
+                          data-jenis_tagihan = "<?= $d['jenis_tagihan'] ?>"
+                          data-jumlah_tagihan="<?= $d['jumlah_tagihan'] ?>">
+                          <i class="bi bi-cash"> Bayar Tagihan</i>
+                        </button>
+                        <?php } else { ?> 
+                          <a href="nota_rumah.php?id=<?= $d['id_jadwal_pembayaran'] ?>" class="btn btn-sm btn-success"><i class="bi  bi-clipboard2-check-fill"></i> Cetak Nota</a>
+                        <?php } ?>
                       </td>
                     </tr>
                      <?php } ?>
@@ -101,6 +115,50 @@ else {
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <!-- modal PEMBAYARAN -->
+      <div class="modal fade" id="modal_pembayaran">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Pembayaran Booking</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="pembayaran.php" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="id_jadwal_pembayaran" class="form-control">
+                    <input type="hidden" name="jenis_tagihan" readonly>
+                    <input type="hidden" name="jumlah_tagihan" readonly>
+                    <input type="hidden" name="jenis_pembayaran" value="rumah" readonly>
+                    <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="metode_pembayaran">Metode Bayar</label>
+                    <select name="metode_pembayaran" class="form-control" id="metode_pembayaran" required>
+                    <option value="">-- Masukan Metode Pembayaran</option>
+                    <option value="cash">Cash</option>
+                    <option value="transfer">Transfer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="tanggal_pembayaran">Tanggal Bayar</label>
+                  <input type="date" class="form-control" name="tanggal_pembayaran" required>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_bayar" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+  <!-- /.modal PEMBAYARAN -->
 
 
   <!-- Control Sidebar -->
@@ -121,6 +179,18 @@ else {
 include '../layout_admin/js.php'
 ?>
 </body>
+<script type="text/javascript">
+   $('#modal_pembayaran').on('show.bs.modal', function(e) {
+
+   var id_jadwal_pembayaran = $(e.relatedTarget).data('id_jadwal_pembayaran');
+   var jenis_tagihan = $(e.relatedTarget).data('jenis_tagihan');
+   var jumlah_tagihan = $(e.relatedTarget).data('jumlah_tagihan');
+
+    $(e.currentTarget).find('input[name="id_jadwal_pembayaran"]').val(id_jadwal_pembayaran);
+    $(e.currentTarget).find('input[name="jenis_tagihan"]').val(jenis_tagihan);
+    $(e.currentTarget).find('input[name="jumlah_tagihan"]').val(jumlah_tagihan);
+    });
+</script>
 </html>
 
 <?php
