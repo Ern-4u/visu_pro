@@ -51,7 +51,11 @@ else {
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    
+    <div class="content-header">
+      <div class="container-fluid">
+       
+      </div>
+    </div>
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
@@ -62,7 +66,7 @@ else {
           </h3>
         </div>
         <div class="card-body">
-          <buttton class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</buttton>
+          <a href="halaman_tambah.php" class="btn btn-primary mb-3"><i class="fas fa-plus"></i> Tambah Data</a>
           <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr class="text-center">
@@ -116,7 +120,7 @@ else {
                     </tr>
                      <?php } ?>
                   </tbody>
-                </table>
+          </table>
         </div>
       </div>      
 
@@ -132,6 +136,7 @@ else {
             FROM rumah 
             LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
             LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
+            WHERE rumah.status = '0'
             ") or die(mysqli_error($conn));
   $ambil_data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli") or die(mysqli_error($conn));
   $ambil_data_marketing = mysqli_query($conn, "SELECT * FROM marketing") or die(mysqli_error($conn));
@@ -149,10 +154,6 @@ else {
             </div>
             <div class="modal-body">
               <form action="tambah.php" method="post">
-                <div class="form-group">
-                    <label for="no_transaksi">Nomor Transaksi</label>
-                    <input type="text" name="no_transaksi" class="form-control" id="no_transaksi" placeholder="Masukan Nomor Transaksi" required>
-                </div>
                 <div class="form-group">
                   <label for="">Pilih Rumah Yang Akan Di beli</label>
                   <select name="id_rumah" id="" class="form-control select2" style="width: 100%;" >

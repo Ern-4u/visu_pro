@@ -8,11 +8,11 @@
         $id = @$_GET['id'];
         
         
-        $hapus_site_plan = mysqli_query($conn, "DELETE FROM site_plan 
-        WHERE id_site_plan = '$id'")or die (mysqli_error($conn));
+        $hapus_site_plan = mysqli_query($conn, "DELETE FROM transaksi 
+        WHERE id_transaksi = '$id'")or die (mysqli_error($conn));
 
 
-        echo '<script>alert("Data Site Plan Berhasil Dihapus");
+        echo '<script>alert("Data Transaksi Berhasil Dihapus!!");
         window.location.href="index.php";
         </script>';
         ?>

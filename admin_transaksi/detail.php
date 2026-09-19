@@ -1,5 +1,6 @@
 <?php
 require_once '../database/config.php';
+require_once '../includes/tanggal.php';
 $authority = @$_SESSION['peran'];
 
 if ($authority != 'A') {
@@ -10,25 +11,13 @@ if ($authority != 'A') {
 else {
   
   $id_transaksi = @$_GET['id'];
-  $data_detail_transaksi = mysqli_query($conn, "SELECT detail_transaksi.*, transaksi.*
-            FROM detail_transaksi 
-            LEFT JOIN transaksi ON detail_transaksi.id_transaksi = transaksi.id_transaksi
-            WHERE detail_transaksi.id_transaksi = '$id_transaksi'
-            ") or die(mysqli_error($conn));
-  
-  $data_detail_transaksi_rumah = mysqli_query($conn, "SELECT detail_transaksi_rumah.*, transaksi.*
-            FROM detail_transaksi_rumah
-            LEFT JOIN transaksi ON detail_transaksi_rumah.id_transaksi = transaksi.id_transaksi
-            WHERE detail_transaksi_rumah.id_transaksi = '$id_transaksi'
-            ") or die(mysqli_error($conn));
-
-  $data_detail_booking_rumah = mysqli_query($conn, "SELECT booking.*, transaksi.*
-            FROM booking
-            LEFT JOIN transaksi ON booking.id_transaksi = transaksi.id_transaksi
-            WHERE booking.id_transaksi = '$id_transaksi'
-            ") or die(mysqli_error($conn));
-
-  
+  $query_data_transaksi = mysqli_query($conn, "SELECT transaksi.*, rumah.*,kategori_rumah.*,pembeli.*
+                                                FROM transaksi
+                                                LEFT JOIN rumah ON transaksi.id_rumah = rumah.id_rumah
+                                                LEFT JOIN pembeli ON transaksi.id_pembeli = pembeli.id_pembeli
+                                                LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
+                                                WHERE transaksi.id_transaksi = '$id_transaksi'") or die(mysqli_error($conn));
+  $data_transaksi = mysqli_fetch_array($query_data_transaksi);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +30,124 @@ else {
     $hal = 'transaksi';
   ?>
   
+  <!-- CSS Khusus untuk Kwitansi -->
+  <style>
+    .kwitansi-wrapper {
+      background-color: #ffffff;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 40px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      font-family: Arial, sans-serif;
+      color: #000;
+    }
+    .kwitansi-title {
+      font-weight: 900;
+      font-size: 2.8rem;
+      line-height: 1;
+      margin-bottom: 0;
+      letter-spacing: -1px;
+    }
+    .contact-info {
+      font-size: 15px;
+    }
+    .contact-info i {
+      color: #0072c6;
+      margin-right: 10px;
+      font-size: 1.3rem;
+      width: 20px;
+      text-align: center;
+    }
+    .logo-container {
+      background-color: #0072c6;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo-icon {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+    }
+    .logo-text {
+      font-weight: bold;
+      font-size: 1.3rem;
+      line-height: 1.1;
+    }
+    .blue-line {
+      height: 8px;
+      background-color: #0072c6;
+      width: 100%;
+      margin-top: 15px;
+      margin-bottom: 35px;
+    }
+    .form-group-custom {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .form-group-custom label {
+      margin-bottom: 0;
+      white-space: nowrap;
+      margin-right: 10px;
+      font-weight: normal;
+      font-size: 15px;
+    }
+    .input-box {
+      border: 1px solid #000;
+      border-radius: 0;
+      height: 35px;
+      width: 100%;
+    }
+    .input-underline {
+      border: none;
+      border-bottom: 1px solid #000;
+      border-radius: 0;
+      padding-left: 5px;
+      background-color: transparent;
+      width: 100%;
+    }
+    /* Tambahan agar terbilang terlihat beda/miring */
+    #kwitansi_sebesar {
+      font-style: italic;
+    }
+    .input-underline:focus, .input-box:focus {
+      box-shadow: none;
+      outline: none;
+      border-color: #0072c6;
+    }
+    .label-min-width {
+      min-width: 170px;
+      display: inline-block;
+    }
+    .colon {
+      margin-right: 10px;
+    }
+    .footer-text {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 60px;
+      font-size: 1.2rem;
+    }
+    .pembuat-nota {
+      margin-top: 40px;
+      text-align: right;
+    }
+    .pembuat-nota-label {
+      margin-right: 10px;
+    }
+    .pembuat-nota-input {
+      display: inline-block;
+      text-align: left;
+      width: 250px;
+      border-bottom: 1px solid #000;
+    }
+  </style>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-flex">
 <div class="wrapper">
@@ -51,301 +158,246 @@ else {
   </div>
 
   <!-- Navbar -->
-  <?php
-  include '../layout_admin/navbar.php'
-  ?>
+  <?php include '../layout_admin/navbar.php' ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php
-  include '../layout_admin/sidebar.php'
-  ?>
+  <?php include '../layout_admin/sidebar.php' ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <div class="content-header">
-
+      <div class="container-fluid">
+       
+      </div>
     </div>
     
     <!-- Main content -->
     <section class="content">
-    <div class="container-fluid">
+      <div class="container-fluid">
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Data Booking Rumah</h3>
+        <!-- ================= MULA KWITANSI ================= -->
+        <?php 
+         $tanggal = date('y-m-d');
+
+        $prefix = $tanggal . "-";
+
+        $query_kwitansi = "SELECT no_kwitansi FROM detail_transaksi WHERE no_kwitansi LIKE '$prefix%' ORDER BY no_kwitansi DESC LIMIT 1";
+        $result = $conn->query($query_kwitansi);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $kwitansi_terakhir = $row['no_kwitansi'];
+            
+            $pecah = explode("-", $kwitansi_terakhir);
+            $nomor_terakhir = (int) end($pecah); 
+            
+            $nomor_baru = $nomor_terakhir + 1;
+        } else {
+            $nomor_baru = 1;
+        }
+
+        $nomor_urut_format = str_pad($nomor_baru, 4, "0", STR_PAD_LEFT);
+
+        $no_kwitansi_generate = $prefix . $nomor_urut_format;
+
+        //generate nomor kwitansi selesai
+
+        ?>
+
+        <div class="kwitansi-wrapper">
+            <!-- Header Row -->
+            <div class="row align-items-center">
+                <!-- Judul & Kontak -->
+                <div class="col-md-8">
+                    <h1 class="kwitansi-title">KWITANSI<br>PEMBAYARAN</h1>
+                    
+                    <div class="row mt-4">
+                        <div class="col-sm-6 contact-info">
+                            <div class="mb-2"><i class="fas fa-phone-alt"></i> +123-456-7890</div>
+                            <div><i class="fas fa-globe"></i> REALLYGREATSITE.COM</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Logo -->
+                <div class="col-md-4 p-0">
+                    <div class="logo-container">
+                        <i class="fas fa-layer-group logo-icon"></i>
+                        <div class="logo-text">ALDENAIRE &<br>PARTNERS</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garis Biru -->
+            <div class="blue-line"></div>
+
+            <!-- Baris No Nota & Tanggal -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-group-custom">
+                        <label>NO KWITANSI:</label>
+                        <input type="text" class="form-control input-box" value="<?php echo $no_kwitansi_generate; ?>" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-custom">
+                        <label>TANGGAL:</label>
+                        <input type="text" class="form-control input-box" value="<?= tanggal_indonesia($tanggal) ?>" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baris Nama & Kontak -->
+            <div class="row mb-3">
+                <div class="col-md-7">
+                    <div class="d-flex align-items-end">
+                        <label class="mb-0 mr-2">NAMA:</label>
+                        <input type="text" class="form-control input-underline" value="<?= $data_transaksi['nama_pembeli'] ?>" readonly>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="d-flex align-items-end">
+                        <label class="mb-0 mr-2">KONTAK:</label>
+                        <input type="text" class="form-control input-underline" value="<?= $data_transaksi['kontak'] ?>" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baris Alamat -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="d-flex align-items-end">
+                        <label class="mb-0 label-min-width">ALAMAT</label>
+                        <span class="colon">:</span>
+                        <input type="text" class="form-control input-underline" value="<?= $data_transaksi['alamat'] ?>" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baris Jenis Pembayaran -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="d-flex align-items-end">
+                        <label class="mb-0 label-min-width">JENIS PEMBAYARAN</label>
+                        <span class="colon">:</span>
+                        <!-- id="kwitansi_jenis_pembayaran" dipertahankan -->
+                        <input type="text" id="kwitansi_jenis_pembayaran" class="form-control input-underline" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baris Sebesar (Terbilang akan masuk ke sini) -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="d-flex align-items-end">
+                        <label class="mb-0 label-min-width">SEBESAR</label>
+                        <span class="colon">:</span>
+                        <!-- id="kwitansi_sebesar" dipertahankan -->
+                        <input type="text" id="kwitansi_sebesar" class="form-control input-underline" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baris Metode Pembayaran -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="d-flex align-items-end">
+                        <label class="mb-0 label-min-width">METODE PEMBAYARAN</label>
+                        <span class="colon">:</span>
+                        <input type="text" id="kwitansi_metode_pembayaran" class="form-control input-underline" readonly>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $pembuat_nota = $_SESSION['nama']
+            ?>
+            <!-- Tanda Tangan / Pembuat Nota -->
+            <div class="row">
+                <div class="col-12 pembuat-nota">
+                    <span class="pembuat-nota-label">PEMBUAT NOTA :</span>
+                    <div class="pembuat-nota-input"><?= $pembuat_nota ?></div>
+                </div>
+            </div>
+
+            <!-- Footer Text -->
+            <div class="row">
+                <div class="col-12">
+                    <p class="footer-text">TRIMAKASIH ATAS PEMBAYARAN ANDA</p>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <buttton class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah_booking_rumah"><i class="fas fa-plus"></i> Tambah Data</buttton>
-          <table id="example1" class="table table-bordered table-striped">
+        <!-- ================= AKHIR KWITANSI ================= -->
+
+        <div class="card">
+          <div class="card-body">
+           <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label for="input_sebesar">Masukan Jumlah Transaksi</label>
+                <!-- Tambahkan id="input_sebesar" -->
+                <input type="text" id="input_sebesar" name="dibayarkan" class="form-control" placeholder="Hanya ketik angka (misal: 1000000)">
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label for="input_jenis_pembayaran">Pilih Jenis Pembayaran</label>
+                <select name="jenis_pembayaran" id="input_jenis_pembayaran" class="form-control">
+                  <option value="">-- Pilih Jenis Pembayaran --</option>
+                  <option value="Tunai">Tunai</option>
+                  <option value="Transfer Bank">Transfer Bank</option>
+                  <option value="Kartu Kredit">Kartu Kredit</option>
+                  <option value="E-Wallet">E-Wallet</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="form-group">
+                <label for="input_metode_pembayaran">Pilih Metode Pembayaran</label>
+                <select name="metode_pembayaran" id="input_metode_pembayaran" class="form-control">
+                  <option value="">-- Pilih Metode Pembayaran --</option>
+                  <option value="Tunai">Tunai</option>
+                  <option value="Transfer Bank">Transfer Bank</option>
+                  <option value="E-Wallet">E-Wallet</option>
+                </select>
+              </div>
+            </div>
+           </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h1 class="card-title">Histori Pembayaran</h1>
+          </div>
+          <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr class="text-center">
                     <th width="5%">No</th>
-                    <th>Tanggal Booking</th>
-                    <th>Booking Fee</th>
-                    <th>Tenor</th>
-                    <th>Status Booking</th>
-                    <th>Aksi</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                  $no = 1; 
-                  while ($d = mysqli_fetch_array($data_detail_booking_rumah)) { ?>
-                    <tr>
-                      <td width="5%" class="text-center"><?=  $no++ ; ?></td>
-                      <td><?= $d['tanggal_booking'] ?> </td>
-                      <td><?= $d['booking_fee']; ?></td>
-                      <td><?= $d['tenor']; ?></td>
-                      <td><?= ($d['status_booking'] == 'lunas') ? 'Lunas' : 'Belum Lunas' ?></td>
-                      <td class="text-center">
-                        <a href="jadwal_pembayaran_booking.php?id=<?= $d['id_transaksi'] ?>&jenis_tagihan=<?= 'booking' ?>" 
-                        class="btn btn-info btn-xs"><i class="bi bi-list-ol"></i> Jadwal Tagihan
-                        </a>
-                        <a href="hapus_booking_rumah.php?id=<?= $d['id_transaksi']; ?>" 
-                        class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
-                        ><i class="fas fa-trash"></i></a>
-                      </td>
-                    </tr>
-                     <?php } ?>
-                  </tbody>
-                </table>
-        </div>
-      </div>
-
-      <!-- selesai tabel booking rumah -->
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Data Transaksi Rumah</h3>
-        </div>
-        <div class="card-body">
-          <buttton class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah_transaksi_rumah"><i class="fas fa-plus"></i> Tambah Data</buttton>
-          <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr class="text-center">
-                    <th width="5%">No</th>
-                    <th>Metode Pembayaran</th>
-                    <th>Tenor</th>
-                    <th>Tanggal Akad</th>
-                    <th>Aksi</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                  $no = 1; 
-                  while ($d = mysqli_fetch_array($data_detail_transaksi_rumah)) { ?>
-                    <tr>
-                      <td width="5%" class="text-center"><?=  $no++ ; ?></td>
-                      <td><?= $d['metode_pembayaran'] ?> </td>
-                      <td><?= $d['tenor'] ?></td>
-                      <td><?= $d['tanggal_akad'] ?></td>
-                      <td class="text-center">
-                        <a href="jadwal_pembayaran_rumah.php?id=<?= $d['id_transaksi'] ?>&jenis_tagihan=rumah" 
-                        class="btn btn-info btn-xs"><i class="bi bi-list-ol"></i> Jadwal Tagihan
-                        </a>
-                        <a href="hapus_transaksi_rumah.php?id=<?= $d['id_transaksi']; ?>" 
-                        class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
-                        ><i class="fas fa-trash"></i>
-                        </a>
-                      </td>
-                    </tr>
-                     <?php } ?>
-                  </tbody>
-                </table>
-        </div>
-      </div>
-
-      <!-- Selesai tabel data pembayaran rumah -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">
-            Data Transaksi Rumah Tambahan
-          </h3>
-        </div>
-        <div class="card-body">
-          <buttton class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah_detail_transaksi"><i class="fas fa-plus"></i> Tambah Data</buttton>
-          <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr class="text-center">
-                    <th width="5%">No</th>
-                    <th>Nama Item</th>
-                    <th>Harga</th>
+                    <th>No Transaksi</th>
+                    <th>Pembeli</th>
+                    <th>Rumah</th>
+                    <th>Marketing</th>
+                    <th>Tanggal</th>
                     <th>Status</th>
+                    <th>Total</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <?php
-                  $no = 1; 
-                  mysqli_data_seek($data_detail_transaksi,0);
-                  while ($d = mysqli_fetch_array($data_detail_transaksi)) { ?>
-                    <tr>
-                      <td width="5%" class="text-center"><?=  $no++ ; ?></td>
-                      <td><?= $d['nama_item']; ?></td>
-                      <td><?= $d['harga']; ?></td>
-                      <td><?= ($d['status_detail_transaksi'] == 'lunas') ? 'Lunas' : 'Belum Lunas' ?></td>
-                      <td class="text-center">
-                        <a href="nota_detail_transaksi.php?id=<?= $d['id_detail_transaksi'] ?>" class="btn btn-xs btn-info"><i class="bi bi-filetype-pdf"></i> Cetak Nota</a>
-                        <a href="hapus_detail_transaksi.php?id=<?= $d['id_transaksi']; ?>" 
-                        class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
-                        ><i class="fas fa-trash"></i></a>
-                      </td>
-                    </tr>
-                     <?php } ?>
+                    
                   </tbody>
-                </table>
+            </table>
+          </div>
         </div>
-      </div>      
 
-    </div>  
-    <!--/. container-fluid -->
+      </div>  
+      <!--/. container-fluid -->
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-  <!-- selesai data detail transaksi rumah tambahan -->
-
-
-<!-- modal transaksi booking rumah -->
-
-<!-- modal -->
-      <div class="modal fade" id="modal-tambah_booking_rumah">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Transaksi Booking</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="tambah_booking_rumah.php" method="post">
-                <div class="form-group">
-                    <input type="hidden" name="id_transaksi" class="form-control" value="<?= $id_transaksi ?>">
-                    <label for="tanggal_booking">Tanggal Booking</label>
-                    <input type="date" name="tanggal_booking" class="form-control" id="tanggal_booking" placeholder="Masukan Tanggal Booking Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="booking_fee">Booking Feee</label>
-                    <input type="number" name="booking_fee" class="form-control" id="booking_fee" placeholder="Masukan Jumlah Booking Fee" required>
-                </div>
-                <div class="form-group">
-                    <label for="tenor">Tenor</label>
-                    <input type="number" name="tenor" class="form-control" id="tenor" placeholder="Masukan Jumlah Tenor Angsuran" required>
-                </div>
-                <div class="form-group">
-                    <label for="tenor">Status Booking</label>
-                    <select name="status_booking" id="status_booking" class="form-control">
-                      <option value="">-- Masukan Status Booking --</option>
-                      <option value="belum_lunas">Belum Lunas</option>
-                      <option value="lunas">Lunas</option>
-                    </select>
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_tambah" class="btn btn-primary">Simpan</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Tambah -->
-
-<!-- selesai modal transaksi booking rumah -->
-
-
-
-<!-- modal transaksi rumah -->
-  <!-- modal -->
-      <div class="modal fade" id="modal-tambah_transaksi_rumah">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Transaksi</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="tambah_transaksi_rumah.php" method="post">
-                <div class="form-group">
-                    <input type="hidden" name="id_transaksi" class="form-control" value="<?= $id_transaksi ?>">
-                    <label for="metode_pembayaran">Metode Pembayaran Rumah</label>
-                    <input type="text" name="metode_pembayaran" class="form-control" id="metode_pembayaran" placeholder="Masukan Metode Pembayaran Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="tenor">Tenor</label>
-                    <input type="number" name="tenor" class="form-control" id="tenor" placeholder="Masukan Tenor Pembayaran" required>
-                </div>
-                <div class="form-group">
-                    <label for="tanggal_akad">Tanggal</label>
-                    <input type="date" name="tanggal_akad" class="form-control" id="tanggal_akad" placeholder="Masukan Tanggal Akad" required>
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_tambah" class="btn btn-primary">Simpan</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Tambah -->
-
-      <!-- selesai modal transaksi rumah -->
-
-      <!-- mulai tambah modal detail transaksi tambahan -->
-
-  <!-- modal Tambah -->
-      <div class="modal fade" id="modal-tambah_detail_transaksi">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Detail Transaksi</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="tambah_detail_transaksi.php" method="post">
-                <div class="form-group">
-                    <input type="hidden" name="id_transaksi" class="form-control" value="<?= $id_transaksi ?>">
-                    <label for="nama_item">Nama Item</label>
-                    <input type="text" name="nama_item" class="form-control" id="nama_item" placeholder="Masukan Item Yang Akan Dibeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga Item</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Item Yang Akan Dibeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="tenor">Status Transaksi</label>
-                    <select name="status_detail_transaksi" id="status_detail_transaksi" class="form-control">
-                      <option value="">-- Masukan Status Transaksi --</option>
-                      <option value="belum_lunas">Belum Lunas</option>
-                      <option value="lunas">Lunas</option>
-                    </select>
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_tambah" class="btn btn-primary">Simpan</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Tambah -->
-
-      <!-- selesai modal transaksi tambahan -->
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -354,16 +406,90 @@ else {
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-   <?php
-  include '../layout_admin/footer.php'
-  ?>
+   <?php include '../layout_admin/footer.php' ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<?php
-include '../layout_admin/js.php'
-?>
+<?php include '../layout_admin/js.php' ?>
+
+<!-- ================= SCRIPT SINKRONISASI & TERBILANG ================= -->
+<script>
+  // FUNGSI KONVERSI ANGKA KE TERBILANG (BAHASA INDONESIA)
+  function terbilang(angka) {
+    var bilangan = ['','Satu','Dua','Tiga','Empat','Lima','Enam','Tujuh','Delapan','Sembilan','Sepuluh','Sebelas'];
+    angka = Math.abs(angka);
+    var simpan = "";
+
+    if (angka < 12) {
+      simpan = " " + bilangan[angka];
+    } else if (angka < 20) {
+      simpan = terbilang(Math.floor(angka - 10)) + " Belas";
+    } else if (angka < 100) {
+      simpan = terbilang(Math.floor(angka / 10)) + " Puluh" + terbilang(angka % 10);
+    } else if (angka < 200) {
+      simpan = " Seratus" + terbilang(angka - 100);
+    } else if (angka < 1000) {
+      simpan = terbilang(Math.floor(angka / 100)) + " Ratus" + terbilang(angka % 100);
+    } else if (angka < 2000) {
+      simpan = " Seribu" + terbilang(angka - 1000);
+    } else if (angka < 1000000) {
+      simpan = terbilang(Math.floor(angka / 1000)) + " Ribu" + terbilang(angka % 1000);
+    } else if (angka < 1000000000) {
+      simpan = terbilang(Math.floor(angka / 1000000)) + " Juta" + terbilang(angka % 1000000);
+    } else if (angka < 1000000000000) {
+      simpan = terbilang(Math.floor(angka / 1000000000)) + " Miliar" + terbilang(angka % 1000000000);
+    } else if (angka < 1000000000000000) {
+      simpan = terbilang(Math.floor(angka / 1000000000000)) + " Triliun" + terbilang(angka % 1000000000000);
+    }
+    return simpan;
+  }
+
+  // Mengambil elemen
+  const inputSebesar = document.getElementById('input_sebesar');
+  const kwitansiSebesar = document.getElementById('kwitansi_sebesar');
+  
+  const inputJenisPembayaran = document.getElementById('input_jenis_pembayaran');
+  const kwitansiJenisPembayaran = document.getElementById('kwitansi_jenis_pembayaran');
+
+  const inputMetodePembayaran = document.getElementById('input_metode_pembayaran');
+  const kwitansiMetodePembayaran = document.getElementById('kwitansi_metode_pembayaran');
+
+  // Event listener saat user mengetik jumlah transaksi
+  inputSebesar.addEventListener('input', function() {
+    // 1. Bersihkan input dari huruf, ambil murni angka saja
+    let angkaMurni = this.value.replace(/[^0-9]/g, '');
+
+    // 2. Jika input kosong, kosongkan juga form bawah dan kwitansinya
+    if (angkaMurni === '') {
+      this.value = '';
+      kwitansiSebesar.value = '';
+      return;
+    }
+
+    // 3. (Opsional tapi rapi) Format angka di input bawah jadi pakai titik (Rupiah) saat mengetik
+    let formattedNumber = new Intl.NumberFormat('id-ID').format(angkaMurni);
+    this.value = formattedNumber; 
+
+    // 4. Ubah angka murni tersebut ke string Terbilang
+    let teksTerbilang = terbilang(parseInt(angkaMurni));
+
+    // 5. Gabungkan menjadi satu kalimat di kwitansi
+    // Output Contoh: Rp 1.000.000 ( Satu Juta Rupiah )
+    kwitansiSebesar.value = 'Rp ' + formattedNumber + '  ( ' + teksTerbilang.trim() + ' Rupiah )';
+  });
+
+  // Event listener saat user memilih jenis pembayaran
+  inputJenisPembayaran.addEventListener('change', function() {
+    kwitansiJenisPembayaran.value = this.value; 
+  });
+
+  // Event listener saat user memilih metode pembayaran
+  inputMetodePembayaran.addEventListener('change', function() {
+    kwitansiMetodePembayaran.value = this.value; 
+  });
+</script>
+
 </body>
 </html>
 

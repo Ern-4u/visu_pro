@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-2 pb-2 mb-2 d-flex">
         <div class="info">
-          <h5 class="d-block"><center><b>DASHBOARD</b> Admin</center></h5>
+          <h5 class="d-block"><center><b>DASHBOARD</b> ADMIN</center></h5>
         </div>
       </div>
 
@@ -25,13 +25,8 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li class="nav-header"><b>PROPERTI</b></li>
           <li class="nav-item">
-            <a href="../admin_transaksi/" class="nav-link <?=  ($hal == "transaksi") ? "active" : "" ?>">
-              <i class="nav-icon fas bi bi-credit-card-fill"></i>
-              <p>Transaksi</p>
-            </a>
-          </li>
-           <li class="nav-item">
             <a href="../admin_site_plan/" class="nav-link <?=  ($hal == "site_plan") ? "active" : "" ?>">
               <i class="nav-icon bi bi-pin-map-fill"></i>
               <p>Site Plan</p>
@@ -44,50 +39,29 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../admin_pembeli/" class="nav-link <?=  ($hal == "pembeli") ? "active" : "" ?>">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Data Pembeli</p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="../admin_rumah/" class="nav-link <?=  ($hal == "admin_rumah") ? "active" : "" ?>">
               <i class="nav-icon bi bi-house-fill"></i>
               <p>Data Rumah</p>
             </a>
           </li>
-          <!-- <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dropdown
-                <i class="right fas fa-angle-left"></i>
-              </p>
+          <li class="nav-header"><b>KEUANGAN</b></li>
+          <li class="nav-item">
+            <a href="../admin_transaksi/" class="nav-link <?=  ($hal == "transaksi") ? "active" : "" ?>">
+              <i class="nav-icon fas bi bi-credit-card-fill"></i>
+              <p>Transaksi</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
+          </li>
+          <li class="nav-header"><b>TOOLS</b></li>
           <li class="nav-item">
             <a href="../admin_users/" class="nav-link <?=  ($hal == "users") ? "active" : "" ?>">
               <i class="nav-icon fas fa-users"></i>
               <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../admin_pembeli/" class="nav-link <?=  ($hal == "pembeli") ? "active" : "" ?>">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Data Pembeli</p>
             </a>
           </li>
           <li class="nav-item">

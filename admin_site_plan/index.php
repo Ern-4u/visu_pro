@@ -86,7 +86,6 @@ else {
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['nama_site_plan']; ?></td>
                       <td><?= $d['lokasi']; ?></td>
-                      <td><?= $d['penanggung_jawab']; ?></td>
                       <td><a href="https://wa.me/<?= $d['penanggung_jawab']; ?>?text=Hai Bolehkah saya bertanya tentang Rumah?" target="_blank" type="button" class="btn btn-success btn-xs">
                            <i class="bi bi-whatsapp"></i><?= $d['penanggung_jawab'];?>                           
                       </a></td>
@@ -97,12 +96,12 @@ else {
                         data-id_site_plan="<?= $d['id_site_plan'] ?>"
                         >Brosur Belum Diupload</button>
                       <?php } else { ?>
-                      <button type="button" class="btn btn-warning btn-xs mb-1"
+                      <button type="button" class="btn btn-warning btn-xs mb-3"
                         data-target="#modal-brosur"
                         data-toggle="modal"
                         data-id_site_plan="<?= $d['id_site_plan'] ?>"
-                        ><i class="fas fa-edit"></i></button>
-                      <a href="../assets/brosur/<?= $d['brosur']; ?>" class="btn btn-success btn-xs" target="_blank">Download Brosur</a>
+                        ><i class="fas fa-edit"></i>Edit Brosur</button>
+                      <a href="../assets/brosur/<?= $d['brosur']; ?>" target="_blank"><img src="../assets/brosur/<?= $d['brosur']; ?>" alt="brosur" width="50px" height="100px"></a>
                       <?php }?>
                       </td>
                       <td class="text-center">
