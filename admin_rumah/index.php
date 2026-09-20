@@ -91,11 +91,12 @@ else {
             LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
             where rumah.id_site_plan = '$id_site_plan'
             ") or die(mysqli_error($conn));
+            $nm_st_pln = mysqli_fetch_array($query_rumah);
             ?>
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Daftar Data Kategori Rumah</h3>
+                <h3 class="card-title">Daftar Data Rumah Komplek <?= $nm_st_pln['nama_site_plan'] ?></h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -119,6 +120,7 @@ else {
                   <tbody>
                     <?php
                   $no = 1; 
+                  mysqli_data_seek($query_rumah, 0);
                   while ($d = mysqli_fetch_array($query_rumah)) { ?>
                     <tr>
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>

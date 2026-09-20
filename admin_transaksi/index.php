@@ -77,7 +77,6 @@ else {
                     <th>Marketing</th>
                     <th>Tanggal</th>
                     <th>Status</th>
-                    <th>Total</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -103,9 +102,8 @@ else {
                       <td><?= $d['nama'] ?></td>
                       <td><?= $d['tanggal_transaksi'] ?></td>
                       <td><?= $d['status_transaksi'] ?></td>
-                      <td><?= $d['total'] ?></td>
                       <td class="text-center">
-                        <a href="hapus.php?id=<?= $d['id_transaksi']; ?>" 
+                        <a href="hapus.php?id=<?= $d['id_transaksi']; ?>&id_rumah=<?= $d['id_rumah'] ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
                         <a href="detail.php?id=<?= $d['id_transaksi']; ?>" 
