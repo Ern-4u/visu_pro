@@ -78,11 +78,7 @@ else {
                     <div class="col-2.5">
                         <button type="submit" name="btn_cari" class="btn btn-primary"><i class="fas fa-search"></i> Tampilkan Data</button>
                     </div>
-                    <div class="col-6">
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                    <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                    <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>  
-                    </div>
+                    
                 </div>
             </form>
             <?php 
@@ -103,13 +99,19 @@ else {
               </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="col-6">
+                  <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                  <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                  <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>  
+                </div>
+                
+                    
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th class="text-center" width="5%">No</th>
                     <th>Kode Blok</th>
                     <th>Kategori</th>
-                    <th>Site Plan</th>
                     <th>Status</th>
                     <th>Aksi</th>
                   </tr>
@@ -122,7 +124,6 @@ else {
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['kode_blok']; ?></td>
                       <td><?= $d['nama_kategori']; ?></td>
-                      <td><?= $d['nama_site_plan'] ?></td>
                       <td><?php
                       if ($d['status'] == 0) {
                         echo 'Tersedia';
