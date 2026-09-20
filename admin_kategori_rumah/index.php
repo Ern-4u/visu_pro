@@ -88,7 +88,7 @@ else {
                       <td><?= $d['nama_kategori']; ?></td>
                       <td><?= $d['luas_bangunan']; ?></td>
                       <td><?= $d['luas_tanah']; ?></td>
-                      <td><?= $d['harga']; ?></td>
+                      <td>Rp <?= number_format($d['harga'], 0, ',', '.'); ?></td>
                       <td><?= $d['deskripsi']; ?></td>
                       <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_kategori']; ?>" 
