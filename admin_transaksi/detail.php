@@ -153,9 +153,9 @@ else {
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  <!-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble rounded-circle" src="../assets/logo/visupro.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> -->
 
   <!-- Navbar -->
   <?php include '../layout_admin/navbar.php' ?>
@@ -329,40 +329,189 @@ else {
         </div>
         <!-- ================= AKHIR KWITANSI ================= -->
 
+        <form action="proses_pembayaran.php" method="POST" target="_blank">
+  
+        <!-- DATA HIDDEN UNTUK DIKIRIM KE BACKEND -->
+        <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>">
+        <input type="hidden" name="no_kwitansi" value="<?= $no_kwitansi_generate ?>">
+        <input type="hidden" name="tanggal_pembayaran" value="<?= $tanggal ?>">
+
         <div class="card">
           <div class="card-body">
-           <div class="row">
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label for="input_sebesar">Masukan Jumlah Transaksi</label>
-                <!-- Tambahkan id="input_sebesar" -->
-                <input type="text" id="input_sebesar" name="dibayarkan" class="form-control" placeholder="Hanya ketik angka (misal: 1000000)">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="input_sebesar">Masukan Jumlah Transaksi</label>
+                  <!-- Name form ini adalah 'dibayarkan' -->
+                  <input type="text" id="input_sebesar" name="dibayarkan" class="form-control" placeholder="Hanya ketik angka (misal: 1000000)" required>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="input_jenis_pembayaran">Pilih Jenis Pembayaran</label>
+                  <select name="jenis_pembayaran" id="input_jenis_pembayaran" class="form-control" required>
+                    <option value="">-- Pilih Jenis Pembayaran --</option>
+                    <!-- Sesuaikan option ini dengan data pembayaran di tabel Anda -->
+                    <option value="Booking Fee">Booking Fee</option>
+                    <option value="Pembangunan Rumah">Pembangunan Rumah</option>
+                    <option value="Pajak Bangunan">Pajak Bangunan</option>
+                    <option value="Akte Jual Beli">Akte Jual Beli</option>
+                    <option value="Notaris">Notaris</option>
+                    <option value="Lahan Makam">Lahan Makam</option>
+                    <option value="Hook">Hook</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label for="input_metode_pembayaran">Pilih Metode Pembayaran</label>
+                  <!-- Catatan: metode_pembayaran tidak ada di gambar struktur DB Anda, jadi kita abaikan proses insert-nya di backend -->
+                  <select name="metode_pembayaran" id="input_metode_pembayaran" class="form-control">
+                    <option value="">-- Pilih Metode Pembayaran --</option>
+                    <option value="Tunai">Tunai</option>
+                    <option value="Transfer Bank">Transfer Bank</option>
+                    <option value="E-Wallet">E-Wallet</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label for="input_jenis_pembayaran">Pilih Jenis Pembayaran</label>
-                <select name="jenis_pembayaran" id="input_jenis_pembayaran" class="form-control">
-                  <option value="">-- Pilih Jenis Pembayaran --</option>
-                  <option value="Tunai">Tunai</option>
-                  <option value="Transfer Bank">Transfer Bank</option>
-                  <option value="Kartu Kredit">Kartu Kredit</option>
-                  <option value="E-Wallet">E-Wallet</option>
-                </select>
+
+            <!-- TOMBOL SUBMIT -->
+            <div class="row mt-3">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-print"></i> Submit & Cetak Nota</button>
               </div>
             </div>
-            <div class="col-lg-4">
-              <div class="form-group">
-                <label for="input_metode_pembayaran">Pilih Metode Pembayaran</label>
-                <select name="metode_pembayaran" id="input_metode_pembayaran" class="form-control">
-                  <option value="">-- Pilih Metode Pembayaran --</option>
-                  <option value="Tunai">Tunai</option>
-                  <option value="Transfer Bank">Transfer Bank</option>
-                  <option value="E-Wallet">E-Wallet</option>
-                </select>
-              </div>
-            </div>
-           </div>
+
+          </div>
+        </div>
+      </form>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+
+            </h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th>Jenis Pembayaran</th>
+                  <th>Sudah Dibayarkan</th>
+                  <th>Yang Harus Dibayar</th>
+                  <th>Yang Belum Di bayar</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                
+                <!-- Row 1: Booking Fee -->
+                <tr>
+                  <?php 
+                  $jns_booking = 'Booking Fee';
+                  $queri_hrg_booking = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_booking' ") or die(mysqli_error($conn));
+                  $hrg_booking = mysqli_fetch_array($queri_hrg_booking);
+                  $queri_total_booking = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_booking'")or die(mysqli_error($conn));
+                  $total_booking = mysqli_fetch_array($queri_total_booking);
+                  ?>
+                  <td>Booking Fee</td>
+                  <td> Rp <?= number_format($total_booking['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_booking['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_booking['harga'] ?? 0) - ($total_booking['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+                <!-- Row 2: Pembangunan Rumah -->
+                <tr>
+                  <?php 
+                  $jns_pem_rumah = 'Pembangunan Rumah';
+                  $queri_hrg_rmh = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_pem_rumah' ") or die(mysqli_error($conn));
+                  $hrg_rumah = mysqli_fetch_array($queri_hrg_rmh);
+                  $queri_total_rmh = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_pem_rumah'")or die(mysqli_error($conn));
+                  $total_rmh = mysqli_fetch_array($queri_total_rmh);
+                  ?>
+                  <td>Pembangunan Rumah</td>
+                  <td> Rp <?= number_format($total_rmh['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_rumah['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_rumah['harga'] ?? 0) - ($total_rmh['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+                <!-- Row 3: Pajak Bangunan -->
+                <tr>
+                  <?php 
+                  $jns_pb_rumah = 'Pajak Bangunan';
+                  $queri_hrg_pb = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_pb_rumah' ") or die(mysqli_error($conn));
+                  $hrg_pb = mysqli_fetch_array($queri_hrg_pb);
+                  $queri_total_pb = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_pb_rumah'")or die(mysqli_error($conn));
+                  $total_pb = mysqli_fetch_array($queri_total_pb);
+                  ?>
+                  <td>Pajak Bangunan</td>
+                  <td> Rp <?= number_format($total_pb['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_pb['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_pb['harga'] ?? 0) - ($total_pb['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+                <!-- Row 4: Akte Jual Beli -->
+                <tr>
+                  <?php 
+                  $jns_ajb = 'Akte Jual Beli';
+                  $queri_hrg_ajb = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_ajb' ") or die(mysqli_error($conn));
+                  $hrg_ajb = mysqli_fetch_array($queri_hrg_ajb);
+                  $queri_total_ajb = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_ajb'")or die(mysqli_error($conn));
+                  $total_ajb = mysqli_fetch_array($queri_total_ajb);
+                  ?>
+                  <td>Akte Jual Beli</td>
+                  <td> Rp <?= number_format($total_ajb['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_ajb['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_ajb['harga'] ?? 0) - ($total_ajb['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+                <!-- Row 5: Notaris -->
+                <tr>
+                  <?php 
+                  $jns_notaris = 'Notaris';
+                  $queri_hrg_notaris = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_notaris' ") or die(mysqli_error($conn));
+                  $hrg_notaris = mysqli_fetch_array($queri_hrg_notaris);
+                  $queri_total_notaris = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_notaris'")or die(mysqli_error($conn));
+                  $total_notaris = mysqli_fetch_array($queri_total_notaris);
+                  ?>
+                  <td>Notaris</td>
+                  <td> Rp <?= number_format($total_notaris['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_notaris['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_notaris['harga'] ?? 0) - ($total_notaris['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+                <!-- Row 6: Lahan Makam -->
+                <tr>
+                  <?php 
+                  $jns_makam = 'Lahan Makam';
+                  $queri_hrg_makam = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_makam' ") or die(mysqli_error($conn));
+                  $hrg_makam = mysqli_fetch_array($queri_hrg_makam);
+                  $queri_total_makam = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_makam'")or die(mysqli_error($conn));
+                  $total_makam = mysqli_fetch_array($queri_total_makam);
+                  ?>
+                  <td>Lahan Makam</td>
+                  <td> Rp <?= number_format($total_makam['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_makam['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_makam['harga'] ?? 0) - ($total_makam['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+                <!-- Row 7: Hook -->
+                <tr>
+                  <?php 
+                  $jns_hook = 'Hook';
+                  $queri_hrg_hook = mysqli_query($conn, "SELECT harga FROM jenis_pembayaran WHERE id_transaksi ='$id_transaksi' AND jenis_pembayaran ='$jns_hook' ") or die(mysqli_error($conn));
+                  $hrg_hook = mysqli_fetch_array($queri_hrg_hook);
+                  $queri_total_hook = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_harga FROM detail_transaksi WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = '$jns_hook'")or die(mysqli_error($conn));
+                  $total_hook = mysqli_fetch_array($queri_total_hook);
+                  ?>
+                  <td>Hook</td>
+                  <td> Rp <?= number_format($total_hook['total_harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format($hrg_hook['harga'] ?? 0, 0, ',', '.') ?></td>
+                  <td> Rp <?= number_format(($hrg_hook['harga'] ?? 0) - ($total_hook['total_harga'] ?? 0), 0, ',', '.') ?></td>
+                </tr>
+
+              </tbody>
+            </table>
           </div>
         </div>
 

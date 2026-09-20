@@ -107,7 +107,13 @@ if (isset($_POST['btn_tambah'])) {
         $hrg_hook = trim(mysqli_real_escape_string($conn, $_POST['hook']));
         $jns_hook = 'Hook';
         if ($hrg_hook == '') {
-            
+            $kosong = 0 ;
+            $bayar_hook = mysqli_query($conn, "INSERT INTO jenis_pembayaran VALUES (
+            null,
+            '$id_transaksi',
+            '$jns_hook',
+            '$kosong'
+            )") or die(mysqli_error($conn));           
         } else {
             $bayar_hook = mysqli_query($conn, "INSERT INTO jenis_pembayaran VALUES (
             null,
