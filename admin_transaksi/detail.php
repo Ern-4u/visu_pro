@@ -59,7 +59,7 @@ else {
       text-align: center;
     }
     .logo-container {
-      background-color: #0072c6;
+      background-color: #ffffff;
       color: white;
       text-align: center;
       padding: 30px 20px;
@@ -153,9 +153,13 @@ else {
 <div class="wrapper">
 
   <!-- Preloader -->
-  <!-- <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble rounded-circle" src="../assets/logo/visupro.png" alt="AdminLTELogo" height="60" width="60">
-  </div> -->
+  <?php
+  $query_web = mysqli_query($conn, "SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
+  $web = mysqli_fetch_array($query_web); 
+  ?>
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble rounded-circle" src="../assets/logo/<?= $web['logo'] ?>" alt="AdminLTELogo" height="60" width="60">
+  </div>
 
   <!-- Navbar -->
   <?php include '../layout_admin/navbar.php' ?>
@@ -223,8 +227,7 @@ else {
                 <!-- Logo -->
                 <div class="col-md-4 p-0">
                     <div class="logo-container">
-                        <i class="fas fa-layer-group logo-icon"></i>
-                        <div class="logo-text">ALDENAIRE &<br>PARTNERS</div>
+                        <img src="../assets/logo/<?= $web['logo'] ?>" width="250px" height="150px" alt="">
                     </div>
                 </div>
             </div>
@@ -625,7 +628,7 @@ else {
                         <td><?= $no++ ?></td>
                         <td><?= $dt_trans['no_kwitansi'] ?></td>
                         <td> Rp <?= number_format($dt_trans['dibayarkan'] ?? 0, 0, ',', '.') ?></td>
-                        <td><?= $dt_trans['tanggal_pembayaran'] ?></td>
+                        <td><?= tanggal_indonesia($dt_trans['tanggal_pembayaran']) ?></td>
                         <td><?= $dt_trans['jenis_pembayaran'] ?></td>
                         <td class="text-center">
                           <a href="../assets/kwitansi/<?= $dt_trans['kwitansi'] ?>" class="btn btn-info btn-xs" target="_blank">Download Kwitansi</a>

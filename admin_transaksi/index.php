@@ -1,5 +1,6 @@
 <?php
 require_once '../database/config.php';
+require_once '../includes/tanggal.php';
 $authority = @$_SESSION['peran'];
 
 if ($authority != 'A') {
@@ -34,8 +35,12 @@ else {
 <div class="wrapper">
 
   <!-- Preloader -->
+  <?php
+  $query_web = mysqli_query($conn, "SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
+  $web = mysqli_fetch_array($query_web); 
+  ?>
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble rounded-circle" src="../assets/logo/visupro.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__wobble rounded-circle" src="../assets/logo/<?= $web['logo'] ?>" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
@@ -100,7 +105,7 @@ else {
                       ?>
                       <td><?= $rmh['kode_blok']; ?> - <?= $rmh['nama_kategori']  ?> - <?= $rmh['nama_site_plan'] ?></td>
                       <td><?= $d['nama'] ?></td>
-                      <td><?= $d['tanggal_transaksi'] ?></td>
+                      <td><?= tanggal_indonesia($d['tanggal_transaksi']) ?></td>
                       <td><?= $d['status_transaksi'] ?></td>
                       <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_transaksi']; ?>&id_rumah=<?= $d['id_rumah'] ?>" 

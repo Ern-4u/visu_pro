@@ -27,8 +27,12 @@ else {
 <div class="wrapper">
 
   <!-- Preloader -->
+  <?php
+  $query_web = mysqli_query($conn, "SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
+  $web = mysqli_fetch_array($query_web); 
+  ?>
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble rounded-circle" src="../assets/logo/visupro.png" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__wobble rounded-circle" src="../assets/logo/<?= $web['logo'] ?>" alt="AdminLTELogo" height="60" width="60">
   </div>
 
   <!-- Navbar -->

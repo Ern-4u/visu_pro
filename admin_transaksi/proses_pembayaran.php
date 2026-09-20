@@ -5,6 +5,9 @@ require_once '../includes/tanggal.php';
 // Pastikan lokasi autoload mPDF sesuai dengan instalasi composer Anda
 require_once '../vendor/autoload.php';
 
+$query_web = mysqli_query($conn, "SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
+  $web = mysqli_fetch_array($query_web); 
+
 if (@$_SESSION['peran'] != 'A') {
     echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!"); window.location.href="../logout.php" </script>';
     exit;
@@ -94,8 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </td>
                     <td style="width: 30%; vertical-align: top;">
                         <div class="logo-container">
-                            <span style="font-size: 24px;">&#9776;</span><br>
-                            ALDENAIRE &<br>PARTNERS
+                            <img src="../assets/logo/'.$web['logo'].'" width="200px" height="100px" alt="">
                         </div>
                     </td>
                 </tr>
