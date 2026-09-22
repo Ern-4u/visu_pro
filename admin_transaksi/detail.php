@@ -600,6 +600,69 @@ else {
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Buat Janji Bayar</h3>
+            </div>
+            <form action="janji_bayar.php" method="post">
+            <div class="card-body">
+              <div class="form-group">
+                <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>">
+                <label for="">Buat Tanggal</label>
+                <input type="date" class="form-control" name="tanggal_dijanjikan" placeholder="Masukan Tanggal Janji" required>
+              </div>
+              <div class="form-group">
+                <label for="">Keterangan</label>
+                <input type="text" class="form-control" name="keterangan" placeholder="Masukan Keterangan Janji" required>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" name="btn_tambah_janji" class="btn btn-primary mb-3">Simpan</button>
+            </div>
+            </form>
+          </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  History Janji Bayar
+                </h3>
+              </div>
+              <div class="card-body">
+                <table id="tbl-janji" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>Tanggal Buat</th>
+                      <th>Janji Bayar</th>
+                      <th>Status</th>
+                      <th>Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php 
+                  $query_janji_bayar = mysqli_query($conn, "SELECT * FROM janji_bayar WHERE id_transaksi = '$id_transaksi' ORDER BY id_janji_bayar DESC") or die(mysqli_error($conn));
+                  $no = 1;
+                    while ($jj = mysqli_fetch_array($query_janji_bayar)) { ?>
+                      <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= tanggal_indonesia($jj['tanggal_janji']) ?></td>
+                        <td><?= tanggal_indonesia($jj['tanggal_dijanjikan']) ?></td>
+                        <td><?= $jj['status'] ?></td>
+                        <td><?= $jj['keterangan'] ?></td>
+                      </tr>
+                   <?php }
+                  ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="card">
           <div class="card-header">
             <h1 class="card-title">Histori Pembayaran</h1>
@@ -804,7 +867,13 @@ else {
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#tbl-histori_wrapper .col-md-6:eq(0)'); 
     // ^ Tambahkan appendTo di atas agar tombol export muncul di posisi yang tepat
-
+  $("#tbl-janji").DataTable({
+      "responsive": true,
+      "pageLength": 5, 
+      "lengthChange": false, 
+      "autoWidth": false,
+      "buttons": ["copy", "excel", "pdf", "print"]
+    }).buttons().container().appendTo('#tbl-janji_wrapper .col-md-6:eq(0)');
 
   $('#modal-bukti-bayar').on('show.bs.modal', function(e) {
 

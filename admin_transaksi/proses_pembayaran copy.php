@@ -1,8 +1,7 @@
 <?php
 require_once '../database/config.php';
 require_once '../includes/tanggal.php';
-
-// Pastikan lokasi autoload mPDF sesuai dengan instalasi composer Anda
+require_once '../includes/janji_bayar.php'; 
 require_once '../vendor/autoload.php';
 
 $query_web = mysqli_query($conn, "SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
@@ -67,8 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ('$id_transaksi', '$no_kwitansi', '$jenis_pembayaran', '$dibayarakan', '$tanggal_pembayaran', '$nama_file_pdf')";
     
     if (mysqli_query($conn, $query_insert)) {
-        $query_update_janji = mysqli_query($conn , "UPDATE janji_bayar SET status_janji_bayar = 'Terpenuhi' WHERE id_transaksi = '$id_transaksi' AND status_janji_bayar = 'Aktif'")or die(mysqli_error($conn));
-        
+
+        // 5b. TANDAI JANJI BAYAR AKTIF (jika ada) UNTUK TRANSAKSI INI SEBAGAI TERPENUHI
+        tandaiJanjiTerpenuhi($conn, (int) $id_transaksi);
+
+        // 6. RANCANG DESAIN HTML UNTUK PDF (Pakai Tabel agar kompatibel di mPDF)
         $html = '
         <style>
             body { font-family: Arial, sans-serif; color: #000; }
