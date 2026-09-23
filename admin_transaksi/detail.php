@@ -52,7 +52,7 @@ else {
       font-size: 15px;
     }
     .contact-info i {
-      color: #0072c6;
+      color: #001F3F;
       margin-right: 10px;
       font-size: 1.3rem;
       width: 20px;
@@ -80,7 +80,7 @@ else {
     }
     .blue-line {
       height: 8px;
-      background-color: #0072c6;
+      background-color: #001F3F;
       width: 100%;
       margin-top: 15px;
       margin-bottom: 35px;
@@ -118,7 +118,7 @@ else {
     .input-underline:focus, .input-box:focus {
       box-shadow: none;
       outline: none;
-      border-color: #0072c6;
+      border-color: #001F3F;
     }
     .label-min-width {
       min-width: 170px;
@@ -391,7 +391,7 @@ else {
       </form>
 
         <div class="card">
-          <div class="card-header">
+          <div class="card-header" style="background-color: #001F3F; color: white;">
             <h3 class="card-title">
               SUMMARY PEMBAYARAN
             </h3>
@@ -603,8 +603,8 @@ else {
         <div class="row">
           <div class="col-lg-4">
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Buat Janji Bayar</h3>
+            <div class="card-header" style="background-color: #001F3F; color: white;">
+              <h3 class="card-title">BUAT JANJI BAYAR</h3>
             </div>
             <form action="janji_bayar.php" method="post">
             <div class="card-body">
@@ -626,9 +626,9 @@ else {
           </div>
           <div class="col-lg-8">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">
-                  History Janji Bayar
+                  HISTORY JANJI BAYAR
                 </h3>
               </div>
               <div class="card-body">
@@ -664,8 +664,8 @@ else {
         </div>
 
         <div class="card">
-          <div class="card-header">
-            <h1 class="card-title">Histori Pembayaran</h1>
+          <div class="card-header" style="background-color: #001F3F; color: white;">
+            <h1 class="card-title">HISTORY PEMBAYARAN</h1>
           </div>
           <div class="card-body">
             <table id="tbl-histori" class="table table-bordered table-striped">
@@ -734,8 +734,8 @@ else {
       <div class="modal fade" id="modal-bukti-bayar">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Upload Bukti Pembayaran</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">UPLOAD BUKTI PEMBAYARAN</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

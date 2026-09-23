@@ -62,8 +62,8 @@ else {
     <section class="content">
     <div class="container-fluid">
       <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Daftar Data Admin</h3>
+              <div class="card-header" style="background-color: #001F3F; color: white;">
+                <h3 class="card-title">DATA USERS</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -125,8 +125,8 @@ else {
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Data User</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">TAMBAH DATA USER</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -163,8 +163,8 @@ else {
       <div class="modal fade" id="modal-edit" >
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Data User</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">EDIT DATA USER</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

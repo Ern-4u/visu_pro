@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-light-teal elevation-4">
+<aside class="main-sidebar sidebar-light-navy elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="../assets/logo/<?= $web['logo'] ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -10,7 +10,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-2 pb-2 mb-2 d-flex">
         <div class="info">
-          <h5 class="d-block"><center><b>DASHBOARD</b> ADMIN</center></h5>
+          <h5 class="d-block" style="color: #001F3F; text-align: center;"><center><b>DASHBOARD</b> ADMIN</center></h5>
         </div>
       </div>
 

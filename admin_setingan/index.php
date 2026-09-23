@@ -64,8 +64,8 @@ else {
     <section class="content">
     <div class="container-fluid">
       <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Settingan Web</h3>
+              <div class="card-header" style="background-color: #001F3F; color: white;">
+                <h3 class="card-title">SETTINGAN WEB</h3>
               </div>
               <!-- /.card-header -->
                <form action="" method="post">

@@ -99,8 +99,8 @@ else {
             ?>
 
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Daftar Data Rumah Komplek <?= $nm_st_pln['nama_site_plan'] ?></h3>
+              <div class="card-header" style="background-color: #001F3F; color: white;">
+                <h3 class="card-title">DAFTAR RUMAH KOMPLEK <?= strtoupper($nm_st_pln['nama_site_plan']) ?></h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -190,7 +190,7 @@ else {
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
               <h4 class="modal-title">Tambah Data Rumah</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -251,7 +251,7 @@ else {
       <div class="modal fade" id="modal-import">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
               <h4 class="modal-title">Import Data Rumah</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -280,7 +280,7 @@ else {
       <div class="modal fade" id="modal-edit" >
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
               <h4 class="modal-title">Edit Data Rumah</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

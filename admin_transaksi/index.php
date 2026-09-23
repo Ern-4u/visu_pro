@@ -65,9 +65,9 @@ else {
     <section class="content">
     <div class="container-fluid">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #001F3F; color: white;">
           <h3 class="card-title">
-            Data Transaksi Rumah
+            DATA TRANSAKSI
           </h3>
         </div>
         <div class="card-body">
@@ -149,7 +149,7 @@ else {
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
               <h4 class="modal-title">Tambah Data Transaksi</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

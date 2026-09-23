@@ -62,8 +62,8 @@ else {
     <section class="content">
     <div class="container-fluid">
       <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Daftar Data Kategori Rumah</h3>
+              <div class="card-header" style="background-color: #001F3F; color: white;">
+                <h3 class="card-title">DATA KATEGORI RUMAH</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -130,8 +130,8 @@ else {
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Data Kategori Rumah</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">TAMBAH DATA KATEGORI RUMAH</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -179,8 +179,8 @@ else {
       <div class="modal fade" id="modal-import">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Import Data Kategori Rumah</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">IMPORT DATA KATEGORI</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -208,8 +208,8 @@ else {
       <div class="modal fade" id="modal-edit" >
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Data Kategori Rumah</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">EDIT DATA KATEGORI</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

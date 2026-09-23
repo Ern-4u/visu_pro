@@ -62,8 +62,8 @@ else {
     <section class="content">
     <div class="container-fluid">
       <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Daftar Data Kategori Rumah</h3>
+              <div class="card-header" style="background-color: #001F3F; color: white;">
+                <h3 class="card-title">DATA PEMBELI</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -93,7 +93,7 @@ else {
                       <td><?= $d['pasangan'] ?></td>
                       <td><?= $d['alamat'] ?></td>
                       <td><a href="https://wa.me/<?= $d['kontak']; ?>?text=Hello saya Dari perumahan Grand Villages" target="_blank" type="button" class="btn btn-success btn-xs">
-                           <i class="bi bi-whatsapp"></i><?= $d['kontak'];?>                           
+                           <i class="bi bi-whatsapp"></i> <?= $d['kontak'];?>                           
                       </a></td>
                       <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_pembeli']; ?>" 
@@ -129,8 +129,8 @@ else {
       <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Data Kategori Rumah</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">TAMBAH DATA PEMBELI</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -174,8 +174,8 @@ else {
       <div class="modal fade" id="modal-import">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Import Data Site Plan</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">IMPORT DATA PEMBELI</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -203,8 +203,8 @@ else {
       <div class="modal fade" id="modal-edit" >
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Data Kategori Rumah</h4>
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">EDIT DATA PEMBELI</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
