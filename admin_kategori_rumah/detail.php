@@ -43,8 +43,8 @@ else {
   <!-- Main Sidebar Container -->
   <?php
   include '../layout_admin/sidebar.php';
-
-  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah
+  $id_kategori = @$_GET['id'];
+  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah WHERE id_kategori = '$id_kategori'
             ") or die(mysqli_error($conn));
   ?>
 
@@ -68,8 +68,6 @@ else {
               <!-- /.card-header -->
               <div class="card-body">
                 <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                <button class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -138,30 +136,15 @@ else {
               </button>
             </div>
             <div class="modal-body">
-              <form action="tambah.php" method="post">
+              <form action="tambah_foto.php" method="post">
                 <div class="form-group">
-                    <label for="nama_kategori">Nama Kategori</label>
-                    <input type="text" name="nama_kategori" class="form-control" id="nama_kategori" placeholder="Masukan Nama Kategori Rumah" required>
+                  <input type="hidden" name="id_kategori" value="<?= $id_kategori ?>">
+                    <label for="keterangan_foto">Keterangan Foto</label>
+                    <input type="text" name="keterangan_foto" class="form-control" id="keterangan_foto" placeholder="Masukan Keterangan Foto" required>
                 </div>
                 <div class="form-group">
-                    <label for="luas_bangunan">Luas Bangunan</label>
-                    <input type="number" name="luas_bangunan" class="form-control" id="luas_bangunan" placeholder="Masukan Luas Bangunan" required>
-                </div>
-                <div class="form-group">
-                    <label for="luas_tanah">Luas Tanah</label>
-                    <input type="number" name="luas_tanah" class="form-control" id="luas_tanah" placeholder="Masukan Luas Bangunan" required>
-                </div>
-                <div class="form-group">
-                    <label for="jumlah_kamar">Jumlah Kamar</label>
-                    <input type="number" name="jumlah_kamar" class="form-control" id="jumlah_kamar" placeholder="Masukan Jumlah Kamar" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control" id="deskripsi" placeholder="Masukan Deskripsi" required></textarea>
+                    <label for="foto">Luas Bangunan</label>
+                    <input type="file" accept=".jpg,.jpeg,.png" name="foto" class="form-control" id="foto" placeholder="Upload Foto Rumah" required>
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -176,86 +159,6 @@ else {
       </div>
       <!-- /.modal Tambah -->
 
-      <!-- modal Import -->
-      <div class="modal fade" id="modal-import">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #001F3F; color: white;">
-              <h4 class="modal-title">IMPORT DATA KATEGORI</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="import.php" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="file_excel">Pilih File Excel (.xls, .xlsx, .csv)</label>
-                    <input type="file" name="file_excel" class="form-control" id="file_excel" required accept=".xls, .xlsx, .csv">
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_import" class="btn btn-success">Import Data</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Import -->
-
-      <!-- modal Edit -->
-      <div class="modal fade" id="modal-edit" >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #001F3F; color: white;">
-              <h4 class="modal-title">EDIT DATA KATEGORI</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-               <form action="edit.php" method="post">
-                <div class="form-group">
-                    <input type="hidden" name="id_kategori" class="form-control" id="id_kategori" required>
-                </div>
-                <div class="form-group">
-                    <label for="nama_kategori">Nama Kategori</label>
-                    <input type="text" name="nama_kategori" class="form-control" id="nama_kategori" placeholder="Masukan Nama Kategori Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="luas_bangunan">Luas Bangunan</label>
-                    <input type="number" name="luas_bangunan" class="form-control" id="luas_bangunan" placeholder="Masukan Luas Bangunan" required>
-                </div>
-                <div class="form-group">
-                    <label for="luas_tanah">Luas Tanah</label>
-                    <input type="number" name="luas_tanah" class="form-control" id="luas_tanah" placeholder="Masukan Luas Bangunan" required>
-                </div>
-                <div class="form-group">
-                    <label for="jumlah_kamar">Jumlah Kamar</label>
-                    <input type="number" name="jumlah_kamar" class="form-control" id="jumlah_kamar" placeholder="Masukan Jumlah Kamar" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Rumah" required>
-                </div>
-                <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control" id="deskripsi" placeholder="Masukan Deskripsi" required></textarea>
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_edit" class="btn btn-primary">Simpan</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Edit -->
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

@@ -108,12 +108,17 @@ else {
                       <?php }?>
                       </td>
                       <td class="text-center">
-                        <a href="https://instagram.com/<?= $d['ig'] ?>" target="_blank" style="background-color: #E1306C; color: white;" class="btn btn-xs"><img
+                        <a href="https://instagram.com/<?= $d['ig'] ?>" target="_blank" class="btn btn-xs"><img
                             src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/instagram/default.svg"
                             alt="Instagram"
-                            width="20"
-                            height="20"/></i> Instagram</a>
-                        <a href="https://www.tiktok.com/<?= $d['tiktok'] ?>" target="_blank" style="background-color: #000; color: white;" class="btn btn-xs"><i class="bi bi-tiktok"></i> Tiktok</a>
+                            width="25"
+                            height="25"/></i></a>
+                        <a href="https://www.tiktok.com/<?= $d['tiktok'] ?>" target="_blank" class="btn btn-xs"><img
+                          src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tiktok/light.svg"
+                          alt="TikTok"
+                          width="24"
+                          height="24"
+                        /></a>
                       </td>
                       <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_site_plan']; ?>" 

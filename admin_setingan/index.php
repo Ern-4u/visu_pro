@@ -68,28 +68,51 @@ else {
                 <h3 class="card-title">SETTINGAN WEB</h3>
               </div>
               <!-- /.card-header -->
-               <form action="" method="post">
+               <form action="" method="post" enctype="multipart/form-data">
               <div class="card-body"> 
-                  <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
                     <label for="">Nama Proyek</label>
                     <input type="text" value="<?= $result['nama_proyek'] ?>" name="nama_proyek" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Alamat (Sesuai Google Mpas)</label>
+                      <input type="text" name="alamat" value="<?= $result['alamat'] ?>" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Contact Person</label>
+                      <input type="text" name="cp" value="<?= $result['cp'] ?>" class="form-control">
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="">Alamat (Sesuai Google Mpas)</label>
-                    <input type="text" name="alamat" value="<?= $result['alamat'] ?>" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="">Contact Person</label>
-                    <input type="text" name="cp" value="<?= $result['cp'] ?>" class="form-control">
-                  </div>
-                  <div class="form-group">
+                  <!-- end coll -->
+                  <div class="col-lg-6">
+                    <div class="form-group">
                     <label for="">Instagram</label>
                     <input type="text" name="instagram" value="<?= $result['instagram'] ?>" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="">Tiktok</label>
+                      <input type="text" name="tiktok" value="<?= $result['tiktok'] ?>" class="form-control">
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="">Tiktok</label>
-                    <input type="text" name="tiktok" value="<?= $result['tiktok'] ?>" class="form-control">
+                  <!-- end coll -->
+                </div>
+                <!-- end row -->
+                 <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="logo">Logo Saat Ini</label><br>
+                      <img src="../assets/logo/<?= $result['logo'] ?>" alt="Logo Perusahaan" width="200px" height="200px">
+                    </div>
+                    <div class="form-group">
+                      <label for="logo">Ganti Logo</label><br>
+                      <input type="file" name="logo" accept=".jpg,.jpeg.png" class="form-control">
+                    </div>
                   </div>
+                  <!-- end col -->
+                 </div>
+                 <!-- end row -->
               </div>
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary mb-3" name="btn_edit">Simpan Data</button>
@@ -125,11 +148,34 @@ else {
   $query_edit = "UPDATE web SET  nama_proyek='$nama_proyek', alamat='$alamat', cp= '$cp', instagram='$instagram', tiktok='$tiktok' WHERE id='$id'";
   $result_edit = mysqli_query($conn, $query_edit);
 
+  
+    $file = $_FILES['logo']['name'];
+    $ekstensi = explode('.', $file);
+    $nama_file = 'logo'.round(microtime(true)).'.'.end($ekstensi);
+
+    $alamat_tujuan = '../assets/logo/'.$nama_file;
+    $file_alamat_sumber = $_FILES['logo']['tmp_name'];
+
+    move_uploaded_file($file_alamat_sumber, $alamat_tujuan);
+
+    $query_foto = mysqli_query($conn, "UPDATE web SET logo = '$nama_file' WHERE id = '$id'") or die(mysqli_error($conn));
+
   if ($result_edit) {
     echo "<script>alert('Data Web berhasil diperbarui.'); window.location.href='../admin_setingan/';</script>";
   } else {
     echo "<script>alert('Terjadi kesalahan saat memperbarui data Web.'); window.location.href='../admin_setingan/';</script>";
   }
+
+    $file = $_FILES['logo']['name'];
+    $ekstensi = explode('.', $file);
+    $nama_file = 'marketing'.round(microtime(true)).'.'.end($ekstensi);
+
+    $alamat_tujuan = '../assets/logo/'.$nama_file;
+    $file_alamat_sumber = $_FILES['logo']['tmp_name'];
+
+    move_uploaded_file($file_alamat_sumber, $alamat_tujuan);
+
+    $query_foto = mysqli_query($conn, "UPDATE web SET logo = '$nama_file' WHERE id = '$id'") or die(mysqli_error($conn));
 }
 ?>
       

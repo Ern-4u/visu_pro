@@ -332,64 +332,138 @@ else {
         </div>
         <!-- ================= AKHIR KWITANSI ================= -->
 
-        <form action="proses_pembayaran.php" method="POST" target="_blank">
-  
-        <!-- DATA HIDDEN UNTUK DIKIRIM KE BACKEND -->
-        <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>">
-        <input type="hidden" name="no_kwitansi" value="<?= $no_kwitansi_generate ?>">
-        <input type="hidden" name="tanggal_pembayaran" value="<?= $tanggal ?>">
-
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <label for="input_sebesar">Masukan Jumlah Transaksi</label>
-                  <!-- Name form ini adalah 'dibayarkan' -->
-                  <input type="text" id="input_sebesar" name="dibayarkan" class="form-control" placeholder="Hanya ketik angka (misal: 1000000)" required>
-                </div>
+        <div class="card card-navy card-outline card-tabs">
+              <div class="card-header p-0 pt-1 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Transaksi</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Data Janji Bayar</a>
+                  </li>
+                </ul>
               </div>
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <label for="input_jenis_pembayaran">Pilih Jenis Pembayaran</label>
-                  <select name="jenis_pembayaran" id="input_jenis_pembayaran" class="form-control" required>
-                    <option value="">-- Pilih Jenis Pembayaran --</option>
-                    <!-- Sesuaikan option ini dengan data pembayaran di tabel Anda -->
-                    <option value="Booking Fee">Booking Fee</option>
-                    <option value="Pembangunan Rumah">Pembangunan Rumah</option>
-                    <option value="Pajak Bangunan">Pajak Bangunan</option>
-                    <option value="Akte Jual Beli">Akte Jual Beli</option>
-                    <option value="Notaris">Notaris</option>
-                    <option value="Lahan Makam">Lahan Makam</option>
-                    <option value="Hook">Hook</option>
-                  </select>
-                </div>
+              <div class="card-body">
+                <div class="tab-content" id="custom-tabs-three-tabContent">
+                  <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                    <form action="proses_pembayaran.php" method="POST" id="form-pembayaran">
+                    <!-- DATA HIDDEN UNTUK DIKIRIM KE BACKEND -->
+                    <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>">
+                    <input type="hidden" name="no_kwitansi" value="<?= $no_kwitansi_generate ?>">
+                    <input type="hidden" name="tanggal_pembayaran" value="<?= $tanggal ?>">
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="input_sebesar">Masukan Jumlah Transaksi</label>
+                              <!-- Name form ini adalah 'dibayarkan' -->
+                              <input type="text" id="input_sebesar" name="dibayarkan" class="form-control" placeholder="Hanya ketik angka (misal: 1000000)" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="input_jenis_pembayaran">Pilih Jenis Pembayaran</label>
+                              <select name="jenis_pembayaran" id="input_jenis_pembayaran" class="form-control" required>
+                                <option value="">-- Pilih Jenis Pembayaran --</option>
+                                <!-- Sesuaikan option ini dengan data pembayaran di tabel Anda -->
+                                <option value="Booking Fee">Booking Fee</option>
+                                <option value="Pembangunan Rumah">Pembangunan Rumah</option>
+                                <option value="Pajak Bangunan">Pajak Bangunan</option>
+                                <option value="Akte Jual Beli">Akte Jual Beli</option>
+                                <option value="Notaris">Notaris</option>
+                                <option value="Lahan Makam">Lahan Makam</option>
+                                <option value="Hook">Hook</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="input_metode_pembayaran">Pilih Metode Pembayaran</label>
+                              <!-- Catatan: metode_pembayaran tidak ada di gambar struktur DB Anda, jadi kita abaikan proses insert-nya di backend -->
+                              <select name="metode_pembayaran" id="input_metode_pembayaran" class="form-control">
+                                <option value="">-- Pilih Metode Pembayaran --</option>
+                                <option value="Tunai">Tunai</option>
+                                <option value="Transfer Bank">Transfer Bank</option>
+                                <option value="E-Wallet">E-Wallet</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- TOMBOL SUBMIT -->
+                        <div class="row mt-3">
+                          <div class="col-12">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-print"></i> Submit & Cetak Nota</button>
+                          </div>
+                        </div>
+                    </form>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                     <div class="row">
+                      <div class="col-lg-4">
+                          <div class="card">
+                              <div class="card-header" style="background-color: #001F3F; color: white;">
+                              <h3 class="card-title">BUAT JANJI BAYAR</h3>
+                              </div>
+                              <form action="janji_bayar.php" method="post">
+                              <div class="card-body">
+                                  <div class="form-group">
+                                    <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>">
+                                    <label for="">Buat Tanggal</label>
+                                    <input type="date" class="form-control" name="tanggal_dijanjikan" placeholder="Masukan Tanggal Janji" required>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for="">Keterangan</label>
+                                      <input type="text" class="form-control" name="keterangan" placeholder="Masukan Keterangan Janji" required>
+                                  </div>
+                              </div>
+                              <div class="card-footer">
+                                  <button type="submit" name="btn_tambah_janji" class="btn btn-primary mb-3">Simpan</button>
+                              </div>
+                              </form>
+                          </div>
+                      </div>
+                      <div class="col-lg-8">
+                          <div class="card">
+                            <div class="card-header" style="background-color: #001F3F; color: white;">
+                              <h3 class="card-title">
+                              HISTORY JANJI BAYAR
+                              </h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="tbl-janji" class="table table-bordered table-striped">
+                                    <thead>
+                                      <tr>
+                                      <th>NO</th>
+                                      <th>Tanggal Buat</th>
+                                      <th>Janji Bayar</th>
+                                      <th>Status</th>
+                                      <th>Keterangan</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php 
+                                    $query_janji_bayar = mysqli_query($conn, "SELECT * FROM janji_bayar WHERE id_transaksi = '$id_transaksi' ORDER BY id_janji_bayar DESC") or die(mysqli_error($conn));
+                                    $no = 1;
+                                    while ($jj = mysqli_fetch_array($query_janji_bayar)) { ?>
+                                      <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= tanggal_indonesia($jj['tanggal_janji']) ?></td>
+                                        <td><?= tanggal_indonesia($jj['tanggal_dijanjikan']) ?></td>
+                                        <td><?= $jj['status'] ?></td>
+                                        <td><?= $jj['keterangan'] ?></td>
+                                      </tr>
+                                      <?php }
+                                      ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
               </div>
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <label for="input_metode_pembayaran">Pilih Metode Pembayaran</label>
-                  <!-- Catatan: metode_pembayaran tidak ada di gambar struktur DB Anda, jadi kita abaikan proses insert-nya di backend -->
-                  <select name="metode_pembayaran" id="input_metode_pembayaran" class="form-control">
-                    <option value="">-- Pilih Metode Pembayaran --</option>
-                    <option value="Tunai">Tunai</option>
-                    <option value="Transfer Bank">Transfer Bank</option>
-                    <option value="E-Wallet">E-Wallet</option>
-                  </select>
-                </div>
               </div>
-            </div>
-
-            <!-- TOMBOL SUBMIT -->
-            <div class="row mt-3">
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-print"></i> Submit & Cetak Nota</button>
-              </div>
-            </div>
-
-          </div>
         </div>
-      </form>
-
+       <!-- TRANSAKSI DAN JANJI BAYAR SELESAI -->
         <div class="card">
           <div class="card-header" style="background-color: #001F3F; color: white;">
             <h3 class="card-title">
@@ -580,6 +654,10 @@ else {
                   $grand_total_dibayarkan += $val_dibayarkan_hook;
                   $grand_total_harus_dibayar += $val_harga_hook;
                   $grand_total_sisa += $val_sisa_hook;
+
+                  if ($grand_total_sisa == 0) {
+                    $query_update_status_transaksi = mysqli_query($conn, "UPDATE transaksi SET status_transaksi = 'Selesai' WHERE id_transaksi ='$id_transaksi'")or die(mysqli_error($conn));
+                  }
                   ?>
                   <td>Hook</td>
                   <td> Rp <?= number_format($val_dibayarkan_hook, 0, ',', '.') ?></td>
@@ -600,68 +678,6 @@ else {
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-lg-4">
-          <div class="card">
-            <div class="card-header" style="background-color: #001F3F; color: white;">
-              <h3 class="card-title">BUAT JANJI BAYAR</h3>
-            </div>
-            <form action="janji_bayar.php" method="post">
-            <div class="card-body">
-              <div class="form-group">
-                <input type="hidden" name="id_transaksi" value="<?= $id_transaksi ?>">
-                <label for="">Buat Tanggal</label>
-                <input type="date" class="form-control" name="tanggal_dijanjikan" placeholder="Masukan Tanggal Janji" required>
-              </div>
-              <div class="form-group">
-                <label for="">Keterangan</label>
-                <input type="text" class="form-control" name="keterangan" placeholder="Masukan Keterangan Janji" required>
-              </div>
-            </div>
-            <div class="card-footer">
-              <button type="submit" name="btn_tambah_janji" class="btn btn-primary mb-3">Simpan</button>
-            </div>
-            </form>
-          </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="card">
-              <div class="card-header" style="background-color: #001F3F; color: white;">
-                <h3 class="card-title">
-                  HISTORY JANJI BAYAR
-                </h3>
-              </div>
-              <div class="card-body">
-                <table id="tbl-janji" class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>NO</th>
-                      <th>Tanggal Buat</th>
-                      <th>Janji Bayar</th>
-                      <th>Status</th>
-                      <th>Keterangan</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <?php 
-                  $query_janji_bayar = mysqli_query($conn, "SELECT * FROM janji_bayar WHERE id_transaksi = '$id_transaksi' ORDER BY id_janji_bayar DESC") or die(mysqli_error($conn));
-                  $no = 1;
-                    while ($jj = mysqli_fetch_array($query_janji_bayar)) { ?>
-                      <tr>
-                        <td><?= $no++ ?></td>
-                        <td><?= tanggal_indonesia($jj['tanggal_janji']) ?></td>
-                        <td><?= tanggal_indonesia($jj['tanggal_dijanjikan']) ?></td>
-                        <td><?= $jj['status'] ?></td>
-                        <td><?= $jj['keterangan'] ?></td>
-                      </tr>
-                   <?php }
-                  ?>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="card">
           <div class="card-header" style="background-color: #001F3F; color: white;">
@@ -852,6 +868,46 @@ else {
   inputMetodePembayaran.addEventListener('change', function() {
     kwitansiMetodePembayaran.value = this.value; 
   });
+
+  document.getElementById('form-pembayaran').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const form = this;
+
+    // Buka tab kosong SAAT INI JUGA (masih dalam konteks klik user)
+    // supaya tidak diblokir popup blocker browser
+    const newTab = window.open('', '_blank');
+
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Arahkan tab yang sudah dibuka tadi ke file kwitansi
+            newTab.location.href = '../assets/kwitansi/' + data.file_kwitansi;
+            // Refresh halaman detail supaya summary & history ikut update
+            window.location.reload();
+        } else {
+            newTab.close();
+            alert(data.message || 'Terjadi kesalahan saat menyimpan pembayaran.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+    })
+    .catch(err => {
+        newTab.close();
+        alert('Gagal menghubungi server: ' + err);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    });
+});
 </script>
 
 

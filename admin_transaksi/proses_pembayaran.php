@@ -20,9 +20,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $no_kwitansi        = $_POST['no_kwitansi'];
     $tanggal_pembayaran = $_POST['tanggal_pembayaran'];
     $jenis_pembayaran   = $_POST['jenis_pembayaran'];
+
+    // $ambil_max_booking = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Booking Fee' ") or die(mysqli_error($conn));
+    // $ambil_max_rumah = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Pembangunan Rumah' ") or die(mysqli_error($conn));
+    // $ambil_max_pb = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Pajak Bangunan' ") or die(mysqli_error($conn));
+    // $ambil_max_ajb = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Akte Jual Beli' ") or die(mysqli_error($conn));
+    // $ambil_max_notaris = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Notaris' ") or die(mysqli_error($conn));
+    // $ambil_max_makam = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Lahan Makam' ") or die(mysqli_error($conn));
+    // $ambil_max_hook = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Hook' ") or die(mysqli_error($conn));
     
+    
+    // $max_booking = mysqli_fetch_array($ambil_max_booking);
+    // $max_rumah = mysqli_fetch_array($ambil_max_rumah);
+    // $max_pb = mysqli_fetch_array($ambil_max_pb);
+    // $max_ajb = mysqli_fetch_array($ambil_max_ajb);
+    // $max_notaris = mysqli_fetch_array($ambil_max_notaris);
+    // $max_makam = mysqli_fetch_array($ambil_max_makam);
+    // $max_hook = mysqli_fetch_array($ambil_max_hook);
+
     // Hilangkan titik dari format rupiah JS agar bisa masuk ke kolom INT (dibayarakan)
     $dibayarakan = str_replace('.', '', $_POST['dibayarkan']); 
+
+
+    // if ($dibayarakan > $max_booking['harga'] & $jenis_pembayaran == 'Booking Fee' ) {
+    //     echo '<script> alert("Jumlah Pembayaran '.$jenis_pembayaran.' Tidak boleh Melebihi'.number_format($max_booking["dibayarkan"] ?? 0, 0, ",", ".").' "); window.location.href="detail.php?id='.$id_transaksi.'" </script>';
+    // } elseif ($dibayarakan > $max_rumah['harga'] & $jenis_pembayaran == 'Pembangunan Rumah') {
+    //     echo '<script> alert("Jumlah Pembayaran '.$jenis_pembayaran.' Tidak boleh Melebihi'.number_format($max_rumah["dibayarkan"] ?? 0, 0, ",", ".").' "); window.location.href="detail.php?id='.$id_transaksi.'" </script>';
+    // } elseif ($dibayarakan > $max_pb['harga'] & $jenis_pembayaran == 'Pajak Bangunan') {
+    //     echo '<script> alert("Jumlah Pembayaran '.$jenis_pembayaran.' Tidak boleh Melebihi'.number_format($max_rumah["dibayarkan"] ?? 0, 0, ",", ".").' "); window.location.href="detail.php?id='.$id_transaksi.'" </script>';
+    // }
+
+
     
     // 2. AMBIL DATA TRANSAKSI UNTUK DI TAMPILKAN KE PDF
     $query_data = mysqli_query($conn, "SELECT t.*, r.*, p.* 
@@ -67,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ('$id_transaksi', '$no_kwitansi', '$jenis_pembayaran', '$dibayarakan', '$tanggal_pembayaran', '$nama_file_pdf')";
     
     if (mysqli_query($conn, $query_insert)) {
-        $query_update_janji = mysqli_query($conn , "UPDATE janji_bayar SET status_janji_bayar = 'Terpenuhi' WHERE id_transaksi = '$id_transaksi' AND status_janji_bayar = 'Aktif'")or die(mysqli_error($conn));
+        $query_update_janji = mysqli_query($conn , "UPDATE janji_bayar SET status = 'Terpenuhi' WHERE id_transaksi = '$id_transaksi' AND status = 'Aktif'")or die(mysqli_error($conn));
         
         $html = '
         <style>
@@ -107,16 +135,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <table class="form-table" style="margin-bottom: 25px;">
                 <tr>
-                    <td style="width: 110px;">NO KWITANSI:</td>
-                    <td style="width: 250px;"><div class="input-box">'.$no_kwitansi.'</div></td>
-                    <td style="width: 90px; padding-left:30px;">TANGGAL:</td>
-                    <td><div class="input-box">'.tanggal_indonesia($tanggal_pembayaran).'</div></td>
+                    <td style="width: 110px;">NO KWITANSI: </td>
+                    <td style="width: 250px;"><div class="input-box"> '.$no_kwitansi.'</div></td>
+                    <td style="width: 90px; padding-left:30px;">TANGGAL: </td>
+                    <td> <div class="input-box"> '.tanggal_indonesia($tanggal_pembayaran).'</div></td>
                 </tr>
             </table>
 
             <table class="form-table">
                 <tr>
-                    <td style="width: 70px;">NAMA:</td>
+                    <td style="width: 70px;">NAMA : </td>
                     <td class="input-td" style="width: 320px;">'.$nama_pembeli.'</td>
                     <td style="width: 80px; padding-left:30px;">KONTAK:</td>
                     <td class="input-td">'.$kontak.'</td>
@@ -125,23 +153,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <table class="form-table">
                 <tr>
-                    <td class="label-td">ALAMAT :</td>
+                    <td class="label-td">ALAMAT : </td>
                     <td class="input-td">'.$alamat.'</td>
                 </tr>
                 <tr>
-                    <td class="label-td">JENIS PEMBAYARAN :</td>
+                    <td class="label-td">JENIS PEMBAYARAN : </td>
                     <td class="input-td">'.$jenis_pembayaran.'</td>
                 </tr>
                 <tr>
-                    <td class="label-td">SEBESAR :</td>
+                    <td class="label-td">SEBESAR : </td>
                     <td class="input-td" style="font-style: italic;">'.$sebesar_teks.'</td>
                 </tr>
             </table>
 
             <div class="pembuat-nota">
-                PEMBUAT NOTA : 
+                PEMBUAT NOTA :  
                 <span style="display:inline-block; width: 250px; border-bottom: 1px solid #000; text-align:left; padding-left:10px;">
-                    '.$pembuat_nota.'
+                     '.$pembuat_nota.'
                 </span>
             </div>
 
@@ -149,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>';
 
         // 7. INISIALISASI DAN CETAK DENGAN mPDF
+                // 7. INISIALISASI DAN CETAK DENGAN mPDF
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8', 
             'format' => 'A4', 
@@ -160,14 +189,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         $mpdf->WriteHTML($html);
         
-        // Simpan file ke server terlebih dahulu
+        // Simpan file ke server saja — PDF dibuka lewat tab baru oleh JS, bukan di sini
         $mpdf->Output($path_simpan, \Mpdf\Output\Destination::FILE);
 
-        // Langsung render PDF di browser (Tab Baru)
-        $mpdf->Output($nama_file_pdf, \Mpdf\Output\Destination::INLINE);
+        // Balikan response JSON ke JS
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status'        => 'success',
+            'message'       => 'Pembayaran berhasil disimpan',
+            'file_kwitansi' => $nama_file_pdf,
+            'id_transaksi'  => $id_transaksi
+        ]);
+        exit;
 
     } else {
-        echo "<script>alert('Gagal menyimpan ke database: " . mysqli_error($conn) . "'); window.close();</script>";
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status'  => 'error',
+            'message' => 'Gagal menyimpan ke database: ' . mysqli_error($conn)
+        ]);
+        exit;
     }
 } else {
     echo "Metode tidak diizinkan.";
