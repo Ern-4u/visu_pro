@@ -22,7 +22,7 @@ if (isset($_POST['btn_tambah'])) {
     $query_foto = mysqli_query($conn, "INSERT INTO foto_rumah VALUES (null,'$id_kategori','$nama_file','$keterangan_foto') ") or die(mysqli_error($conn));
     
     echo '<script> alert("Foto Rumah Berhasil Disimpan");
-    window.location.href="detail.php>id='.$id_kategori.'; </script>';
+    window.location.href="detail.php?id='.$id_kategori.'"; </script>';
     
     
 }

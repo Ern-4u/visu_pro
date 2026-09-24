@@ -80,7 +80,7 @@ else {
                         </div>
                     </div>
                     <div class="col-2.5">
-                        <button type="submit" name="btn_cari" class="btn btn-primary"><i class="fas fa-search"></i> Tampilkan Data</button>
+                        <button type="submit" name="btn_cari" class="btn" style="color: white; background-color: #001F3F;"><i class="fas fa-search"></i> Tampilkan Data</button>
                     </div>
                     
                 </div>
@@ -101,13 +101,16 @@ else {
             <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DAFTAR RUMAH KOMPLEK <?= strtoupper($nm_st_pln['nama_site_plan']) ?></h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                  <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>  
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="col-6">
-                  <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                  <a href="export.php" class="btn btn-info mb-3"><i class="fas fa-file-download"></i> Export Excel</a>  
+                  
                 </div>
                 
                     
