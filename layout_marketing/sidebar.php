@@ -39,7 +39,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="../marketing_rumah/" class="nav-link <?=  ($hal == "marketing_rumah") ? "active" : "" ?>">
+            <a href="../marketing_rumah/" class="nav-link <?=  ($hal == "rumah") ? "active" : "" ?>">
               <i class="nav-icon bi bi-house-fill"></i>
               <p>Data Rumah</p>
             </a>
