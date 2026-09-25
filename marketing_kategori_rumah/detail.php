@@ -2,7 +2,7 @@
 require_once '../database/config.php';
 $authority = @$_SESSION['peran'];
 
-if ($authority != 'A') {
+if ($authority != 'M') {
     echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!");
   window.location.href="../logout.php" </script>';
 } else {
