@@ -3,7 +3,7 @@ require_once '../database/config.php';
 require_once '../includes/tanggal.php';
 $authority = @$_SESSION['peran'];
 
-if ($authority != 'A') {
+if ($authority != 'M') {
   echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!");
   window.location.href="../logout.php" </script>';
 }
@@ -26,7 +26,7 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_admin/css.php';
+    include '../layout_marketing/css.php';
     $hal = 'transaksi';
   ?>
   
@@ -162,11 +162,11 @@ else {
   </div>
 
   <!-- Navbar -->
-  <?php include '../layout_admin/navbar.php' ?>
+  <?php include '../layout_marketing/navbar.php' ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php include '../layout_admin/sidebar.php' ?>
+  <?php include '../layout_marketing/sidebar.php' ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -218,8 +218,9 @@ else {
                     
                     <div class="row mt-4">
                         <div class="col-sm-6 contact-info">
-                            <div class="mb-2"><i class="fas fa-phone-alt"></i> +123-456-7890</div>
-                            <div><i class="fas fa-globe"></i> REALLYGREATSITE.COM</div>
+                            <div class="mb-2"><i class="fas fa-phone-alt"></i> <?= $web['cp'] ?></div>
+                            <div><i class="bi bi-instagram"></i> <?= $web['instagram'] ?></div>
+                            <div><i class="bi bi-tiktok"></i> <?= $web['tiktok'] ?></div>
                         </div>
                     </div>
                 </div>
@@ -391,7 +392,7 @@ else {
                         <!-- TOMBOL SUBMIT -->
                         <div class="row mt-3">
                           <div class="col-12">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-print"></i> Submit & Cetak Nota</button>
+                            <button type="submit" class="btn " style="background-color: #001F3F; color: white;"><i class="fas fa-print"></i> Submit & Cetak Nota</button>
                           </div>
                         </div>
                     </form>
@@ -416,7 +417,7 @@ else {
                                   </div>
                               </div>
                               <div class="card-footer">
-                                  <button type="submit" name="btn_tambah_janji" class="btn btn-primary mb-3">Simpan</button>
+                                  <button type="submit" name="btn_tambah_janji" class="btn mb-3" style="background-color: #001F3F; color: white;">Simpan</button>
                               </div>
                               </form>
                           </div>
@@ -786,12 +787,12 @@ else {
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-   <?php include '../layout_admin/footer.php' ?>
+   <?php include '../layout_marketing/footer.php' ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<?php include '../layout_admin/js.php' ?>
+<?php include '../layout_marketing/js.php' ?>
 
 <!-- ================= SCRIPT SINKRONISASI & TERBILANG ================= -->
 <script>

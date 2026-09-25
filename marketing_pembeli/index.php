@@ -2,7 +2,7 @@
 require_once '../database/config.php';
 $authority = @$_SESSION['peran'];
 
-if ($authority != 'A') {
+if ($authority != 'M') {
   echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!");
   window.location.href="../logout.php" </script>';
 }
@@ -18,7 +18,7 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_admin/css.php';
+    include '../layout_marketing/css.php';
     $hal = 'pembeli';
   ?>
   
@@ -37,13 +37,13 @@ else {
 
   <!-- Navbar -->
   <?php
-  include '../layout_admin/navbar.php'
+  include '../layout_marketing/navbar.php'
   ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <?php
-  include '../layout_admin/sidebar.php';
+  include '../layout_marketing/sidebar.php';
 
   $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli ")or die(mysqli_error($conn));
   ?>
@@ -66,7 +66,6 @@ else {
                 <h3 class="card-title">DATA PEMBELI</h3>
                 <div class="card-tools">
                   <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
                   <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>
                 </div>
               </div>
@@ -258,14 +257,14 @@ else {
 
   <!-- Main Footer -->
    <?php
-  include '../layout_admin/footer.php'
+  include '../layout_marketing/footer.php'
   ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 <?php
-include '../layout_admin/js.php'
+include '../layout_marketing/js.php'
 ?>
 <script type="text/javascript">
    $('#modal-edit').on('show.bs.modal', function(e) {

@@ -119,8 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td style="width: 70%; vertical-align: top;">
                         <h1 class="kwitansi-title">KWITANSI<br>PEMBAYARAN</h1>
                         <p style="font-size: 13px; margin-top: 15px; line-height: 1.5;">
-                            +123-456-7890<br>
-                            REALLYGREATSITE.COM
+                           '.$web['cp'].'<br>
+                            '.$web['instagram'].'
                         </p>
                     </td>
                     <td style="width: 30%; vertical-align: top;">

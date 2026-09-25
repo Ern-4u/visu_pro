@@ -3,7 +3,7 @@ require_once '../database/config.php';
 require_once '../includes/tanggal.php';
 $authority = @$_SESSION['peran'];
 
-if ($authority != 'A') {
+if ($authority != 'M') {
   echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!");
   window.location.href="../logout.php" </script>';
 }
@@ -26,7 +26,7 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_admin/css.php';
+    include '../layout_marketing/css.php';
     $hal = 'transaksi';
   ?>
   
@@ -45,13 +45,13 @@ else {
 
   <!-- Navbar -->
   <?php
-  include '../layout_admin/navbar.php'
+  include '../layout_marketing/navbar.php'
   ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <?php
-  include '../layout_admin/sidebar.php'
+  include '../layout_marketing/sidebar.php'
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -222,14 +222,14 @@ else {
 
   <!-- Main Footer -->
    <?php
-  include '../layout_admin/footer.php'
+  include '../layout_marketing/footer.php'
   ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 <?php
-include '../layout_admin/js.php'
+include '../layout_marketing/js.php'
 ?>
 </body>
 </html>

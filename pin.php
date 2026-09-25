@@ -135,21 +135,13 @@ if (isset($_POST['pin'])) {
         $_SESSION['sandi'] = $data_user['sandi'];
             header("Location: admin_home");
         exit();
-      } elseif ($peran == 'D') {
-        $_SESSION['username'] = $data_user['username'];
-        $_SESSION['pin'] = $data_user['pin'];
-        $_SESSION['peran'] = $data_user['peran'];
-        $_SESSION['nama'] = $data_user['nama'];
-        $_SESSION['sandi'] = $data_user['sandi'];
-        header("Location: home_dosen");
-        exit();
       } elseif ($peran == 'M') {
         $_SESSION['username'] = $data_user['username'];
         $_SESSION['pin'] = $data_user['pin'];
         $_SESSION['peran'] = $data_user['peran'];
         $_SESSION['nama'] = $data_user['nama'];
         $_SESSION['sandi'] = $data_user['sandi'];
-        header("Location: home_mahasiswa");
+        header("Location: marketing_home");
         exit();
       } else {
         echo "

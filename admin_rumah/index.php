@@ -159,9 +159,6 @@ else {
                         data-toggle="modal">
                         <i class="fas fa-edit"> </i>
                         </button>
-                        <a href="detail.php?id=<?= $d['id_rumah']; ?>" 
-                        class="btn btn-success btn-xs" 
-                        ><i class="fas fa-eye"></i></a>
                       </td>
                     </tr>
                      <?php } ?>
