@@ -124,12 +124,8 @@ else {
                         ><i class="fas fa-trash"></i></a>
                         <a href="detail.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-success btn-xs"><i class="bi bi-list-ul"></i></a>
-                        <button class="btn btn-warning btn-xs" type="submit" 
-                        data-target="#modal-edit" 
-                        
-                        data-toggle="modal">
-                        <i class="fas fa-edit"> </i>
-                      </button>
+                        <a href="edit_status.php?id=<?= $d['id_transaksi']; ?>&id_rumah=<?= $d['id_rumah'] ?>" 
+                        class="btn btn-success btn-xs" onclick="return confirm('Anda yakin akan Menggagalkan Transaksi ini?')"><i class="fas fa-edit"></i></a>
                       </td>
                     </tr>
                      <?php } ?>

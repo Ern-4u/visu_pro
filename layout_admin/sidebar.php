@@ -53,6 +53,12 @@
           </li>
           <li class="nav-header"><b>TOOLS</b></li>
           <li class="nav-item">
+            <a href="../admin_berita_acara/" class="nav-link <?=  ($hal == "berita_acara") ? "active" : "" ?>">
+              <i class="nav-icon bi bi-envelope-paper-fill"></i>
+              <p>Berita Acara</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="../admin_users/" class="nav-link <?=  ($hal == "users") ? "active" : "" ?>">
               <i class="nav-icon fas fa-users"></i>
               <p>Users</p>

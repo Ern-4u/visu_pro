@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 24, 2026 at 08:56 AM
+-- Generation Time: Sep 28, 2026 at 07:22 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -20,6 +20,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `real_estate`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `berita_acara`
+--
+
+CREATE TABLE `berita_acara` (
+  `id_berita_acara` int NOT NULL,
+  `no_berita_acara` varchar(255) NOT NULL,
+  `id_transaksi` int NOT NULL,
+  `tanggal_serah_terima` date NOT NULL,
+  `jumlah_kunci` int NOT NULL,
+  `id_user` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -57,7 +72,8 @@ INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `no_kwita
 (20, 11, '26-09-24-0002', 'Pajak Bangunan', 2000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0002.pdf'),
 (21, 11, '26-09-24-0003', 'Akte Jual Beli', 3000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0003.pdf'),
 (22, 11, '26-09-24-0004', 'Lahan Makam', 3000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0004.pdf'),
-(23, 11, '26-09-24-0005', 'Lahan Makam', 1000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0005.pdf');
+(23, 11, '26-09-24-0005', 'Lahan Makam', 1000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0005.pdf'),
+(24, 12, '26-09-28-0001', 'Pembangunan Rumah', 2000000, NULL, '2026-09-28', 'Kwitansi_26_09_28_0001.pdf');
 
 -- --------------------------------------------------------
 
@@ -71,6 +87,13 @@ CREATE TABLE `foto_rumah` (
   `foto` text NOT NULL,
   `keterangan_foto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `foto_rumah`
+--
+
+INSERT INTO `foto_rumah` (`id_foto_rumah`, `id_kategori`, `foto`, `keterangan_foto`) VALUES
+(2, 2, 'fto_rumah1790267457.png', 'Foto Depan');
 
 -- --------------------------------------------------------
 
@@ -93,7 +116,9 @@ CREATE TABLE `janji_bayar` (
 
 INSERT INTO `janji_bayar` (`id_janji_bayar`, `id_transaksi`, `tanggal_janji`, `tanggal_dijanjikan`, `status`, `keterangan`) VALUES
 (1, 11, '2026-09-22', '2026-09-22', 'Gagal', 'bayar AJB'),
-(2, 11, '2026-09-22', '2026-09-30', 'Terpenuhi', 'ga ada');
+(2, 11, '2026-09-22', '2026-09-30', 'Terpenuhi', 'ga ada'),
+(3, 12, '2026-09-28', '2026-09-30', 'Terpenuhi', 'bayar rumah'),
+(4, 12, '2026-09-28', '2026-10-02', 'Aktif', 'bayar AJB');
 
 -- --------------------------------------------------------
 
@@ -449,6 +474,12 @@ INSERT INTO `web` (`id`, `nama_proyek`, `alamat`, `cp`, `instagram`, `tiktok`, `
 --
 
 --
+-- Indexes for table `berita_acara`
+--
+ALTER TABLE `berita_acara`
+  ADD PRIMARY KEY (`id_berita_acara`);
+
+--
 -- Indexes for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
@@ -531,22 +562,28 @@ ALTER TABLE `web`
 --
 
 --
+-- AUTO_INCREMENT for table `berita_acara`
+--
+ALTER TABLE `berita_acara`
+  MODIFY `id_berita_acara` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_detail_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `foto_rumah`
 --
 ALTER TABLE `foto_rumah`
-  MODIFY `id_foto_rumah` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_foto_rumah` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `janji_bayar`
 --
 ALTER TABLE `janji_bayar`
-  MODIFY `id_janji_bayar` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_janji_bayar` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `jenis_pembayaran`
