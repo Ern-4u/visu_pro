@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 28, 2026 at 07:22 AM
+-- Generation Time: Sep 28, 2026 at 05:02 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -52,28 +52,6 @@ CREATE TABLE `detail_transaksi` (
   `tanggal_pembayaran` date NOT NULL,
   `kwitansi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `detail_transaksi`
---
-
-INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `no_kwitansi`, `jenis_pembayaran`, `dibayarkan`, `bukti_pembayaran`, `tanggal_pembayaran`, `kwitansi`) VALUES
-(9, 11, '26-09-21-0001', 'Booking Fee', 5000000, NULL, '2026-09-21', 'Kwitansi_26_09_21_0001.pdf'),
-(10, 11, '26-09-21-0002', 'Booking Fee', 5000000, NULL, '2026-09-21', 'Kwitansi_26_09_21_0002.pdf'),
-(11, 12, '26-09-23-0001', 'Booking Fee', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0001.pdf'),
-(12, 11, '26-09-23-0002', 'Booking Fee', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0002.pdf'),
-(13, 12, '26-09-23-0003', 'Pembangunan Rumah', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0003.pdf'),
-(14, 12, '26-09-23-0004', 'Pembangunan Rumah', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0004.pdf'),
-(15, 12, '26-09-23-0005', 'Pembangunan Rumah', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0005.pdf'),
-(16, 12, '26-09-23-0006', 'Booking Fee', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0006.pdf'),
-(17, 12, '26-09-23-0006', 'Pembangunan Rumah', 100000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0006.pdf'),
-(18, 11, '26-09-23-0007', 'Notaris', 5000000, NULL, '2026-09-23', 'Kwitansi_26_09_23_0007.pdf'),
-(19, 11, '26-09-24-0001', 'Pembangunan Rumah', 850000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0001.pdf'),
-(20, 11, '26-09-24-0002', 'Pajak Bangunan', 2000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0002.pdf'),
-(21, 11, '26-09-24-0003', 'Akte Jual Beli', 3000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0003.pdf'),
-(22, 11, '26-09-24-0004', 'Lahan Makam', 3000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0004.pdf'),
-(23, 11, '26-09-24-0005', 'Lahan Makam', 1000000, NULL, '2026-09-24', 'Kwitansi_26_09_24_0005.pdf'),
-(24, 12, '26-09-28-0001', 'Pembangunan Rumah', 2000000, NULL, '2026-09-28', 'Kwitansi_26_09_28_0001.pdf');
 
 -- --------------------------------------------------------
 
@@ -128,7 +106,7 @@ INSERT INTO `janji_bayar` (`id_janji_bayar`, `id_transaksi`, `tanggal_janji`, `t
 
 CREATE TABLE `jenis_pembayaran` (
   `id_jenis_pembayaran` int NOT NULL,
-  `id_transaksi` int NOT NULL,
+  `id_kategori` int NOT NULL,
   `jenis_pembayaran` varchar(255) NOT NULL,
   `harga` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -137,21 +115,9 @@ CREATE TABLE `jenis_pembayaran` (
 -- Dumping data for table `jenis_pembayaran`
 --
 
-INSERT INTO `jenis_pembayaran` (`id_jenis_pembayaran`, `id_transaksi`, `jenis_pembayaran`, `harga`) VALUES
-(29, 11, 'Booking Fee', 15000000),
-(30, 11, 'Pembangunan Rumah', 850000000),
-(31, 11, 'Pajak Bangunan', 2000000),
-(32, 11, 'Akte Jual Beli', 3000000),
-(33, 11, 'Notaris', 5000000),
-(34, 11, 'Lahan Makam', 4000000),
-(35, 11, 'Hook', 0),
-(36, 12, 'Booking Fee', 5000000),
-(37, 12, 'Pembangunan Rumah', 1000000000),
-(38, 12, 'Pajak Bangunan', 10000000),
-(39, 12, 'Akte Jual Beli', 2000000),
-(40, 12, 'Notaris', 500000),
-(41, 12, 'Lahan Makam', 3000000),
-(42, 12, 'Hook', 0);
+INSERT INTO `jenis_pembayaran` (`id_jenis_pembayaran`, `id_kategori`, `jenis_pembayaran`, `harga`) VALUES
+(50, 2, 'Booking Fee', 9000000),
+(51, 2, 'Pembangunan Rumah', 300000000);
 
 -- --------------------------------------------------------
 
@@ -165,7 +131,6 @@ CREATE TABLE `kategori_rumah` (
   `luas_bangunan` varchar(30) NOT NULL,
   `luas_tanah` varchar(30) NOT NULL,
   `jumlah_kamar` varchar(30) NOT NULL,
-  `harga` int NOT NULL,
   `deskripsi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -173,17 +138,17 @@ CREATE TABLE `kategori_rumah` (
 -- Dumping data for table `kategori_rumah`
 --
 
-INSERT INTO `kategori_rumah` (`id_kategori`, `nama_kategori`, `luas_bangunan`, `luas_tanah`, `jumlah_kamar`, `harga`, `deskripsi`) VALUES
-(2, 'Cluster A Hook', '100', '120', '3', 100000000, 'gada\r\n'),
-(14, 'Cluster Z', '80', '100', '3', 1000000000, 'kosong'),
-(15, 'Cluster A Standar', '85', '105', '2', 850000000, 'Desain minimalis modern'),
-(16, 'Cluster B Premium', '120', '150', '4', 1450000000, 'Fasilitas smart home terintegrasi'),
-(17, 'Cluster B Standar', '90', '110', '3', 950000000, 'Cocok untuk keluarga kecil'),
-(18, 'Cluster C Hook', '115', '140', '3', 1250000000, 'Sirkulasi udara sangat baik, dekat taman'),
-(19, 'Cluster C Standar', '80', '100', '2', 800000000, 'Dekat dengan fasilitas clubhouse'),
-(20, 'Cluster D Exclusive', '150', '200', '4', 1900000000, 'Posisi depan menghadap gerbang utama'),
-(21, 'Cluster D Standar', '100', '120', '3', 1100000000, 'Carport luas muat 2 mobil'),
-(22, 'Cluster Z Hook', '95', '130', '3', 1150000000, 'Sisa lahan belakang masih luas untuk dibangun');
+INSERT INTO `kategori_rumah` (`id_kategori`, `nama_kategori`, `luas_bangunan`, `luas_tanah`, `jumlah_kamar`, `deskripsi`) VALUES
+(2, 'Cluster A Hook', '100', '120', '3', 'gada\r\n'),
+(14, 'Cluster Z', '80', '100', '3', 'kosong'),
+(15, 'Cluster A Standar', '85', '105', '2', 'Desain minimalis modern'),
+(16, 'Cluster B Premium', '120', '150', '4', 'Fasilitas smart home terintegrasi'),
+(17, 'Cluster B Standar', '90', '110', '3', 'Cocok untuk keluarga kecil'),
+(18, 'Cluster C Hook', '115', '140', '3', 'Sirkulasi udara sangat baik, dekat taman'),
+(19, 'Cluster C Standar', '80', '100', '2', 'Dekat dengan fasilitas clubhouse'),
+(20, 'Cluster D Exclusive', '150', '200', '4', 'Posisi depan menghadap gerbang utama'),
+(21, 'Cluster D Standar', '100', '120', '3', 'Carport luas muat 2 mobil'),
+(22, 'Cluster Z Hook', '95', '130', '3', 'Sisa lahan belakang masih luas untuk dibangun');
 
 -- --------------------------------------------------------
 
@@ -207,7 +172,8 @@ CREATE TABLE `marketing` (
 INSERT INTO `marketing` (`id_karyawan`, `nama`, `kontak`, `email`, `kelamin`, `foto`) VALUES
 ('KMAR0001', 'Muhammad Isa Irawanto', '082329221051', 'sabig1984@gmail.com', 'L', 'marketing1788194123.jpeg'),
 ('KMAR0002', 'Najwa Shabira', '082329221051', 'najwa@gmail.com', 'P', 'marketing1788403542.jpeg'),
-('KMAR0003', 'zelia', '082348348394', 'sabig1984@gmail.com', 'P', NULL);
+('KMAR0003', 'zelia', '082348348394', 'sabig1984@gmail.com', 'P', NULL),
+('KMAR0004', 'Pak Lukman', '082329221051', 'sabig1984@gmail.com', 'L', NULL);
 
 -- --------------------------------------------------------
 
@@ -270,8 +236,8 @@ CREATE TABLE `rumah` (
 
 INSERT INTO `rumah` (`id_rumah`, `kode_blok`, `id_kategori`, `status`, `id_site_plan`) VALUES
 (1, 'A1', 2, '0', 4),
-(2, 'A2', 14, '1', 4),
-(3, 'A3', 15, '1', 4),
+(2, 'A2', 14, '0', 4),
+(3, 'A3', 15, '0', 4),
 (4, 'A4', 16, '0', 4),
 (5, 'A5', 17, '0', 4),
 (6, 'A6', 18, '0', 4),
@@ -414,14 +380,6 @@ CREATE TABLE `transaksi` (
   `tanggal_transaksi` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `transaksi`
---
-
-INSERT INTO `transaksi` (`id_transaksi`, `no_transaksi`, `id_pembeli`, `id_karyawan`, `id_rumah`, `status_transaksi`, `total`, `tanggal_transaksi`) VALUES
-(11, '26-09-21-0001', 4, 'KMAR0002', 3, 'Selesai', 0, '2026-09-21'),
-(12, '26-09-23-0001', 2, 'KMAR0002', 2, 'Berlangsung', 0, '2026-09-23');
-
 -- --------------------------------------------------------
 
 --
@@ -444,7 +402,8 @@ INSERT INTO `users` (`username`, `sandi`, `pin`, `peran`, `nama`) VALUES
 ('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', '123456', 'A', 'Admin'),
 ('KMAR0001', '1f72e09d0784331913df6ab1eca877e03ae1f2cc', '123456', 'M', 'Muhammad Isa Irawanto'),
 ('KMAR0002', 'a5f798b8a46059b10dd74c287cf990c9bb58cde6', '123456', 'M', 'Najwa Shabira'),
-('KMAR0003', 'b665da672af9b6bf7581c4d7f2d58e6d223029ee', '123456', 'M', 'zelia');
+('KMAR0003', 'b665da672af9b6bf7581c4d7f2d58e6d223029ee', '123456', 'M', 'zelia'),
+('KMAR0004', 'f23100b9f9a9062b6928ced483b266ee4db11f49', '123456', 'M', 'Pak Lukman');
 
 -- --------------------------------------------------------
 
@@ -571,7 +530,7 @@ ALTER TABLE `berita_acara`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_detail_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `foto_rumah`
@@ -589,7 +548,7 @@ ALTER TABLE `janji_bayar`
 -- AUTO_INCREMENT for table `jenis_pembayaran`
 --
 ALTER TABLE `jenis_pembayaran`
-  MODIFY `id_jenis_pembayaran` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_jenis_pembayaran` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `kategori_rumah`
@@ -625,7 +584,7 @@ ALTER TABLE `site_plan`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
