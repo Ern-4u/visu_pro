@@ -657,7 +657,7 @@ else {
                   $grand_total_sisa += $val_sisa_hook;
 
                   if ($grand_total_sisa == 0) {
-                    $query_update_status_transaksi = mysqli_query($conn, "UPDATE transaksi SET status_transaksi = 'Selesai' WHERE id_transaksi ='$id_transaksi'")or die(mysqli_error($conn));
+                    $query_update_status_transaksi = mysqli_query($conn, "UPDATE transaksi SET status_transaksi = 'Selesai' WHERE id_transaksi ='$id_transaksi' ")or die(mysqli_error($conn));
                   }
                   ?>
                   <td>Hook</td>

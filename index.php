@@ -1048,7 +1048,7 @@ function formatPriceLabel($harga) {
                         <?php if (!empty($tt_proyek)) : ?>
                             <a href="https://tiktok.com/<?= htmlspecialchars($tt_proyek) ?>" target="_blank" class="text-light fs-4"><i class="bi bi-tiktok"></i></a>
                         <?php endif; ?>
-                        <a href="https://wa.me/<?= $wa_number ?>" target="_blank" class="text-light fs-4"><i class="bi bi-whatsapp"></i></a>
+                        <a href="https://wa.me/<?= $cp_proyek ?>" target="_blank" class="text-light fs-4"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>

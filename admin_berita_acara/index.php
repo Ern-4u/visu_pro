@@ -19,7 +19,7 @@ else {
   <title>VISU Pro | Dashboard admin</title>
   <?php
     include '../layout_admin/css.php';
-    $hal = 'pembeli';
+    $hal = 'berita_acara';
   ?>
   
 </head>
@@ -45,7 +45,13 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli ")or die(mysqli_error($conn));
+  $data_berita_acara = mysqli_query($conn, "SELECT ba.*, t.*,p.*,k.nama_kategori,s.nama_site_plan
+                                      FROM berita_acara ba 
+                                      LEFT JOIN transaksi t ON ba.id_transaksi = t.id_transaksi
+                                      LEFT JOIN pembeli p ON t.id_pembeli = p.id_pembeli
+                                      LEFT JOIN rumah r ON t.id_rumah = r.id_rumah
+                                      LEFT JOIN kategori_rumah k ON r.id_kategori = k.id_kategori
+                                      LEFT JOIN site_plan s ON r.id_site_plan = s.id_site_plan ")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -66,7 +72,6 @@ else {
                 <h3 class="card-title">DATA PEMBELI</h3>
                 <div class="card-tools">
                   <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
                   <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>
                 </div>
               </div>
@@ -77,27 +82,22 @@ else {
                   <thead>
                   <tr class="text-center">
                     <th width="5%">No</th>
-                    <th>NIK</th>
-                    <th>Nama Pembeli</th>
-                    <th>Pasangan</th>
-                    <th>Alamat</th>
-                    <th>Kontak</th>
+                    <th>Nomor Surat</th>
+                    <th>Tanggal Surat</th>
+                    <th>Nama Penerima</th>
+                    
                     <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
                   $no = 1; 
-                  while ($d = mysqli_fetch_array($data_pembeli)) { ?>
+                  while ($d = mysqli_fetch_array($data_berita_acara)) { ?>
                     <tr>
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
-                      <td><?= $d['nik']; ?></td>
-                      <td><?= $d['nama_pembeli']; ?></td>
-                      <td><?= $d['pasangan'] ?></td>
-                      <td><?= $d['alamat'] ?></td>
-                      <td><a href="https://wa.me/<?= $d['kontak']; ?>?text=Hello saya Dari perumahan Grand Villages" target="_blank" type="button" class="btn btn-success btn-xs">
-                           <i class="bi bi-whatsapp"></i> <?= $d['kontak'];?>                           
-                      </a></td>
+                      <td><?= $d['no_berita_acara']; ?></td>
+                      <td><?= $d['tanggal_serah_terima']; ?></td>
+                      <td><?= $d['nama_pembeli'] ?></td>
                       <td class="text-center">
                         <a href="hapus.php?id=<?= $d['id_pembeli']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
@@ -138,21 +138,10 @@ else {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <?php 
-            $query_transaksi_tersedia = mysqli_query($conn, "SELECT * FROM transaksi WHERE status_transaksi != 'Gagal Bayar'")or die(mysqli_query($conn));
-            ?>
             <div class="modal-body">
               <form action="tambah.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="no_transaksi">Nomor Transaksi</label>
-                    <select name="no_transaksi" id="">
-                      <option value="">-- Pilih No Transaksi</option>
-                      <?php 
-                      while ($qt = mysqli_fetch_array($query_transaksi_tersedia)) { ?>
-                        <option value="<?= $qt['id_transaksi'] ?>"> <?= $qt[''] ?> </option>
-                      <?php }
-                      ?>
-                    </select>
+                    <label for="nik">NIK</label>
                     <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
                 </div>
                 <div class="form-group">
