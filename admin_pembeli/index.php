@@ -105,6 +105,7 @@ else {
                         <button class="btn btn-warning btn-xs" type="submit" 
                         data-target="#modal-edit" 
                         data-id_pembeli="<?= $d['id_pembeli'] ?>" 
+                        data-id_karyawan="<?= $d['id_karyawan'] ?>" 
                         data-nik="<?= $d['nik'] ?>" 
                         data-nama_pembeli="<?= $d['nama_pembeli']?>" 
                         data-pasangan="<?= $d['pasangan']?>"
@@ -138,21 +139,12 @@ else {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <?php 
-            $query_transaksi_tersedia = mysqli_query($conn, "SELECT * FROM transaksi WHERE status_transaksi != 'Gagal Bayar'")or die(mysqli_query($conn));
-            ?>
+            
             <div class="modal-body">
               <form action="tambah.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="no_transaksi">Nomor Transaksi</label>
-                    <select name="no_transaksi" id="">
-                      <option value="">-- Pilih No Transaksi</option>
-                      <?php 
-                      while ($qt = mysqli_fetch_array($query_transaksi_tersedia)) { ?>
-                        <option value="<?= $qt['id_transaksi'] ?>"> <?= $qt[''] ?> </option>
-                      <?php }
-                      ?>
-                    </select>
+                    <input type="hidden" name="id_karyawan" value="<?= $_SESSION['username'] ?>">
+                    <label for="no_transaksi">NIK</label>
                     <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
                 </div>
                 <div class="form-group">
@@ -225,6 +217,7 @@ else {
             </div>
             <div class="modal-body">
                <form action="edit.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id_karyawan">
                 <input type="hidden" name="id_pembeli">
                <div class="form-group">
                     <label for="nik">NIK</label>
@@ -282,6 +275,7 @@ include '../layout_admin/js.php'
    $('#modal-edit').on('show.bs.modal', function(e) {
 
    var id_pembeli = $(e.relatedTarget).data('id_pembeli');
+   var id_karyawan = $(e.relatedTarget).data('id_karyawan');
    var nik = $(e.relatedTarget).data('nik');
    var nama_pembeli = $(e.relatedTarget).data('nama_pembeli');
    var pasangan = $(e.relatedTarget).data('pasangan');
@@ -291,6 +285,7 @@ include '../layout_admin/js.php'
 
   
     $(e.currentTarget).find('input[name="id_pembeli"]').val(id_pembeli);
+    $(e.currentTarget).find('input[name="id_karyawan"]').val(id_karyawan);
     $(e.currentTarget).find('input[name="nama_pembeli"]').val(nama_pembeli);
     $(e.currentTarget).find('input[name="pasangan"]').val(pasangan);
     $(e.currentTarget).find('input[name="alamat"]').val(alamat);

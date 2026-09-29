@@ -142,10 +142,13 @@ else {
                         echo 'Terjual Cash Tempo';
                       } elseif ($d['status'] == 3) {
                         echo 'Terjual Kredit';
+                      } elseif ($d['status'] == 4) {
+                        echo 'Terbooking';
                       }
                       ?>
                       </td>
                       <td class="text-center">
+                        <a href="halaman_beli_rumah.php?id=<?= $d['id_rumah'] ?>" class="btn btn-xs btn-success"><i class="bi bi-cart-check-fill"></i> Beli Rumah</a>
                         <a href="hapus.php?id=<?= $d['id_rumah']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>

@@ -188,10 +188,8 @@ if ($authority != 'A') {
                               <div class="col-lg-12">
                                 <div class="card">
                                 <div class="card-header">
-                                        <button class="btn  btn-sm " style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
-                                        <button class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                                        <a href="export.php" class="btn btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>
-                                </div>
+                                    <button class="btn  btn-sm " style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
+                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     
