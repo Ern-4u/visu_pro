@@ -28,7 +28,7 @@ $id_karyawan = $_SESSION['username'];
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_admin/css.php';
+    include '../layout_marketing/css.php';
     $hal = 'transaksi';
   ?>
   
@@ -47,13 +47,13 @@ $id_karyawan = $_SESSION['username'];
 
   <!-- Navbar -->
   <?php
-  include '../layout_admin/navbar.php'
+  include '../layout_marketing/navbar.php'
   ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <?php
-  include '../layout_admin/sidebar.php'
+  include '../layout_marketing/sidebar.php'
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -159,14 +159,14 @@ $id_karyawan = $_SESSION['username'];
 
   <!-- Main Footer -->
    <?php
-  include '../layout_admin/footer.php'
+  include '../layout_marketing/footer.php'
   ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 <?php
-include '../layout_admin/js.php'
+include '../layout_marketing/js.php'
 ?>
 </body>
 <script>

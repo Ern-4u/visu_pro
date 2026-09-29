@@ -14,7 +14,7 @@ if ($authority != 'M') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VISU Pro | Dashboard admin</title>
     <?php
-    include '../layout_admin/css.php';
+    include '../layout_marketing/css.php';
     $hal = 'kategori_rumah';
     ?>
     <style>
@@ -70,12 +70,12 @@ if ($authority != 'M') {
     </div>
 
     <!-- Navbar -->
-    <?php include '../layout_admin/navbar.php'; ?>
+    <?php include '../layout_marketing/navbar.php'; ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     <?php
-    include '../layout_admin/sidebar.php';
+    include '../layout_marketing/sidebar.php';
     $id_kategori = @$_GET['id'];
     $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah WHERE id_kategori = '$id_kategori'") or die(mysqli_error($conn));
     $dt_k = mysqli_fetch_array($data_kategori_rumah);
@@ -347,12 +347,12 @@ if ($authority != 'M') {
 
 
     <!-- Main Footer -->
-    <?php include '../layout_admin/footer.php'; ?>
+    <?php include '../layout_marketing/footer.php'; ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<?php include '../layout_admin/js.php'; ?>
+<?php include '../layout_marketing/js.php'; ?>
 <script type="text/javascript">
     // 1. Mengisi data saat Modal Edit dibuka
     $('#modal-edit').on('show.bs.modal', function (e) {
