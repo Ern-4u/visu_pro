@@ -64,16 +64,16 @@ else {
       <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DATA KATEGORI RUMAH</h3>
-                <div class="card-tools">
-                    <button class="btn btn-light btn-sm " data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
-                    <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                    <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>
-                 </div>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 
-                
+                <div class="card-tools">
+                    <button class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i> Tambah Data</button>
+                    <button class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                    <a href="export.php" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>
+                 </div>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -82,6 +82,7 @@ else {
                     <th>Luas Bangunan</th>
                     <th>Luas Tanah</th>
                     <th>Deskripsi</th>
+                    <th>Total Harga</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -95,6 +96,14 @@ else {
                       <td><?= $d['luas_bangunan']; ?></td>
                       <td><?= $d['luas_tanah']; ?></td>
                       <td><?= $d['deskripsi']; ?></td>
+                      <?php 
+                      $id_kategori = $d['id_kategori'];
+                      $query_total_harga_rumah = mysqli_query($conn, "SELECT SUM(harga) AS total_harga_rumah FROM jenis_pembayaran WHERE id_kategori = '$id_kategori'")or die(mysqli_query($conn));
+                      $tl_harga = mysqli_fetch_array($query_total_harga_rumah);
+                      $total_harga_rumah = $tl_harga['total_harga_rumah'] ? $tl_harga['total_harga_rumah'] : 0;
+
+                       ?>
+                      <td>Rp <?= number_format($total_harga_rumah, 0, ',', '.') ?></td>
                       <td class="text-center">
                         <a href="detail.php?id=<?= $d['id_kategori'] ?>" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>
                         <a href="hapus.php?id=<?= $d['id_kategori']; ?>" 
@@ -155,10 +164,6 @@ else {
                 <div class="form-group">
                     <label for="jumlah_kamar">Jumlah Kamar</label>
                     <input type="number" name="jumlah_kamar" class="form-control" id="jumlah_kamar" placeholder="Masukan Jumlah Kamar" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Rumah" required>
                 </div>
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>
@@ -236,10 +241,6 @@ else {
                 <div class="form-group">
                     <label for="jumlah_kamar">Jumlah Kamar</label>
                     <input type="number" name="jumlah_kamar" class="form-control" id="jumlah_kamar" placeholder="Masukan Jumlah Kamar" required>
-                </div>
-                <div class="form-group">
-                    <label for="harga">Harga</label>
-                    <input type="number" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Rumah" required>
                 </div>
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>

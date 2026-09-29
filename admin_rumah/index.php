@@ -101,19 +101,16 @@ else {
             <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DAFTAR RUMAH KOMPLEK <?= strtoupper($nm_st_pln['nama_site_plan']) ?></h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                  <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>  
-                </div>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div class="col-6">
-                  
-                </div>
                 
-                    
+                <div class="card-tools">
+                  <button type="button" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                  <button type="button" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
+                  <a href="export.php" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>  
+                </div>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -137,15 +134,8 @@ else {
                       if ($d['status'] == 0) {
                         echo 'Tersedia';
                       } elseif ($d['status'] == 1) {
-                        echo 'Terjual Cash';
-                      } elseif ($d['status'] == 2) {
-                        echo 'Terjual Cash Tempo';
-                      } elseif ($d['status'] == 3) {
-                        echo 'Terjual Kredit';
-                      } elseif ($d['status'] == 4) {
-                        echo 'Terbooking';
-                      }
-                      ?>
+                        echo 'Tidak Tersedia';
+                      }?>
                       </td>
                       <td class="text-center">
                         <a href="halaman_beli_rumah.php?id=<?= $d['id_rumah'] ?>" class="btn btn-xs btn-success"><i class="bi bi-cart-check-fill"></i> Beli Rumah</a>

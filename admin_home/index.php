@@ -126,10 +126,11 @@ else {
                 <?php 
                 $query_jumlah_pend = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_pendapatan FROM detail_transaksi WHERE detail_transaksi.tanggal_pembayaran >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)")or die(mysqli_error($conn));
                 $jml_pend = mysqli_fetch_array($query_jumlah_pend);
+                $total_pendapatan = $jml_pend['total_pendapatan'] ? $jml_pend['total_pendapatan'] : 0;
                 ?>
               <div class="info-box-content">
                 <span class="info-box-text">Uang Masuk 1 Bulan Terakhir</span>
-                <span class="info-box-number">Rp <?= number_format($jml_pend['total_pendapatan'], 0, ',', '.'); ?></span>
+                <span class="info-box-number">Rp <?= number_format($total_pendapatan, 0, ',', '.'); ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>

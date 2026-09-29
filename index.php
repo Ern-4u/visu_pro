@@ -729,12 +729,16 @@ function formatPriceLabel($harga) {
                         $prop_location = !empty($prop['lokasi']) ? $prop['lokasi'] : $alamat_proyek;
                         $display_title = !empty($prop['nama_site_plan']) ? $prop['nama_site_plan'] . ' (' . $prop['nama_kategori'] . ')' : $prop['nama_kategori'];
                         $idx++;
+                        $id_kategori = $prop['id_kategori'];
+                        $query_total_harga_rumah = mysqli_query($conn, "SELECT SUM(harga) AS total_harga_rumah FROM jenis_pembayaran WHERE id_kategori = '$id_kategori'")or die(mysqli_query($conn));
+                        $tl_harga = mysqli_fetch_array($query_total_harga_rumah);
+                        $total_harga_rumah = $tl_harga['total_harga_rumah'] ? $tl_harga['total_harga_rumah'] : 0;
                 ?>
                         <div class="col-lg-4 col-md-6">
                             <div class="property-card">
                                 <div class="property-img">
                                     <img src="<?= htmlspecialchars($foto_url) ?>" alt="<?= htmlspecialchars($prop['nama_kategori']) ?>">
-                                    <div class="property-price"><?= formatPriceLabel($prop['harga']) ?></div>
+                                    <div class="property-price"><?= formatPriceLabel($total_harga_rumah) ?></div>
                                 </div>
                                 <div class="property-content">
                                     <span class="property-title"><?= htmlspecialchars($display_title) ?></span>

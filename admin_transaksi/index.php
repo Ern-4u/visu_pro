@@ -69,9 +69,6 @@ else {
           <h3 class="card-title">
             DATA TRANSAKSI
           </h3>
-          <div class="card-tools">
-            <a href="halaman_tambah.php" class="btn btn-light btn-sm"><i class="fas fa-plus"></i> Tambah Data</a>
-          </div>
         </div>
         <div class="card-body">
           
@@ -83,6 +80,7 @@ else {
                     <th>Pembeli</th>
                     <th>Rumah</th>
                     <th>Marketing</th>
+                    <th>Rencana Pembelian</th>
                     <th>Tanggal</th>
                     <th>Status</th>
                     <th>Aksi</th>
@@ -108,6 +106,7 @@ else {
                       ?>
                       <td><?= $rmh['kode_blok']; ?> - <?= $rmh['nama_kategori']  ?> - <?= $rmh['nama_site_plan'] ?></td>
                       <td><?= $d['nama'] ?></td>
+                      <td><?= $d['rencana_pembelian'] ?></td>
                       <td><?= tanggal_indonesia($d['tanggal_transaksi']) ?></td>
                       <td><?php
                       if ($d['status_transaksi'] == 'Berlangsung') {

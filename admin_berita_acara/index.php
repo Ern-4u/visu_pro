@@ -70,14 +70,13 @@ else {
       <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DATA PEMBELI</h3>
-                <div class="card-tools">
-                  <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>
-                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                
+                <div class="card-tools">
+                  <button class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                  <a href="export.php" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>
+                </div>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr class="text-center">

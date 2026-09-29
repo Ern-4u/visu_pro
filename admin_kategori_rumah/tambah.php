@@ -10,7 +10,6 @@ if (isset($_POST['btn_tambah'])) {
     $nama_kategori = trim(mysqli_real_escape_string($conn, $_POST['nama_kategori']));
     $luas_tanah = trim(mysqli_real_escape_string($conn, $_POST['luas_tanah']));
     $luas_bangunan = trim(mysqli_real_escape_string($conn, $_POST['luas_bangunan']));
-    $harga = trim(mysqli_real_escape_string($conn, $_POST['harga']));
     $deskripsi = trim(mysqli_real_escape_string($conn, $_POST['deskripsi']));
     $jumlah_kamar = trim(mysqli_real_escape_string($conn, $_POST['jumlah_kamar']));
     $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
@@ -33,7 +32,6 @@ if (isset($_POST['btn_tambah'])) {
          '$luas_bangunan',
          '$luas_tanah',
          '$jumlah_kamar',
-         '$harga',
          '$deskripsi',
          '$id_site_plan'
          )

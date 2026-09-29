@@ -79,7 +79,6 @@ else {
                     <th>Nama Kategori</th>
                     <th>Luas Bangunan</th>
                     <th>Luas Tanah</th>
-                    <th>Harga</th>
                     <th>Deskripsi</th>
                     <th>Aksi</th>
                   </tr>
@@ -93,7 +92,6 @@ else {
                       <td><?= $d['nama_kategori']; ?></td>
                       <td><?= $d['luas_bangunan']; ?></td>
                       <td><?= $d['luas_tanah']; ?></td>
-                      <td>Rp <?= number_format($d['harga'], 0, ',', '.'); ?></td>
                       <td><?= $d['deskripsi']; ?></td>
                       <td class="text-center">
                         <a href="detail.php?id=<?= $d['id_kategori'] ?>" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></a>

@@ -74,38 +74,51 @@ $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_ru
         <div class="card-body">
               <form action="beli_rumah.php" method="post">
                 <div class="row">
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                        <label for="">Pilih Rumah Yang Akan Di beli</label>
-                        <select name="id_rumah" id="pilih_rumah" class="form-control"  style="width: 100%;" >
-                            <?php
-                            $dt_rmh = mysqli_fetch_array($ambil_data_rumah); 
-                            $id_kategori = $dt_rmh['id_kategori']
-                            ?>
-                            <option value="<?= $id_rumah ?>"> <?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_kategori'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                        <label for="">Pilih Data Pembeli</label>
-                        <select name="id_pembeli" id="" class="form-control select2" style="width: 100%;" >
+                  <div class="col-lg-12">
+                    <table class="table table-borderles">
+                      <tr>
+                        <td width="20%"><b>Pilih Rumah Yang Akan Dibeli</b></td>
+                        <td width="5%"><b>:</b></td>
+                        <td width="50%">
+                          <select name="id_rumah" id="pilih_rumah" class="form-control"  style="width: 100%;" >
+                              <?php
+                              $dt_rmh = mysqli_fetch_array($ambil_data_rumah); 
+                              $id_kategori = $dt_rmh['id_kategori']
+                              ?>
+                              <option value="<?= $id_rumah ?>"> <?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_kategori'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="20%"><b>Pilih Pembeli</b></td>
+                        <td width="5%"><b>:</b></td>
+                        <td width="50%">
+                          <select name="id_pembeli" id="" class="form-control select2bs4" style="width: 100%;" >
                             <option value="">-- Pilih Pembeli --</option>
                             <?php 
                             while ($dt_pbl = mysqli_fetch_array($ambil_data_pembeli)) { ?>
-                            <option value="<?= $dt_pbl['id_pembeli'] ?>"><?= $dt_pbl['nama_pembeli'] ?></option>
+                            <option value="<?= $dt_pbl['id_pembeli'] ?>"><?= $dt_pbl['nama_pembeli'] ?> | <?= $dt_pbl['kontak'] ?></option>
                             <?php }
                             ?>
                         </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                        <label for="">Pilih Data Marketing</label>
-                        <input type="text" class="form-control" name="id_karyawan" readonly value="<?= $_SESSION['username'] ?>"> 
-                        </div>
-                    </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="20%"><b>Pilih Rencana Bayar</b></td>
+                        <td width="5%"><b>:</b></td>
+                        <td width="50%">
+                          <select name="rencana_bayar" id="" class="form-control" style="width: 100%;" >
+                            <option value="">-- Pilih Rencana Bayar --</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cash Tempo">Cash Tempo</option>
+                            <option value="Kredit">Kredit</option>
+                        </select>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
+                
                 <div class="row">
                   <div class="col-lg-12">
                     <table class="table table-bordered table-striped">
@@ -178,6 +191,8 @@ $(document).ready(function() {
         // Masukkan nilai tersebut ke dalam input dengan id 'pem_rumah'
         $('#pem_rumah').val(harga);
     });
+
+    
 });
 </script>
 </html>
