@@ -12,6 +12,7 @@ if (isset($_POST['btn_tambah'])) {
     $pasangan = trim(mysqli_real_escape_string($conn, $_POST['pasangan']));
     $alamat = trim(mysqli_real_escape_string($conn, $_POST['alamat']));
     $kontak = trim(mysqli_real_escape_string($conn, $_POST['kontak']));
+    $id_karyawan = trim(mysqli_real_escape_string($conn, $_POST['id_karyawan']));
 
 
     
@@ -22,7 +23,8 @@ if (isset($_POST['btn_tambah'])) {
          '$nama_pembeli',
          '$pasangan',
          '$alamat',
-         '$kontak')
+         '$kontak',
+         '$id_karyawan')
          ") or die (mysqli_error($conn)) ;
 
          echo '<script> alert("Data Berhasil Disimpan"); 

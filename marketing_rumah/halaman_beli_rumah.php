@@ -8,13 +8,16 @@ if ($authority != 'M') {
 }
 
 else {
+$id_rumah = @$_GET['id'];
 $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_rumah.*
             FROM rumah 
             LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
             LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
-            WHERE rumah.status = '0'
+            WHERE rumah.id_rumah = '$id_rumah'
             ") or die(mysqli_error($conn));
-  $ambil_data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli") or die(mysqli_error($conn));
+
+$id_karyawan = $_SESSION['username'];  
+  $ambil_data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli WHERE id_karyawan = '$id_karyawan'") or die(mysqli_error($conn));
   $ambil_data_marketing = mysqli_query($conn, "SELECT * FROM marketing") or die(mysqli_error($conn));
   
 ?>
@@ -70,18 +73,17 @@ $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_ru
           </h3>
         </div>
         <div class="card-body">
-              <form action="tambah.php" method="post">
+              <form action="beli_rumah.php" method="post">
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
                         <label for="">Pilih Rumah Yang Akan Di beli</label>
-                        <select name="id_rumah" id="pilih_rumah" class="form-control select2"  style="width: 100%;" >
-                            <option value="">-- Pilih Rumah --</option>
-                            <?php 
-                            while ($dt_rmh = mysqli_fetch_array($ambil_data_rumah)) { ?>
-                            <option value="<?= $dt_rmh['id_rumah'] ?>" data-harga="<?= $dt_rmh['harga'] ?>"><?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_kategori'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
-                            <?php }
+                        <select name="id_rumah" id="pilih_rumah" class="form-control"  style="width: 100%;" >
+                            <?php
+                            $dt_rmh = mysqli_fetch_array($ambil_data_rumah); 
+                            $id_kategori = $dt_rmh['id_kategori']
                             ?>
+                            <option value="<?= $id_rumah ?>"> <?= $dt_rmh['kode_blok'] ?> - <?= $dt_rmh['nama_kategori'] ?> - <?= $dt_rmh['nama_site_plan'] ?></option>
                         </select>
                         </div>
                     </div>
@@ -101,61 +103,35 @@ $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_ru
                     <div class="col-lg-4">
                         <div class="form-group">
                         <label for="">Pilih Data Marketing</label>
-                        <select name="id_karyawan" id="" class="form-control select2" style="width: 100%;" >
-                            <option value="">-- Pilih Marketing --</option>
-                            <?php 
-                            while ($dt_mkg = mysqli_fetch_array($ambil_data_marketing)) { ?>
-                            <option value="<?= $dt_mkg['id_karyawan'] ?>"><?= $dt_mkg['nama'] ?></option>
-                            <?php }
-                            ?>
-                        </select>
+                        <input type="text" class="form-control" name="id_karyawan" readonly value="<?= $_SESSION['username'] ?>"> 
                         </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="form-group">
-
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                    <h4 class="mb-3" style="text-align: center; font-family: Arial, Helvetica, sans-serif;"><b>INPUT DAFTAR HARGA</b></h4>
-                    </div>
+                  <div class="col-lg-12">
+                    <table class="table table-bordered table-striped">
+                      <thead>
+                        <tr class="text-center">
+                          <th class="text-center" width="5%">No</th>
+                          <th>Jenis Pembayaran</th>
+                          <th>Harga</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        $query_detail_harga = mysqli_query($conn, "SELECT * FROM jenis_pembayaran WHERE id_kategori = $id_kategori")or die(mysqli_error($conn));
+                        $no = 1; 
+                        while ($dh = mysqli_fetch_array($query_detail_harga)) { ?>
+                      <tr>
+                        <td width="5%" class="text-center"><?=  $no++ ; ?></td>
+                        <td><?= $dh['jenis_pembayaran']; ?></td>
+                        <td>Rp <?= number_format($dh['harga'] ?? 0, 0, ',', '.') ?></td>
+                      </tr>
+                      <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="">Booking Fee</label>
-                            <input type="number" class="form-control" name="booking_fee" placeholder="Masukan Harga Booking" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Pembangunan Rumah</label>
-                            <input type="number" class="form-control" name="pem_rumah" id="pem_rumah" placeholder="Masukan Harga Pembangunan Rumah" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Pajak Pembangunan Rumah</label>
-                            <input type="number" class="form-control" name="pb_rumah" placeholder="Masukan Harga Pajak Pembangunan Rumah" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Akte Jual Beli</label>
-                            <input type="number" class="form-control" name="ajb" placeholder="Masukan Harga Akte Jual Beli" required>
-                        </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                            <label for="">Notaris</label>
-                            <input type="number" class="form-control" name="notaris" placeholder="Masukah Harga jasa Notaris" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Lahan Makam</label>
-                            <input type="number" class="form-control" name="lahan_makam" placeholder="Masukan Harga Lahan Makam" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Hook</label>
-                            <input type="number" class="form-control" name="hook" placeholder="Masukan Harga Hook Rumah" >
-                        </div>
-                        </div>
-                    </div>
               </div>
               <div class="card-footer">
                 <a href="index.php" class="btn btn-default" data-dismiss="modal">Kembali</a>

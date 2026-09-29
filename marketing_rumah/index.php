@@ -18,8 +18,8 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_marketing/css.php';
-    $hal = 'rumah';
+    include '../layout_admin/css.php';
+    $hal = 'admin_rumah';
   ?>
   
 </head>
@@ -37,13 +37,13 @@ else {
 
   <!-- Navbar -->
   <?php
-  include '../layout_marketing/navbar.php'
+  include '../layout_admin/navbar.php'
   ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <?php
-  include '../layout_marketing/sidebar.php';
+  include '../layout_admin/sidebar.php';
 
   
   ?>
@@ -102,6 +102,8 @@ else {
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DAFTAR RUMAH KOMPLEK <?= strtoupper($nm_st_pln['nama_site_plan']) ?></h3>
                 <div class="card-tools">
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
                   <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>  
                 </div>
               </div>
@@ -119,6 +121,7 @@ else {
                     <th>Kode Blok</th>
                     <th>Kategori</th>
                     <th>Status</th>
+                    <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -139,8 +142,13 @@ else {
                         echo 'Terjual Cash Tempo';
                       } elseif ($d['status'] == 3) {
                         echo 'Terjual Kredit';
+                      } elseif ($d['status'] == 4) {
+                        echo 'Terbooking';
                       }
                       ?>
+                      </td>
+                      <td class="text-center">
+                        <a href="halaman_beli_rumah.php?id=<?= $d['id_rumah'] ?>" class="btn btn-xs btn-success"><i class="bi bi-cart-check-fill"></i> Beli Rumah</a>
                       </td>
                     </tr>
                      <?php } ?>
@@ -168,7 +176,161 @@ else {
 
   
   ?>
-  
+  <!-- modal Tambah -->
+      <div class="modal fade" id="modal-tambah">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">Tambah Data Rumah</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="tambah.php" method="post">
+                <div class="form-group">
+                    <label for="kode_blok">Kode Blok</label>
+                    <input type="text" name="kode_blok" class="form-control" id="kode_blok" placeholder="Masukan Kode Blok Rumah" required>
+                </div>
+                <div class="form-group">
+                  <label for="">Masukan Kategori Rumah</label>
+                  <select name="id_kategori" id="" class="form-control">
+                    <option value="">-- Masukan Kategori Rumah --</option>
+                    <?php 
+                    while ($dt_kat = mysqli_fetch_array($ambil_data_kategori)) { ?>
+                      <option value="<?= $dt_kat['id_kategori'] ?>"><?= $dt_kat['nama_kategori'] ?></option>
+                    <?php }
+                    ?>
+                  </select>
+                </div>
+                 <div class="from-group">
+                  <label for="id_site_plan">Site Plan</label>
+                  <select class="form-control" name="id_site_plan">
+                  <option value="">-- Pilih Site Plan --</option>
+                  <?php 
+                  while ($st_plan = mysqli_fetch_array($ambil_data_site_plan)) { ?>
+                    <option value="<?= $st_plan['id_site_plan'] ?>"><?= $st_plan['nama_site_plan'] ?></option>
+                  <?php }
+                  ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="status">Status Rumah</label>
+                  <select name="status" id="status" class="form-control">
+                    <option value="">-- Pilih Status Rumah --</option>
+                    <option value="0">Tersedia</option>
+                    <option value="1">Terjual Cash</option>
+                    <option value="2">Terjual Cash Tempo</option>
+                    <option value="3">Terjual Kredit</option>
+                  </select>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_tambah" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Tambah -->
+
+      <!-- modal Import -->
+      <div class="modal fade" id="modal-import">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">Import Data Rumah</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="import.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file_excel">Pilih File Excel (.xls, .xlsx, .csv)</label>
+                    <input type="file" name="file_excel" class="form-control" id="file_excel" required accept=".xls, .xlsx, .csv">
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_import" class="btn btn-success">Import Data</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Import -->
+
+      <!-- modal Edit -->
+      <div class="modal fade" id="modal-edit" >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">Edit Data Rumah</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               <form action="edit.php" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="id_rumah" class="form-control" id="id_rumah" required>
+                </div>
+                <div class="form-group">
+                    <label for="kode_blok">Kode Blok</label>
+                    <input type="text" name="kode_blok" class="form-control" id="kode_blok" placeholder="Masukan Kode Blok Rumah" required>
+                </div>
+                <div class="form-group">
+                  <label for="">Masukan Kategori Rumah</label>
+                  <select name="id_kategori" id="" class="form-control">
+                    <option value="">-- Masukan Kategori Rumah --</option>
+                    <?php 
+                    mysqli_data_seek($ambil_data_kategori, 0);
+                    while ($dt_kat = mysqli_fetch_array($ambil_data_kategori)) { ?>
+                      <option value="<?= $dt_kat['id_kategori'] ?>"><?= $dt_kat['nama_kategori'] ?></option>
+                    <?php }
+                    ?>
+                  </select>
+                </div>
+                <div class="from-group">
+                  <label for="id_site_plan">Site Plan</label>
+                  <select class="form-control" name="id_site_plan">
+                  <option value="">-- Pilih Site Plan --</option>
+                  <?php
+                  mysqli_data_seek($ambil_data_site_plan, 0); 
+                  while ($st_plan = mysqli_fetch_array($ambil_data_site_plan)) { ?>
+                    <option value="<?= $st_plan['id_site_plan'] ?>"><?= $st_plan['nama_site_plan'] ?></option>
+                  <?php }
+                  ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="status">Status Rumah</label>
+                  <select name="status" id="status" class="form-control">
+                    <option value="">-- Pilih Status Rumah --</option>
+                    <option value="0">Tersedia</option>
+                    <option value="1">Terjual Cash</option>
+                    <option value="2">Terjual Cash Tempo</option>
+                    <option value="3">Terjual Kredit</option>
+                  </select>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_edit" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Edit -->
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -178,15 +340,41 @@ else {
 
   <!-- Main Footer -->
    <?php
-  include '../layout_marketing/footer.php'
+  include '../layout_admin/footer.php'
   ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 <?php
-include '../layout_marketing/js.php'
+include '../layout_admin/js.php'
 ?>
+<script type="text/javascript">
+   $('#modal-edit').on('show.bs.modal', function(e) {
+
+   var id_rumah = $(e.relatedTarget).data('id_rumah');
+   var kode_blok = $(e.relatedTarget).data('kode_blok');
+   var status = $(e.relatedTarget).data('status');
+   var id_kategori = $(e.relatedTarget).data('id_kategori');
+   var id_site_plan = $(e.relatedTarget).data('id_site_plan');
+   
+    $(e.currentTarget).find('input[name="id_rumah"]').val(id_rumah);
+    $(e.currentTarget).find('input[name="kode_blok"]').val(kode_blok);
+    $(e.currentTarget).find('select[name="status"]').val(status);
+    $(e.currentTarget).find('select[name="id_kategori"]').val(id_kategori);
+   $(e.currentTarget).find('select[name="id_site_plan"]').val(id_site_plan);
+   });
+
+
+  $('#modal-foto').on('show.bs.modal', function(e) {
+
+   var id_karyawan = $(e.relatedTarget).data('id_karyawan');
+  
+   $(e.currentTarget).find('input[name="id_karyawan"]').val(id_karyawan);
+  
+  });
+ 
+</script> 
 
 
 </body>

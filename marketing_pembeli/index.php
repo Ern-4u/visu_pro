@@ -18,7 +18,7 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_marketing/css.php';
+    include '../layout_admin/css.php';
     $hal = 'pembeli';
   ?>
   
@@ -37,15 +37,16 @@ else {
 
   <!-- Navbar -->
   <?php
-  include '../layout_marketing/navbar.php'
+  include '../layout_admin/navbar.php'
   ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <?php
-  include '../layout_marketing/sidebar.php';
+  include '../layout_admin/sidebar.php';
 
-  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli ")or die(mysqli_error($conn));
+  $id_karyawan = $_SESSION['username'];
+  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli WHERE id_karyawan = '$id_karyawan' ")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -66,6 +67,7 @@ else {
                 <h3 class="card-title">DATA PEMBELI</h3>
                 <div class="card-tools">
                   <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
+                  <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
                   <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>
                 </div>
               </div>
@@ -104,6 +106,7 @@ else {
                         <button class="btn btn-warning btn-xs" type="submit" 
                         data-target="#modal-edit" 
                         data-id_pembeli="<?= $d['id_pembeli'] ?>" 
+                        data-id_karyawan="<?= $d['id_karyawan'] ?>" 
                         data-nik="<?= $d['nik'] ?>" 
                         data-nama_pembeli="<?= $d['nama_pembeli']?>" 
                         data-pasangan="<?= $d['pasangan']?>"
@@ -137,10 +140,12 @@ else {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            
             <div class="modal-body">
               <form action="tambah.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="nik">NIK</label>
+                    <input type="hidden" name="id_karyawan" value="<?= $_SESSION['username'] ?>">
+                    <label for="no_transaksi">NIK</label>
                     <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
                 </div>
                 <div class="form-group">
@@ -213,6 +218,7 @@ else {
             </div>
             <div class="modal-body">
                <form action="edit.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id_karyawan">
                 <input type="hidden" name="id_pembeli">
                <div class="form-group">
                     <label for="nik">NIK</label>
@@ -257,19 +263,20 @@ else {
 
   <!-- Main Footer -->
    <?php
-  include '../layout_marketing/footer.php'
+  include '../layout_admin/footer.php'
   ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 <?php
-include '../layout_marketing/js.php'
+include '../layout_admin/js.php'
 ?>
 <script type="text/javascript">
    $('#modal-edit').on('show.bs.modal', function(e) {
 
    var id_pembeli = $(e.relatedTarget).data('id_pembeli');
+   var id_karyawan = $(e.relatedTarget).data('id_karyawan');
    var nik = $(e.relatedTarget).data('nik');
    var nama_pembeli = $(e.relatedTarget).data('nama_pembeli');
    var pasangan = $(e.relatedTarget).data('pasangan');
@@ -279,6 +286,7 @@ include '../layout_marketing/js.php'
 
   
     $(e.currentTarget).find('input[name="id_pembeli"]').val(id_pembeli);
+    $(e.currentTarget).find('input[name="id_karyawan"]').val(id_karyawan);
     $(e.currentTarget).find('input[name="nama_pembeli"]').val(nama_pembeli);
     $(e.currentTarget).find('input[name="pasangan"]').val(pasangan);
     $(e.currentTarget).find('input[name="alamat"]').val(alamat);

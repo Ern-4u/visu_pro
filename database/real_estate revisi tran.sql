@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 28, 2026 at 05:02 PM
+-- Generation Time: Sep 29, 2026 at 04:45 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -53,6 +53,14 @@ CREATE TABLE `detail_transaksi` (
   `kwitansi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `id_transaksi`, `no_kwitansi`, `jenis_pembayaran`, `dibayarkan`, `bukti_pembayaran`, `tanggal_pembayaran`, `kwitansi`) VALUES
+(26, 14, '26-09-29-0001', 'Booking Fee', 5000000, NULL, '2026-09-29', 'Kwitansi_26_09_29_0001.pdf'),
+(27, 14, '26-09-29-0002', 'Booking Fee', 1000000, NULL, '2026-09-29', 'Kwitansi_26_09_29_0002.pdf');
+
 -- --------------------------------------------------------
 
 --
@@ -96,7 +104,8 @@ INSERT INTO `janji_bayar` (`id_janji_bayar`, `id_transaksi`, `tanggal_janji`, `t
 (1, 11, '2026-09-22', '2026-09-22', 'Gagal', 'bayar AJB'),
 (2, 11, '2026-09-22', '2026-09-30', 'Terpenuhi', 'ga ada'),
 (3, 12, '2026-09-28', '2026-09-30', 'Terpenuhi', 'bayar rumah'),
-(4, 12, '2026-09-28', '2026-10-02', 'Aktif', 'bayar AJB');
+(4, 12, '2026-09-28', '2026-10-02', 'Aktif', 'bayar AJB'),
+(5, 14, '2026-09-29', '2026-09-30', 'Terpenuhi', 'kosong');
 
 -- --------------------------------------------------------
 
@@ -173,7 +182,8 @@ INSERT INTO `marketing` (`id_karyawan`, `nama`, `kontak`, `email`, `kelamin`, `f
 ('KMAR0001', 'Muhammad Isa Irawanto', '082329221051', 'sabig1984@gmail.com', 'L', 'marketing1788194123.jpeg'),
 ('KMAR0002', 'Najwa Shabira', '082329221051', 'najwa@gmail.com', 'P', 'marketing1788403542.jpeg'),
 ('KMAR0003', 'zelia', '082348348394', 'sabig1984@gmail.com', 'P', NULL),
-('KMAR0004', 'Pak Lukman', '082329221051', 'sabig1984@gmail.com', 'L', NULL);
+('KMAR0004', 'Pak Lukman', '082329221051', 'sabig1984@gmail.com', 'L', NULL),
+('admin', 'Admin', '082328936457', 'admin@gmail.com', 'L', NULL);
 
 -- --------------------------------------------------------
 
@@ -204,17 +214,18 @@ CREATE TABLE `pembeli` (
   `nama_pembeli` varchar(255) NOT NULL,
   `pasangan` varchar(255) NOT NULL,
   `alamat` text NOT NULL,
-  `kontak` varchar(255) NOT NULL
+  `kontak` varchar(255) NOT NULL,
+  `id_karyawan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `pembeli`
 --
 
-INSERT INTO `pembeli` (`id_pembeli`, `nik`, `nama_pembeli`, `pasangan`, `alamat`, `kontak`) VALUES
-(2, '3329041908040001', 'Muhammad Isa Irawanto', 'Belum Nemu', 'Taraban RT04 RW 110', '082328936457'),
-(3, '3329041908040000', 'Najwa Shabira', 'Tidak Tahu', 'Winduaji', '082328936457'),
-(4, '3329041908040000', 'Alfi Resti Zelia', 'Tidak Tahu', 'Salem', '082328936457');
+INSERT INTO `pembeli` (`id_pembeli`, `nik`, `nama_pembeli`, `pasangan`, `alamat`, `kontak`, `id_karyawan`) VALUES
+(2, '3329041908040001', 'Muhammad Isa Irawanto', 'Belum Nemu', 'Taraban RT04 RW 110', '082328936457', 'KMAR0001'),
+(3, '3329041908040000', 'Najwa Shabira', 'Tidak Tahu', 'Winduaji', '082328936457', 'KMAR0001'),
+(4, '3329041908040000', 'Alfi Resti Zelia', 'Tidak Tahu', 'Salem', '082328936457', 'KMAR0001');
 
 -- --------------------------------------------------------
 
@@ -235,7 +246,7 @@ CREATE TABLE `rumah` (
 --
 
 INSERT INTO `rumah` (`id_rumah`, `kode_blok`, `id_kategori`, `status`, `id_site_plan`) VALUES
-(1, 'A1', 2, '0', 4),
+(1, 'A1', 2, '3', 4),
 (2, 'A2', 14, '0', 4),
 (3, 'A3', 15, '0', 4),
 (4, 'A4', 16, '0', 4),
@@ -376,9 +387,15 @@ CREATE TABLE `transaksi` (
   `id_karyawan` varchar(50) NOT NULL,
   `id_rumah` int NOT NULL,
   `status_transaksi` varchar(30) NOT NULL,
-  `total` int NOT NULL,
   `tanggal_transaksi` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`id_transaksi`, `no_transaksi`, `id_pembeli`, `id_karyawan`, `id_rumah`, `status_transaksi`, `tanggal_transaksi`) VALUES
+(14, '26-09-29-0001', 2, 'admin', 1, 'Berlangsung', '2026-09-29');
 
 -- --------------------------------------------------------
 
@@ -530,7 +547,7 @@ ALTER TABLE `berita_acara`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_detail_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `foto_rumah`
@@ -542,7 +559,7 @@ ALTER TABLE `foto_rumah`
 -- AUTO_INCREMENT for table `janji_bayar`
 --
 ALTER TABLE `janji_bayar`
-  MODIFY `id_janji_bayar` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_janji_bayar` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `jenis_pembayaran`
@@ -566,7 +583,7 @@ ALTER TABLE `pembayaran`
 -- AUTO_INCREMENT for table `pembeli`
 --
 ALTER TABLE `pembeli`
-  MODIFY `id_pembeli` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pembeli` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `rumah`
@@ -584,7 +601,7 @@ ALTER TABLE `site_plan`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_transaksi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

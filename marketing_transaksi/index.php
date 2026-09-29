@@ -26,7 +26,7 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VISU Pro | Dashboard admin</title>
   <?php
-    include '../layout_marketing/css.php';
+    include '../layout_admin/css.php';
     $hal = 'transaksi';
   ?>
   
@@ -45,13 +45,13 @@ else {
 
   <!-- Navbar -->
   <?php
-  include '../layout_marketing/navbar.php'
+  include '../layout_admin/navbar.php'
   ?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <?php
-  include '../layout_marketing/sidebar.php'
+  include '../layout_admin/sidebar.php'
   ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -125,7 +125,7 @@ else {
                         <a href="detail.php?id=<?= $d['id_transaksi']; ?>" 
                         class="btn btn-success btn-xs"><i class="bi bi-list-ul"></i></a>
                         <a href="edit_status.php?id=<?= $d['id_transaksi']; ?>&id_rumah=<?= $d['id_rumah'] ?>" 
-                        class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan Menggagalkan Transaksi ini?')"><i class="fas fa"></i>Gagalkan</a>
+                        class="btn btn-success btn-xs" onclick="return confirm('Anda yakin akan Menggagalkan Transaksi ini?')"><i class="fas fa-edit"></i></a>
                       </td>
                     </tr>
                      <?php } ?>
@@ -218,14 +218,14 @@ else {
 
   <!-- Main Footer -->
    <?php
-  include '../layout_marketing/footer.php'
+  include '../layout_admin/footer.php'
   ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 <?php
-include '../layout_marketing/js.php'
+include '../layout_admin/js.php'
 ?>
 </body>
 </html>

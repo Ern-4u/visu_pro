@@ -14,7 +14,7 @@ if ($authority != 'M') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VISU Pro | Dashboard admin</title>
     <?php
-    include '../layout_marketing/css.php';
+    include '../layout_admin/css.php';
     $hal = 'kategori_rumah';
     ?>
     <style>
@@ -70,12 +70,12 @@ if ($authority != 'M') {
     </div>
 
     <!-- Navbar -->
-    <?php include '../layout_marketing/navbar.php'; ?>
+    <?php include '../layout_admin/navbar.php'; ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     <?php
-    include '../layout_marketing/sidebar.php';
+    include '../layout_admin/sidebar.php';
     $id_kategori = @$_GET['id'];
     $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah WHERE id_kategori = '$id_kategori'") or die(mysqli_error($conn));
     $dt_k = mysqli_fetch_array($data_kategori_rumah);
@@ -104,19 +104,21 @@ if ($authority != 'M') {
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-
-                <div class="card">
-                    <div class="card-header card-header-navy">
-                        <h3 class="card-title"><i class="fas fa-home mr-2"></i>DATA KATEGORI RUMAH</h3>
-                        <div class="card-tools">
-                            <button class="btn btn-sm btn-light" data-toggle="modal" data-target="#modal-tambah">
-                                <i class="fas fa-plus mr-1"></i>Tambah Foto
-                            </button>
-                        </div>
+                <div class="card card-navy card-tabs">
+                    <div class="card-header p-0 pt-1 border-bottom-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Detail Spek Rumah</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Detail Harga Rumah</a>
+                        </li>
+                        </ul>
                     </div>
-                    <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="row">
+                        <div class="tab-content" id="custom-tabs-three-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                            <div class="row">
                             <div class="col-lg-6">
                                 <table class="table table-borderless detail-table mb-0">
                                     <tr>
@@ -139,11 +141,6 @@ if ($authority != 'M') {
                                         <td>:</td>
                                         <td><?= $dt_k['jumlah_kamar'] ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>Harga</td>
-                                        <td>:</td>
-                                        <td class="harga-badge">Rp <?= number_format($dt_k['harga'], 0, ',', '.'); ?></td>
-                                    </tr>
                                 </table>
                             </div>
                             <!-- end col -->
@@ -160,6 +157,9 @@ if ($authority != 'M') {
                         <hr>
 
                         <h5 class="mb-3"><i class="fas fa-images mr-2"></i>Foto Spesifikasi Rumah</h5>
+                        <div class="card-tools">
+                            
+                        </div>
                         <div class="row">
                             <?php
                             $query_foto_rmh = mysqli_query($conn, "SELECT * FROM foto_rumah WHERE id_kategori = '$id_kategori'") or die(mysqli_error($conn));
@@ -180,9 +180,51 @@ if ($authority != 'M') {
                             <?php } ?>
                         </div>
                         <!-- end row -->
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="card">
+                                <div class="card-header">
+                                    
+                                 </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    
+                                    <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th class="text-center" width="5%">No</th>
+                                        <th>Jenis Pembayaran</th>
+                                        <th>Harga</th>
+                                       
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                    $query_detail_harga = mysqli_query($conn, "SELECT * FROM jenis_pembayaran WHERE id_kategori = $id_kategori")or die(mysqli_error($conn));
+                                    $no = 1; 
+                                    while ($dh = mysqli_fetch_array($query_detail_harga)) { ?>
+                                        <tr>
+                                        <td width="5%" class="text-center"><?=  $no++ ; ?></td>
+                                        <td><?= $dh['jenis_pembayaran']; ?></td>
+                                        <td>Rp <?= number_format($dh['harga'] ?? 0, 0, ',', '.') ?></td>
+                                       
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                               </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
+                    </div>
                 </div>
+                
                 <!-- /.card -->
 
             </div>
@@ -193,8 +235,8 @@ if ($authority != 'M') {
     <!-- /.content-wrapper -->
 
 
-    <!-- modal Tambah -->
-    <div class="modal fade" id="modal-tambah">
+    <!-- modal Foto -->
+    <div class="modal fade" id="modal-foto">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header card-header-navy">
@@ -225,7 +267,77 @@ if ($authority != 'M') {
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal Tambah -->
+    <!-- /.modal Foto -->
+
+    <!-- modal Tambah -->
+      <div class="modal fade" id="modal-tambah">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">TAMBAH DATA PEMBAYARAN RUMAH</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="tambah_pembayaran.php" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="id_kategori" value="<?= $id_kategori ?>">
+                    <label for="jenis_pembayaran">Jenis Pembayaran</label>
+                    <input type="text" name="jenis_pembayaran" class="form-control" id="jenis_pembayaran" placeholder="Masukan Jenis Pembayaran Rumah" required>
+                </div>
+                <div class="form-group">
+                    <label for="harga">Harga</label>
+                    <input type="text" name="harga" class="form-control" id="input-harga" placeholder="Masukan Harga Jenis Pembayaran" required>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_tambah" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Tambah -->
+
+    <!-- modal Edit -->
+      <div class="modal fade" id="modal-edit" >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">EDIT DATA HARGA</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+               <form action="edit_pembayaran.php" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="id_kategori" value="<?= $id_kategori ?>">
+                    <input type="hidden" name="id_jenis_pembayaran">
+                    <label for="jenis_pembayaran">Jenis Pembayaran</label>
+                    <input type="text" name="jenis_pembayaran" class="form-control" id="jenis_pembayaran" placeholder="Masukan Jenis Pembayaran Rumah" required>
+                </div>
+                <div class="form-group">
+                    <label for="harga">Harga</label>
+                    <input type="text" name="harga" class="form-control" id="harga" placeholder="Masukan Harga Jenis Pembayaran" required>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_edit" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Edit -->
+    
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -235,39 +347,74 @@ if ($authority != 'M') {
 
 
     <!-- Main Footer -->
-    <?php include '../layout_marketing/footer.php'; ?>
+    <?php include '../layout_admin/footer.php'; ?>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-<?php include '../layout_marketing/js.php'; ?>
+<?php include '../layout_admin/js.php'; ?>
 <script type="text/javascript">
+    // 1. Mengisi data saat Modal Edit dibuka
     $('#modal-edit').on('show.bs.modal', function (e) {
-        var id_kategori = $(e.relatedTarget).data('id_kategori');
-        var nama_kategori = $(e.relatedTarget).data('nama_kategori');
-        var luas_bangunan = $(e.relatedTarget).data('luas_bangunan');
-        var luas_tanah = $(e.relatedTarget).data('luas_tanah');
-        var jumlah_kamar = $(e.relatedTarget).data('jumlah_kamar');
-        var harga = $(e.relatedTarget).data('harga');
-        var deskripsi = $(e.relatedTarget).data('deskripsi');
-        var id_site_plan = $(e.relatedTarget).data('id_site_plan');
+        var id_jenis_pembayaran = $(e.relatedTarget).data('id_jenis_pembayaran');
+        var jenis_pembayaran = $(e.relatedTarget).data('jenis_pembayaran');
+        var harga = $(e.relatedTarget).data('harga'); // Contoh: 1500000
+        var id_kategori_rumah = $(e.relatedTarget).data('id_kategori_rumah');
+        
+        // Format angka dari database kasih titik saat modal edit terbuka
+        var hargaFormatted = new Intl.NumberFormat('id-ID').format(harga);
 
-        $(e.currentTarget).find('input[name="id_kategori"]').val(id_kategori);
-        $(e.currentTarget).find('input[name="nama_kategori"]').val(nama_kategori);
-        $(e.currentTarget).find('input[name="luas_bangunan"]').val(luas_bangunan);
-        $(e.currentTarget).find('input[name="luas_tanah"]').val(luas_tanah);
-        $(e.currentTarget).find('input[name="jumlah_kamar"]').val(jumlah_kamar);
-        $(e.currentTarget).find('input[name="harga"]').val(harga);
-        $(e.currentTarget).find('textarea[name="deskripsi"]').val(deskripsi);
-        $(e.currentTarget).find('select[name="id_site_plan"]').val(id_site_plan);
+        $(e.currentTarget).find('input[name="id_jenis_pembayaran"]').val(id_jenis_pembayaran);
+        $(e.currentTarget).find('input[name="jenis_pembayaran"]').val(jenis_pembayaran);
+        $(e.currentTarget).find('input[name="harga"]').val(hargaFormatted); // Masukkan yang sudah ada titiknya
+        $(e.currentTarget).find('input[name="id_kategori_rumah"]').val(id_kategori_rumah);
     });
 
     $('#modal-foto').on('show.bs.modal', function (e) {
         var id_karyawan = $(e.relatedTarget).data('id_karyawan');
         $(e.currentTarget).find('input[name="id_karyawan"]').val(id_karyawan);
     });
-</script>
 
+    // 2. Fungsi untuk membuat input otomatis ada titiknya
+    function formatRupiah(element) {
+        element.addEventListener('input', function() {
+            // Bersihkan semua huruf/simbol, ambil angkanya saja
+            let angkaMurni = this.value.replace(/[^0-9]/g, '');
+            
+            if (angkaMurni === '') {
+                this.value = '';
+                return;
+            }
+            
+            // Format ulang dengan titik
+            this.value = new Intl.NumberFormat('id-ID').format(angkaMurni);
+        });
+    }
+
+    // Terapkan fungsi formatRupiah ke input Tambah dan Edit
+    const inputHargaTambah = document.getElementById('input-harga');
+    const inputHargaEdit = document.getElementById('harga');
+
+    if (inputHargaTambah) formatRupiah(inputHargaTambah);
+    if (inputHargaEdit) formatRupiah(inputHargaEdit);
+
+    // 3. PENTING: Hilangkan titik sebelum form disubmit ke backend (PHP)
+    // Ini memastikan script tambah_pembayaran.php & edit_pembayaran.php 
+    // menerima angka utuh tanpa titik (contoh: 1500000 bukan 1.500.000)
+    $('form').on('submit', function() {
+        if ($('#input-harga').length) {
+            let valTambah = $('#input-harga').val().replace(/\./g, '');
+            $('#input-harga').val(valTambah);
+        }
+        if ($('#harga').length) {
+            let valEdit = $('#harga').val().replace(/\./g, '');
+            $('#harga').val(valEdit);
+        }
+    });
+</script>
 </body>
 </html>
 <?php } ?>
+
+
+                
