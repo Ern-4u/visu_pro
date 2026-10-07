@@ -9,12 +9,13 @@ if ($authority != 'M') {
 }
 
 else {
-
+  $id_karyawan = $_SESSION['username'];
   $data_transaksi = mysqli_query($conn, "SELECT transaksi.*, marketing.*, rumah.*,pembeli.*
             FROM transaksi 
             LEFT JOIN marketing ON transaksi.id_karyawan = marketing.id_karyawan
             LEFT JOIN rumah ON transaksi.id_rumah = rumah.id_rumah
             LEFT JOIN pembeli ON transaksi.id_pembeli = pembeli.id_pembeli
+            WHERE transaksi.id_karyawan = '$id_karyawan'
             ") or die(mysqli_error($conn));
 
 

@@ -506,6 +506,9 @@ else {
                     $grand_total_sudah_bayar += $total_sudah_bayar; 
                     $grand_total_harga       += $harga_bayar;
                     $grand_total_sisa        += $total_sisa;
+                    if ($grand_total_sisa == 0) {
+                      $query_update_status_transaksi = mysqli_query($conn, "UPDATE transaksi SET status_transaksi = 'Selesai' WHERE id_transaksi = '$id_transaksi'")or die(mysqli_error($conn));
+                    }
                     ?>
                     
                     <td>Rp <?= number_format($total_sudah_bayar, 0, ',', '.') ?></td>

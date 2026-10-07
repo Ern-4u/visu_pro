@@ -101,11 +101,6 @@ else {
             <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DAFTAR RUMAH KOMPLEK <?= strtoupper($nm_st_pln['nama_site_plan']) ?></h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                  <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>  
-                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

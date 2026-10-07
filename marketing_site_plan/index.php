@@ -63,9 +63,7 @@ else {
       <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title"> DATA SITE PLAN</h3>
-                <div class="card-tools">
-                  <a href="export.php" class="btn btn-light btn-sm"><i class="fas fa-file-download"></i> Export Excel</a>
-                </div>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body">

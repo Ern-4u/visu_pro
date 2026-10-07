@@ -84,7 +84,7 @@ else {
                     <th>Nomor Surat</th>
                     <th>Tanggal Surat</th>
                     <th>Nama Penerima</th>
-                    
+                   
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -98,20 +98,10 @@ else {
                       <td><?= $d['tanggal_serah_terima']; ?></td>
                       <td><?= $d['nama_pembeli'] ?></td>
                       <td class="text-center">
-                        <a href="hapus.php?id=<?= $d['id_pembeli']; ?>" 
+                        <a href="pdf.php" class="btn btn-info btn-xs" target="_blank">Generate</a>
+                        <a href="hapus.php?id=<?= $d['id_berita_acara']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
-                        <button class="btn btn-warning btn-xs" type="submit" 
-                        data-target="#modal-edit" 
-                        data-id_pembeli="<?= $d['id_pembeli'] ?>" 
-                        data-nik="<?= $d['nik'] ?>" 
-                        data-nama_pembeli="<?= $d['nama_pembeli']?>" 
-                        data-pasangan="<?= $d['pasangan']?>"
-                        data-alamat="<?= $d['alamat']?>"
-                        data-kontak="<?= $d['kontak']?>"
-                        data-toggle="modal">
-                        <i class="fas fa-edit"> </i>
-                      </button>
                       </td>
                     </tr>
                      <?php } ?>
@@ -132,7 +122,7 @@ else {
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header" style="background-color: #001F3F; color: white;">
-              <h4 class="modal-title">TAMBAH DATA PEMBELI</h4>
+              <h4 class="modal-title">TAMBAH BERITA ACARA</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -140,24 +130,24 @@ else {
             <div class="modal-body">
               <form action="tambah.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="nik">NIK</label>
-                    <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
+                    <label for="id_transaksi">Pilih Transaksi</label>
+                    <select name="id_transaksi" id="" class="form-control">
+                    <option value="">-- Pilih Transaksi --</option>
+                    <?php 
+                    $ambil_transaksi = mysqli_query($conn, "SELECT t.*,p.* 
+                                                            FROM transaksi t
+                                                            LEFT JOIN pembeli p ON t.id_pembeli = p.id_pembeli
+                                                            WHERE t.status_transaksi = 'Selesai'
+                                                            ")or die(mysqli_error($conn));
+                    while ($d_trans = mysqli_fetch_array($ambil_transaksi)) { ?>
+                      <option value="<?= $d_trans['id_transaksi'] ?>"><?= $d_trans['nama_pembeli'] ?> | <?= $d_trans['kontak'] ?></option>
+                    <?php }
+                    ?>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="nama_pembeli">Nama Pembeli</label>
-                    <input type="text" name="nama_pembeli" class="form-control" id="nama_pembeli" placeholder="Masukan Nama Calon Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukan Alamat Calon Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="kontak">Nomor Kontak</label>
-                    <input type="text" name="kontak" class="form-control" id="kontak" placeholder="Masukan Nomor Kontak Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="pasangan">Pasangan</label>
-                    <input type="text" name="pasangan" class="form-control" id="pasangan" placeholder="Masukan Nama Pasangan Calon Pembeli">
+                    <label for="jml_kunci">Jumlah Kunci</label>
+                    <input type="number" name="jml_kunci" class="form-control" id="jml_kunci" placeholder="Masukan Jumlah Kunci" required>
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -172,82 +162,7 @@ else {
       </div>
       <!-- /.modal Tambah -->
 
-      <!-- modal Import -->
-      <div class="modal fade" id="modal-import">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #001F3F; color: white;">
-              <h4 class="modal-title">IMPORT DATA PEMBELI</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="import.php" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="file_excel">Pilih File Excel (.xls, .xlsx, .csv)</label>
-                    <input type="file" name="file_excel" class="form-control" id="file_excel" required accept=".xls, .xlsx, .csv">
-                </div>
-                <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_import" class="btn btn-success">Import Data</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Import -->
-
-      <!-- modal Edit -->
-      <div class="modal fade" id="modal-edit" >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #001F3F; color: white;">
-              <h4 class="modal-title">EDIT DATA PEMBELI</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-               <form action="edit.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id_pembeli">
-               <div class="form-group">
-                    <label for="nik">NIK</label>
-                    <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="nama_pembeli">Nama Pembeli</label>
-                    <input type="text" name="nama_pembeli" class="form-control" id="nama_pembeli" placeholder="Masukan Nama Calon Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="alamat">Alamat</label>
-                    <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukan Alamat Calon Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="kontak">Nomor Kontak</label>
-                    <input type="text" name="kontak" class="form-control" id="kontak" placeholder="Masukan Nomor Kontak Pembeli" required>
-                </div>
-                <div class="form-group">
-                    <label for="pasangan">Pasangan</label>
-                    <input type="text" name="pasangan" class="form-control" id="pasangan" placeholder="Masukan Nama Pasangan Calon Pembeli">
-                </div> 
-               <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" name="btn_edit" class="btn btn-primary">Simpan</button>
-              </div>
-              </form>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal Edit -->
-
-       
+      
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
