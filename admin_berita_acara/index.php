@@ -84,7 +84,7 @@ else {
                     <th>Nomor Surat</th>
                     <th>Tanggal Surat</th>
                     <th>Nama Penerima</th>
-                   
+                    <th>File</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -98,7 +98,19 @@ else {
                       <td><?= $d['tanggal_serah_terima']; ?></td>
                       <td><?= $d['nama_pembeli'] ?></td>
                       <td class="text-center">
-                        <a href="pdf.php" class="btn btn-info btn-xs" target="_blank">Generate</a>
+                        <?php 
+                        if ($d['file'] == '') { ?>
+                          <button class="btn btn-xs btn-danger" data-toggle="modal" 
+                          data-target="#modal-upload"
+                          data-id="<?= $d['id_berita_acara'] ?>">
+                            <i class="bi bi-file-earmark-arrow-up-fill"></i> Upload File</button>
+                       <?php } else { ?>
+                           <a href="../assets/bast/<?= $d['file'] ?>" target="_blank" class="btn btn-xs btn-info"><i class="bi bi-file-earmark-arrow-down-fill"></i> Dwonload File</a>
+                       <?php }
+                        ?>
+                      </td>
+                      <td class="text-center">
+                        <a href="pdf.php?id=<?= $d['id_berita_acara'] ?>" class="btn btn-info btn-xs" target="_blank">Generate</a>
                         <a href="hapus.php?id=<?= $d['id_berita_acara']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
@@ -162,6 +174,36 @@ else {
       </div>
       <!-- /.modal Tambah -->
 
+      <!-- modal Upload -->
+      <div class="modal fade" id="modal-upload">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">UPLOAD FILE YANG SUDAH DI TANDATANGAN</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="upload_file.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="file">Upload File</label>
+                  <input type="hidden" name="id">
+                  <input type="file" accept=".pdf" name="ttd_file" id="ttd_file" class="form-control">
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_upload" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Upload -->
+
       
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -202,11 +244,11 @@ include '../layout_admin/js.php'
    });
 
 
-  $('#modal-brosur').on('show.bs.modal', function(e) {
+  $('#modal-upload').on('show.bs.modal', function(e) {
 
-   var id_site_plan = $(e.relatedTarget).data('id_site_plan');
+   var id = $(e.relatedTarget).data('id');
   
-   $(e.currentTarget).find('input[name="id_site_plan"]').val(id_site_plan);
+   $(e.currentTarget).find('input[name="id"]').val(id);
   
   });
  

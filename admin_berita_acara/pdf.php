@@ -1,52 +1,48 @@
 <?php
 require_once '../database/config.php';
+require_once '../includes/tanggal.php';
 $id_berita_acara = @$_GET['id'];
 
-$query_ambil_data = mysqli_query($conn, "SELECT b.*,t.*,p.* FROM berita_acara b
+$nama_admin = $_SESSION['nama'];
+
+
+$query_ambil_data = mysqli_query($conn, "SELECT b.*,t.*,p.*,r.*,s.*,k.* FROM berita_acara b
                                         LEFT JOIN transaksi t ON b.id_transaksi = t.id_transaksi
                                         LEFT JOIN pembeli p ON t.id_pembeli = p.id_pembeli 
+                                        LEFT JOIN rumah r ON t.id_rumah = r.id_rumah
+                                        LEFT JOIN kategori_rumah k ON r.id_kategori = k.id_kategori
+                                        LEFT JOIN site_plan s ON r.id_site_plan = s.id_site_plan
                                         WHERE b.id_berita_acara = '$id_berita_acara'") or die(mysqli_error($conn));
+$dt_berita = mysqli_fetch_array($query_ambil_data);
 
-
-/**
- * Generate PDF "Berita Acara Serah Terima Kunci Rumah" dengan mPDF.
- *
- * Instalasi : composer require mpdf/mpdf
- * Logo      : letakkan file logo di folder yang sama dengan nama "logo.png"
- * Jalankan  : php generate_bast.php   (simpan ke file)
- *             atau akses lewat browser (tampil di browser)
- */
+$query_data_web = mysqli_query($conn,"SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
+$dt_web = mysqli_fetch_array($query_data_web);
 
 require_once '../vendor/autoload.php';
 
-// ======================== DATA (ubah sesuai kebutuhan) ========================
 $data = [
-    'perusahaan'   => 'PT BANGUN INDAH NEGERI',
-    'alamat_1'     => 'Alamat : Jalan Raya Grengseng RT 04 RW 10 Desa Taraban Kec.Paguyangan',
+    'perusahaan'   => $dt_web['nama_proyek'],
+    'alamat_1'     => $dt_web['alamat'],
     'alamat_2'     => 'Kabupaten Brebes, Jawa Tengah',
-    'logo'         => __DIR__ . '/logo.png',
+    'logo'         => '../assets/logo/'.$dt_web['logo'],
+    'kontak'       => $dt_web['cp'] ,
 
-    'nomor'        => 'BAST/GH-RES/2026/10/001',
-    'hari_tanggal' => 'Senin, 05 Oktober 2026',
+    'nomor'        => $dt_berita['no_berita_acara'],
+    'hari_tanggal' => tanggal_indonesia($dt_berita['tanggal_serah_terima']),
 
-    'pihak1_nama'    => 'Budi Santoso, S.T.',
-    'pihak1_jabatan' => 'Estate Manager PT Grand Nusantara Land',
-    'pihak1_alamat'  => 'Jl. Jend. Sudirman No. 88, Jakarta',
+    'pihak1_nama'    => $nama_admin,
+    'pihak1_jabatan' => 'Estate Manager '.$dt_web['nama_proyek'],
 
-    'pihak2_nama' => 'Ahmad Rizky Pratama, S.E.',
-    'pihak2_ktp'  => '3174051208880003',
-    'pihak2_hp'   => '0812-3456-7890',
+    'pihak2_nama' => $dt_berita['nama_pembeli'],
+    'pihak2_alamat'  => $dt_berita['alamat'],
+    'pihak2_hp'   => $dt_berita['kontak'],
 
-    'perumahan' => 'Grand Harmony Residence',
-    'unit'      => 'Blok E No. 12',
-    'tipe_luas' => 'Tipe 70 / LT 120 m² / LB 70 m²',
-    'listrik'   => '2.200 VA / PDAM',
+    'perumahan' => $dt_berita['nama_site_plan'],
+    'unit'      => 'Blok '.$dt_berita['kode_blok'],
+    'jumlah_kunci'      => $dt_berita['jumlah_kunci'].' Kunci',
+    'tipe_luas' => $dt_berita['nama_kategori'].' / '.'LT '.$dt_berita['luas_tanah'].'  M²'.' LB '.$dt_berita['luas_bangunan'].'  M²' ,
 
-    'kelengkapan' => [
-        'Kunci Pintu Utama'       => '3 Set (6 Buah)',
-        'Kunci Pintu Kamar'       => '3 Set (6 Buah)',
-        'Kunci Pintu Dapur/Mandi' => '3 Set (4 Buah)',
-    ],
+    
 
     'ketentuan' => [
         'Tanggung jawab fisik bangunan, penggunaan listrik, air, dan iuran lingkungan (IPL) beralih kepada PIHAK KEDUA sejak BAST ini ditandatangani.',
@@ -56,7 +52,7 @@ $data = [
 
 $e = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 
-// ======================== KOP SURAT (muncul di setiap halaman) ========================
+// Kop Surat
 $logoHtml = file_exists($data['logo'])
     ? '<img src="' . $data['logo'] . '" style="width:22mm; height:22mm;" />'
     : '';
@@ -68,13 +64,13 @@ $header = '
       <td width="26mm" style="vertical-align:middle; padding:0 0 0 0;">' . $logoHtml . '</td>
       <td style="vertical-align:middle; text-align:center; padding:0 26mm 0 0;">
         <div style="font-size:23pt; font-weight:bold; line-height:1.1;">' . $e($data['perusahaan']) . '</div>
-        <div style="font-size:11pt; line-height:1.15; margin-top:1mm;">' . $e($data['alamat_1']) . '<br>' . $e($data['alamat_2']) . '</div>
+        <div style="font-size:11pt; line-height:1.15; margin-top:1mm;">' . $e($data['alamat_1']) . '<br>' .'Kontak : '. $e($data['kontak']) . '</div>
       </td>
     </tr>
   </table>
 </div>';
 
-// ======================== CSS ========================
+// CSS
 $css = '
 body { font-family: freeserif; font-size: 12pt; color: #000000; }
 .wrap { padding: 0 4mm 0 5mm; }
@@ -92,24 +88,27 @@ table.ttd { width:100%; border-collapse:collapse; margin-top:3mm; }
 table.ttd td { text-align:center; vertical-align:top; font-size:12pt; }
 ';
 
-// ======================== HALAMAN 1 ========================
+// Halaman 1
 $html = '<div class="wrap">';
 
 $html .= '<p class="judul">BERITA ACARA SERAH TERIMA KUNCI RUMAH</p>';
-$html .= '<p class="nomor">Nomor: ' . $e($data['nomor']) . '</p>';
+$html .= '<p class="nomor">Nomor : ' . $e($data['nomor']) . '</p>';
 $html .= '<p class="pembuka">Pada hari ini, ' . $e($data['hari_tanggal']) . ', kami yang bertanda tangan di bawah ini:</p>';
 
 // Pihak pertama
 $html .= '<p class="row">1. PIHAK PERTAMA (Developer):</p>';
-$html .= '<p class="det">Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ' . $e($data['pihak1_nama']) . '</p>';
-$html .= '<p class="det">Jabatan&nbsp;: ' . $e($data['pihak1_jabatan']) . '</p>';
-$html .= '<p class="det">Alamat&nbsp;&nbsp;&nbsp;: ' . $e($data['pihak1_alamat']) . '</p>';
+$html .= '<table class="t">'
+    . '<tr><td width="6mm">-</td><td width="32mm">Nama</td><td width="6mm">:</td><td>' . $e($data['pihak1_nama']) . '</td></tr>'
+    . '<tr><td>-</td><td>Jabatan</td><td>:</td><td>' . $e($data['pihak1_jabatan']) . '</td></tr>'
+    . '</table>';
 
 // Pihak kedua
 $html .= '<p class="row">2. PIHAK KEDUA (Pembeli):</p>';
-$html .= '<p class="det">Nama&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ' . $e($data['pihak2_nama']) . '</p>';
-$html .= '<p class="det">No. KTP&nbsp;&nbsp;: ' . $e($data['pihak2_ktp']) . '</p>';
-$html .= '<p class="det">No. HP&nbsp;&nbsp;&nbsp;&nbsp;: ' . $e($data['pihak2_hp']) . '</p>';
+$html .= '<table class="t">'
+    . '<tr><td width="6mm">-</td><td width="32mm">Nama</td><td width="6mm">:</td><td>' . $e($data['pihak2_nama']) . '</td></tr>'
+    . '<tr><td>-</td><td>Alamat</td><td>:</td><td>' . $e($data['pihak2_alamat']) . '</td></tr>'
+    . '<tr><td>-</td><td>No. HP</td><td>:</td><td>' . $e($data['pihak2_hp']) . '</td></tr>'
+    . '</table>';
 
 $html .= '<p class="isi">PIHAK PERTAMA menyerahkan kunci dan fisik bangunan rumah kepada PIHAK KEDUA dengan rincian sebagai berikut:</p>';
 
@@ -119,19 +118,19 @@ $html .= '<table class="t">'
     . '<tr><td width="6mm">-</td><td width="32mm">Perumahan</td><td width="6mm">:</td><td>' . $e($data['perumahan']) . '</td></tr>'
     . '<tr><td>-</td><td>Unit</td><td>:</td><td>' . $e($data['unit']) . '</td></tr>'
     . '<tr><td>-</td><td>Tipe / Luas</td><td>:</td><td>' . $e($data['tipe_luas']) . '</td></tr>'
-    . '<tr><td>-</td><td>Listrik / Air</td><td>:</td><td>' . $e($data['listrik']) . '</td></tr>'
+    . '<tr><td>-</td><td>Jumlah Kunci</td><td>:</td><td>' . $e($data['jumlah_kunci']) . '</td></tr>'
     . '</table>';
 
-// B. Kelengkapan
-$html .= '<p class="sub" style="margin-top:2mm;">B.&nbsp;&nbsp;&nbsp;KELENGKAPAN YANG DISERAHKAN</p>';
-$html .= '<table class="t">';
-$no = 1;
-foreach ($data['kelengkapan'] as $nama => $jumlah) {
-    $html .= '<tr><td width="7mm">' . $no++ . '.</td><td width="52mm">' . $e($nama) . '</td><td width="6mm">:</td><td>' . $e($jumlah) . '</td></tr>';
-}
-$html .= '</table>';
+// // B. Kelengkapan
+// $html .= '<p class="sub" style="margin-top:2mm;">B.&nbsp;&nbsp;&nbsp;KELENGKAPAN YANG DISERAHKAN</p>';
+// $html .= '<table class="t">';
+// $no = 1;
+// foreach ($data['kelengkapan'] as $nama => $jumlah) {
+//     $html .= '<tr><td width="7mm">' . $no++ . '.</td><td width="52mm">' . $e($nama) . '</td><td width="6mm">:</td><td>' . $e($jumlah) . '</td></tr>';
+// }
+// $html .= '</table>';
 
-// ======================== HALAMAN 2 ========================
+// halaman 2
 $html .= '<pagebreak />';
 
 $html .= '<p style="margin-top:2mm;">KETENTUAN:</p>';
