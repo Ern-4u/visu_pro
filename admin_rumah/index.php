@@ -68,7 +68,7 @@ else {
                         $panggil_data_site_plan = mysqli_query($conn, "SELECT * FROM site_plan" )or die($conn);
                         ?>
                         <div class="form-group">                    
-                            <select class="form-control" name="id_site_plan" id="">
+                            <select class="form-control" name="id_site_plan" id="" required>
                               <option value="">-- Masukan Lokasi Perumahan --</option>
                                 <?php 
                                 while ($dt_st = mysqli_fetch_array($panggil_data_site_plan)){?>
@@ -105,20 +105,20 @@ else {
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                
                 <div class="card-tools">
                   <button type="button" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
                   <button type="button" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
                   <a href="export.php" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>  
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped text-center">
                   <thead>
                   <tr>
                     <th class="text-center" width="5%">No</th>
                     <th>Kode Blok</th>
                     <th>Kategori</th>
                     <th>Status</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Progres Pembangunan</th>
+                    <th class="text-center">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -132,10 +132,14 @@ else {
                       <td><?= $d['nama_kategori']; ?></td>
                       <td><?php
                       if ($d['status'] == 0) {
-                        echo 'Tersedia';
+                        ?><span class="btn btn-success btn-xs">Tersedia</span> <?php
                       } elseif ($d['status'] == 1) {
-                        echo 'Tidak Tersedia';
+                        ?> <span class="btn btn-danger btn-xs">Tidak Tersedia</span> <?php
                       }?>
+                      </td>
+                      <td class="text-center">
+                        <a href="../admin_history_rumah/index.php?id=<?= $d['id_rumah'] ?>" 
+                        class="btn btn-xs btn-info"><i class="bi bi-clock-history"></i> Cek Progres</a>
                       </td>
                       <td class="text-center">
                         <a href="halaman_beli_rumah.php?id=<?= $d['id_rumah'] ?>" class="btn btn-xs btn-success"><i class="bi bi-cart-check-fill"></i> Beli Rumah</a>
