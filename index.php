@@ -212,6 +212,63 @@ function formatPriceLabel($harga) {
             color: var(--primary-navy);
         }
 
+
+        .info-card {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            height: 100%;
+            padding: 18px;
+            border: 1px solid #eef0f4;
+            border-radius: 10px;
+            background: #fff;
+        }
+        .info-card-icon {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: var(--secondary-navy);
+            color: var(--mustrad-gold);
+            font-size: 1.5rem;
+        }
+        .info-card-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+        }
+        .info-card-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--primary-navy);
+        }
+        .info-card-number small {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        .info-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .info-tag {
+            background: rgba(206, 167, 81, 0.15);
+            color: #8a6d1f;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
         /* Featured Properties Section */
         .featured-properties {
             padding-top: 80px;
@@ -228,50 +285,70 @@ function formatPriceLabel($harga) {
             margin-bottom: 50px;
         }
 
-        /* Property Card */
+        /* Property & Site Plan Card */
         .property-card {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             margin-bottom: 30px;
             height: 100%;
             display: flex;
             flex-direction: column;
+            border: 1px solid #edf0f5;
+            position: relative;
         }
         .property-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 35px rgba(10,25,47,0.12);
+            border-color: var(--gold-accent);
         }
         .property-img {
             height: 230px;
             background-color: var(--secondary-navy);
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .property-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.9;
+            opacity: 0.92;
             transition: transform 0.5s ease, opacity 0.3s;
         }
         .property-card:hover .property-img img {
             opacity: 1;
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
         .property-price {
             position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: var(--mustrad-gold);
-            color: var(--primary-navy);
-            padding: 8px 15px;
-            border-radius: 6px;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(10, 25, 47, 0.85);
+            color: var(--mustrad-gold);
+            padding: 6px 14px;
+            border-radius: 20px;
             font-weight: 700;
-            font-size: 1.05rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            font-size: 0.82rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(206, 167, 81, 0.3);
+        }
+        .property-badge-status {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #198754;
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         .property-content {
             padding: 22px;
@@ -280,12 +357,13 @@ function formatPriceLabel($harga) {
             flex-grow: 1;
         }
         .property-title {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--primary-navy);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-decoration: none;
             display: block;
+            transition: color 0.25s;
         }
         .property-title:hover {
             color: var(--mustrad-gold);
@@ -293,21 +371,94 @@ function formatPriceLabel($harga) {
         .property-location {
             color: #6c757d;
             font-size: 0.88rem;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             line-height: 1.4;
-            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .property-facilities {
+        .property-stats-grid {
             display: flex;
-            justify-content: space-between;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-            color: #555;
-            font-size: 0.88rem;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
         }
-        .facility i {
-            color: var(--mustrad-gold);
-            margin-right: 5px;
+        .property-stat-pill {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #475569;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .property-type-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 18px;
+        }
+        .property-type-chip {
+            background: rgba(206, 167, 81, 0.12);
+            color: #8c6b1b;
+            font-size: 0.73rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .property-actions {
+            margin-top: auto;
+            border-top: 1px solid #edf2f7;
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .btn-open-siteplan {
+            background-color: var(--primary-navy);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 9px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        .btn-open-siteplan:hover {
+            background-color: var(--mustrad-gold);
+            color: var(--primary-navy);
+            transform: translateY(-1px);
+        }
+        .property-social-links {
+            display: flex;
+            gap: 6px;
+        }
+        .social-circle-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .social-circle-link:hover {
+            background: var(--mustrad-gold);
+            color: var(--primary-navy);
         }
         
         .section-label {
@@ -568,8 +719,12 @@ function formatPriceLabel($harga) {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a href="index.php" class="navbar-logo">
-                <img src="../assets/logo/<?= $logo_filename ?>" alt="Logo <?= $nama_proyek ?>">
-                <span class="navbar-brand ms-2"><?=$nama_proyek ?></span>
+                <?php if (!empty($logo_filename) && file_exists('assets/logo/' . $logo_filename)) : ?>
+                    <img src="assets/logo/<?= htmlspecialchars($logo_filename) ?>" alt="Logo <?= htmlspecialchars($nama_proyek) ?>">
+                <?php else : ?>
+                    <i class="bi bi-building fs-3 text-warning"></i>
+                <?php endif; ?>
+                <span class="navbar-brand ms-2"><?= htmlspecialchars($nama_proyek) ?></span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="bi bi-list text-white fs-1"></i>
@@ -580,7 +735,7 @@ function formatPriceLabel($harga) {
                         <a class="nav-link active" href="index.php">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#properti">Properti</a>
+                        <a class="nav-link" href="#properti">Site Plan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#tentang-kami">Tentang Kami</a>
@@ -595,7 +750,7 @@ function formatPriceLabel($harga) {
                         <a href="<?= $dashboard_url ?>" class="btn btn-login"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
                         <a href="logout.php" class="btn btn-outline-light btn-sm px-3 py-2" title="Logout"><i class="bi bi-box-arrow-right"></i></a>
                     <?php else : ?>
-                        <a href="login.php" class="btn btn-login"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a>
+                        <a href="login.php" class="btn btn-login"><i class="bi bi-box-arrow-in-right me-2"></i>Login Staff</a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -606,166 +761,200 @@ function formatPriceLabel($harga) {
     <section class="hero text-center">
         <div class="container">
             <span class="hero-badge">
-                <i class="bi bi-building me-2"></i>Developer Perumahan Terpercaya
+                <i class="bi bi-shield-check me-2"></i>Developer & Kawasan Hunian Terpercaya
             </span>
-            <h1>Membangun Hunian,<br>Menghadirkan Masa Depan</h1>
-            <p>Eksplorasi daftar properti terverifikasi di berbagai lokasi strategis. Kami membantu Anda menemukan rumah yang sempurna sesuai dengan gaya hidup dan budget Anda.</p>
+            <h1>Membangun Hunian Impian,<br>Menghadirkan Masa Depan</h1>
+            <p>Eksplorasi denah site plan dan hunian pilihan terbaik di berbagai komplek strategis. Klik salah satu kawasan untuk melihat ketersediaan unit dan detail rumah impian Anda.</p>
             
             <div class="search-bar text-start">
-                <form action="index.php#properti" method="GET">
-                    <div class="row g-3 align-items-end">
-                        <div class="col-lg-4 col-md-6">
-                            <label for="location">Lokasi</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0"><i class="bi bi-geo-alt text-muted"></i></span>
-                                <select class="form-select" id="property-location" name="location">
-                                <option value="">Semua Tipe</option>
-                                <?php 
-                                $q_st_pln = mysqli_query($conn, "SELECT * FROM site_plan ORDER BY nama_site_plan ASC");
-                                if ($q_st_pln) {
-                                    while ($st = mysqli_fetch_assoc($q_st_pln)) {
-                                        $selected = ($search_type == $st['id_site_plan']) ? 'selected' : '';
-                                        echo '<option value="' . $st['id_site_plan'] . '" ' . $selected . '>' . htmlspecialchars($st['nama_site_plan']) . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <label for="property-type">Tipe Rumah</label>
-                            <select class="form-select" id="property-type" name="type">
-                                <option value="">Semua Tipe</option>
-                                <?php 
-                                $q_kat_opt = mysqli_query($conn, "SELECT * FROM kategori_rumah ORDER BY nama_kategori ASC");
-                                if ($q_kat_opt) {
-                                    while ($kat = mysqli_fetch_assoc($q_kat_opt)) {
-                                        $selected = ($search_type == $kat['id_kategori']) ? 'selected' : '';
-                                        echo '<option value="' . $kat['id_kategori'] . '" ' . $selected . '>' . htmlspecialchars($kat['nama_kategori']) . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <label for="price-range">Budget</label>
-                            <select class="form-select" id="price-range" name="price">
-                                <option value="">Semua Harga</option>
-                                <option value="1" <?= ($search_price == '1') ? 'selected' : '' ?>>&lt; Rp 500 Juta</option>
-                                <option value="2" <?= ($search_price == '2') ? 'selected' : '' ?>>Rp 500 Juta - 1 Miliar</option>
-                                <option value="3" <?= ($search_price == '3') ? 'selected' : '' ?>>&gt; Rp 1 Miliar</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 col-md-6">
-                            <button type="submit" class="btn btn-search w-100">
-                                <i class="bi bi-search me-2"></i>Cari
-                            </button>
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-lg-9 col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0 text-muted ps-3"><i class="bi bi-search"></i></span>
+                            <input type="text" id="filterKomplekInput" class="form-control border-start-0 ps-2" placeholder="Cari nama komplek atau lokasi perumahan..." onkeyup="filterSiteplanCards()">
                         </div>
                     </div>
-                </form>
+                    <div class="col-lg-3 col-md-4">
+                        <a href="#properti" class="btn btn-search w-100 text-center">
+                            <i class="bi bi-map me-1"></i> Eksplorasi Site Plan
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <!-- Site Plan Stat -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="bi bi-map"></i></div>
+                            <div>
+                                <?php 
+                                $query_total_site_plan = mysqli_query($conn, "SELECT COUNT(id_site_plan) AS total_site_plan FROM site_plan") or die(mysqli_error($conn));
+                                $tl_stplan = mysqli_fetch_array($query_total_site_plan);
+                                ?>
+                                <div class="info-card-label">Kawasan Perumahan</div>
+                                <div class="info-card-number"><?= $tl_stplan['total_site_plan'] ?> <small>lokasi</small></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kategori Rumah Stat -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="bi bi-houses"></i></div>
+                            <div>
+                                <?php 
+                                $query_total_kategori = mysqli_query($conn, "SELECT COUNT(id_kategori) AS total_kategori FROM kategori_rumah") or die(mysqli_error($conn));
+                                $tl_kat = mysqli_fetch_array($query_total_kategori);
+                                ?>
+                                <div class="info-card-label">Kategori / Tipe Rumah</div>
+                                <div class="info-card-number"><?= $tl_kat['total_kategori'] ?> <small>tipe</small></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Rumah Stat -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="info-card">
+                            <div class="info-card-icon"><i class="bi bi-house-check-fill"></i></div>
+                            <div>
+                                <?php 
+                                $query_total_rumah = mysqli_query($conn, "SELECT COUNT(id_rumah) AS total_rumah FROM rumah") or die(mysqli_error($conn));
+                                $tl_rmh = mysqli_fetch_array($query_total_rumah);
+                                ?>
+                                <div class="info-card-label">Total Unit Rumah</div>
+                                <div class="info-card-number"><?= $tl_rmh['total_rumah'] ?> <small>unit</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Properties Section -->
+    <!-- Featured Properties / Site Plan Section -->
     <section id="properti" class="featured-properties">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title">Properti Pilihan</h2>
-                <p class="section-subtitle">Temukan rumah dan hunian terbaik yang tersedia untuk keluarga Anda</p>
+                <span class="section-label">Masterplan & Properti</span>
+                <h2 class="section-title">Kawasan Site Plan Perumahan</h2>
+                <p class="section-subtitle">Klik pada salah satu kawasan komplek untuk melihat denah masterplan, kategori rumah, dan daftar ketersediaan unit di dalamnya.</p>
             </div>
 
-            <div class="row g-4">
-                <?php
-                $sql_properties = "SELECT kr.*, sp.id_site_plan, sp.nama_site_plan, sp.lokasi,
-                (SELECT foto FROM foto_rumah fr WHERE fr.id_kategori = kr.id_kategori ORDER BY fr.id_foto_rumah ASC LIMIT 1) as foto
-                FROM kategori_rumah kr
-                JOIN rumah r ON r.id_kategori = kr.id_kategori
-                JOIN site_plan sp ON sp.id_site_plan = r.id_site_plan";
+            <div class="row g-4" id="siteplanCardsGrid">
+                <?php 
+                $query_site_plan = mysqli_query($conn, "SELECT * FROM site_plan ORDER BY id_site_plan ASC") or die(mysqli_error($conn));
 
-                $where_clauses = [];
-                if (!empty($search_location)) {
-                    $where_clauses[] = "sp.id_site_plan = '$search_location'";
-                }
-                if (!empty($search_type)) {
-                    $where_clauses[] = "kr.id_kategori = '$search_type'";
-                }
-                if (!empty($search_price)) {
-                    if ($search_price == '1') {
-                        $where_clauses[] = "kr.harga < 500000000";
-                    } elseif ($search_price == '2') {
-                        $where_clauses[] = "kr.harga BETWEEN 500000000 AND 1000000000";
-                    } elseif ($search_price == '3') {
-                        $where_clauses[] = "kr.harga > 1000000000";
+                while ($site_plan = mysqli_fetch_array($query_site_plan)) { 
+                    $sp_id = $site_plan['id_site_plan'];
+                    
+                    // Hitung total unit dan unit tersedia
+                    $q_sp_unit = mysqli_query($conn, "SELECT 
+                        COUNT(id_rumah) AS total,
+                        SUM(CASE WHEN status='0' THEN 1 ELSE 0 END) AS tersedia,
+                        SUM(CASE WHEN status='1' THEN 1 ELSE 0 END) AS terjual
+                        FROM rumah WHERE id_site_plan = '$sp_id'");
+                    $sp_stat = mysqli_fetch_assoc($q_sp_unit);
+                    $sp_total = $sp_stat['total'] ?? 0;
+                    $sp_tersedia = $sp_stat['tersedia'] ?? 0;
+
+                    // Ambil beberapa tipe/kategori rumah yang ada di site plan ini
+                    $q_sp_kat = mysqli_query($conn, "SELECT DISTINCT k.nama_kategori 
+                        FROM kategori_rumah k 
+                        JOIN rumah r ON k.id_kategori = r.id_kategori 
+                        WHERE r.id_site_plan = '$sp_id' 
+                        ORDER BY k.nama_kategori ASC 
+                        LIMIT 3");
+                    $kat_list = [];
+                    while ($kl = mysqli_fetch_assoc($q_sp_kat)) {
+                        $kat_list[] = $kl['nama_kategori'];
                     }
-                }
 
-                if (count($where_clauses) > 0) {
-                    $sql_properties .= " WHERE " . implode(" AND ", $where_clauses);
-                }
+                    $gambar_brosur = $site_plan['brosur'];
+                    $path_brosur = 'assets/brosur/' . $gambar_brosur;
+                    $has_brosur = !empty($gambar_brosur) && file_exists($path_brosur);
 
-                $sql_properties .= " ORDER BY kr.id_kategori DESC";
-                $res_properties = mysqli_query($conn, $sql_properties);
-
-                // Fallback unsplash photos array for realistic demo rendering
-                $fallback_photos = [
-                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1600607687920-4e2a09be15b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                ];
-
-                if (mysqli_num_rows($res_properties) > 0) {
-                    $idx = 0;
-                    while ($prop = mysqli_fetch_assoc($res_properties)) {
-                        $foto_url = '';
-                        if (!empty($prop['foto']) && file_exists('assets/fto_rumah/' . $prop['foto'])) {
-                            $foto_url = 'assets/fto_rumah/' . $prop['foto'];
-                        } else {
-                            $foto_url = $fallback_photos[$idx % count($fallback_photos)];
-                        }
-                        
-                        $prop_location = !empty($prop['lokasi']) ? $prop['lokasi'] : $alamat_proyek;
-                        $display_title = !empty($prop['nama_site_plan']) ? $prop['nama_site_plan'] . ' (' . $prop['nama_kategori'] . ')' : $prop['nama_kategori'];
-                        $idx++;
-                        $id_kategori = $prop['id_kategori'];
-                        $query_total_harga_rumah = mysqli_query($conn, "SELECT SUM(harga) AS total_harga_rumah FROM jenis_pembayaran WHERE id_kategori = '$id_kategori'")or die(mysqli_query($conn));
-                        $tl_harga = mysqli_fetch_array($query_total_harga_rumah);
-                        $total_harga_rumah = $tl_harga['total_harga_rumah'] ? $tl_harga['total_harga_rumah'] : 0;
+                    $wa_penanggung = !empty($site_plan['penanggung_jawab']) ? preg_replace('/[^0-9]/', '', $site_plan['penanggung_jawab']) : preg_replace('/[^0-9]/', '', $cp_proyek);
+                    if (substr($wa_penanggung, 0, 1) === '0') {
+                        $wa_penanggung = '62' . substr($wa_penanggung, 1);
+                    }
                 ?>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="property-card">
-                                <div class="property-img">
-                                    <img src="<?= htmlspecialchars($foto_url) ?>" alt="<?= htmlspecialchars($prop['nama_kategori']) ?>">
-                                    <div class="property-price"><?= formatPriceLabel($total_harga_rumah) ?></div>
-                                </div>
-                                <div class="property-content">
-                                    <span class="property-title"><?= htmlspecialchars($display_title) ?></span>
-                                    <div class="property-location">
-                                        <i class="bi bi-geo-alt text-muted me-1"></i><?= htmlspecialchars($prop_location) ?>
+                    <div class="col-lg-4 col-md-6 siteplan-card-col" data-name="<?= strtolower(htmlspecialchars($site_plan['nama_site_plan'])) ?>" data-location="<?= strtolower(htmlspecialchars($site_plan['lokasi'])) ?>">
+                        <div class="property-card">
+                            <a href="detail_site_plan.php?id=<?= $sp_id ?>" class="property-img text-decoration-none">
+                                <?php if ($has_brosur) : ?>
+                                    <img src="<?= $path_brosur ?>" alt="Denah Komplek <?= htmlspecialchars($site_plan['nama_site_plan']) ?>" loading="lazy">
+                                <?php else : ?>
+                                    <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-white bg-dark p-3 text-center">
+                                        <i class="bi bi-map fs-1 text-warning mb-2"></i>
+                                        <span class="fw-bold small text-light">Denah Komplek</span>
+                                        <span class="text-white-50 small"><?= htmlspecialchars($site_plan['nama_site_plan']) ?></span>
                                     </div>
-                                    <div class="property-facilities">
-                                        <div class="facility" title="Kamar Tidur"><i class="bi bi-moon-stars"></i> <?= htmlspecialchars($prop['jumlah_kamar']) ?> Kamar</div>
-                                        <div class="facility" title="Luas Bangunan"><i class="bi bi-building"></i> LB: <?= htmlspecialchars($prop['luas_bangunan']) ?>m&sup2;</div>
-                                        <div class="facility" title="Luas Tanah"><i class="bi bi-arrows-fullscreen"></i> LT: <?= htmlspecialchars($prop['luas_tanah']) ?>m&sup2;</div>
+                                <?php endif; ?>
+                                <div class="property-badge-status">
+                                    <i class="bi bi-check-circle-fill me-1"></i><?= $sp_tersedia ?> Unit Tersedia
+                                </div>
+                                <div class="property-price">
+                                    <i class="bi bi-map me-1"></i>Denah Site Plan
+                                </div>
+                            </a>
+                            <div class="property-content">
+                                <a href="detail_site_plan.php?id=<?= $sp_id ?>" class="property-title">
+                                    Komplek <?= htmlspecialchars($site_plan['nama_site_plan']) ?>
+                                </a>
+                                <div class="property-location" title="<?= htmlspecialchars($site_plan['lokasi']) ?>">
+                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i><?= htmlspecialchars($site_plan['lokasi']) ?>
+                                </div>
+                                
+                                <div class="property-stats-grid">
+                                    <span class="property-stat-pill" title="Total Unit Rumah">
+                                        <i class="bi bi-houses text-primary"></i> <?= $sp_total ?> Unit Total
+                                    </span>
+                                    <span class="property-stat-pill text-success" title="Unit Siap Huni / Tersedia">
+                                        <i class="bi bi-check2-circle text-success"></i> <?= $sp_tersedia ?> Tersedia
+                                    </span>
+                                </div>
+
+                                <?php if (!empty($kat_list)) : ?>
+                                    <div class="property-type-tags">
+                                        <?php foreach ($kat_list as $kn) : ?>
+                                            <span class="property-type-chip"><i class="bi bi-layers me-1"></i><?= htmlspecialchars($kn) ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="property-actions">
+                                    <a href="detail_site_plan.php?id=<?= $sp_id ?>" class="btn-open-siteplan">
+                                        <span>Lihat Site Plan & Rumah</span>
+                                        <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                    <div class="property-social-links">
+                                        <?php if (!empty($site_plan['ig'])) : ?>
+                                            <a href="https://instagram.com/<?= htmlspecialchars(ltrim($site_plan['ig'], '@')) ?>" target="_blank" class="social-circle-link" title="Instagram Komplek">
+                                                <i class="bi bi-instagram"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($site_plan['tiktok'])) : ?>
+                                            <a href="https://tiktok.com/<?= htmlspecialchars($site_plan['tiktok']) ?>" target="_blank" class="social-circle-link" title="TikTok Komplek">
+                                                <i class="bi bi-tiktok"></i>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if (!empty($wa_penanggung)) : ?>
+                                            <a href="https://wa.me/<?= $wa_penanggung ?>?text=Halo%20Marketing,%20saya%20tertarik%20dengan%20Komplek%20<?= urlencode($site_plan['nama_site_plan']) ?>" target="_blank" class="social-circle-link text-success" title="WhatsApp Marketing">
+                                                <i class="bi bi-whatsapp"></i>
+                                            </a>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                <?php 
-                    }
-                } else {
-                ?>
-                    <div class="col-12 text-center py-5">
-                        <div class="p-4 bg-white rounded-3 shadow-sm d-inline-block">
-                            <i class="bi bi-house-x text-muted fs-1 mb-3 d-block"></i>
-                            <h4 class="text-dark font-weight-bold">Tidak ada properti ditemukan</h4>
-                            <p class="text-muted">Silakan coba kata kunci atau kriteria pencarian lain.</p>
-                            <a href="index.php#properti" class="btn btn-search btn-sm mt-2">Reset Pencarian</a>
-                        </div>
                     </div>
                 <?php } ?>
+            </div>
+
+            <!-- Empty Search State -->
+            <div id="noSiteplanFound" class="alert alert-warning text-center py-4 mt-3 d-none">
+                <i class="bi bi-search fs-3 d-block mb-2"></i>
+                Komplek perumahan tidak ditemukan. Silakan coba kata kunci lain.
             </div>
         </div>
     </section>
@@ -1024,7 +1213,7 @@ function formatPriceLabel($harga) {
                         $q_site_footer = mysqli_query($conn, "SELECT * FROM site_plan ORDER BY id_site_plan DESC LIMIT 5");
                         if ($q_site_footer && mysqli_num_rows($q_site_footer) > 0) {
                             while ($sp_f = mysqli_fetch_assoc($q_site_footer)) {
-                                echo '<li><a href="index.php#properti"><i class="bi bi-chevron-right me-1 small"></i>' . htmlspecialchars($sp_f['nama_site_plan']) . '</a></li>';
+                                echo '<li><a href="detail_site_plan.php?id=' . $sp_f['id_site_plan'] . '"><i class="bi bi-chevron-right me-1 small"></i>' . htmlspecialchars($sp_f['nama_site_plan']) . '</a></li>';
                             }
                         } else {
                             echo '<li><a href="#properti">Perumahan Griya Sejahtera</a></li>';
@@ -1036,9 +1225,9 @@ function formatPriceLabel($harga) {
                 <div class="col-lg-2">
                     <h5>Menu Utama</h5>
                     <ul class="footer-links">
-                        <li><a href="index.php">Home</a></li>
+                        <li><a href="index.php">Beranda</a></li>
+                        <li><a href="#properti">Site Plan</a></li>
                         <li><a href="#tentang-kami">Tentang Kami</a></li>
-                        <li><a href="#properti">Properti</a></li>
                         <li><a href="#kontak">Kontak</a></li>
                         <li><a href="login.php">Login Staff</a></li>
                     </ul>
@@ -1065,7 +1254,7 @@ function formatPriceLabel($harga) {
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Navbar Scroll Script -->
+    <!-- Navbar Scroll & Siteplan Filter Script -->
     <script>
         window.addEventListener('scroll', function() {
             var navbar = document.querySelector('.navbar');
@@ -1077,6 +1266,34 @@ function formatPriceLabel($harga) {
                 navbar.style.padding = '1rem 0';
             }
         });
+
+        // Quick Search Filter for Site Plan Cards
+        function filterSiteplanCards() {
+            var query = document.getElementById('filterKomplekInput').value.toLowerCase().trim();
+            var cards = document.querySelectorAll('.siteplan-card-col');
+            var visibleCount = 0;
+
+            cards.forEach(function(card) {
+                var name = card.getAttribute('data-name') || '';
+                var location = card.getAttribute('data-location') || '';
+
+                if (name.includes(query) || location.includes(query)) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            var noFoundAlert = document.getElementById('noSiteplanFound');
+            if (noFoundAlert) {
+                if (visibleCount === 0) {
+                    noFoundAlert.classList.remove('d-none');
+                } else {
+                    noFoundAlert.classList.add('d-none');
+                }
+            }
+        }
     </script>
 </body>
 </html>
