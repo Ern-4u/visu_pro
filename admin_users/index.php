@@ -138,17 +138,11 @@ else {
               <form action="tambah.php" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Masukan username" required>
+                    <input type="text" name="username" class="form-control" maxlength="15" id="username" placeholder="Masukan username" required>
                 </div>
                 <div class="form-group">
                     <label for="nama">Nama</label>
-                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukan Nama" required>
-                </div>
-                <div class="form-group">
-                  <label for="peran">Role</label>
-                  <select name="peran" class="form-control" id="peran">
-                    <option value="A">Admin</option>
-                  </select>
+                    <input type="text" name="nama" maxlength="255" class="form-control" id="nama" placeholder="Masukan Nama" required>
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>

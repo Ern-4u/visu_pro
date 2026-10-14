@@ -171,7 +171,7 @@ else {
               <form action="tambah.php" method="post">
                 <div class="form-group">
                     <label for="id_karyawan">ID Karyawan</label>
-                    <input type="text" name="id_karyawan" class="form-control" id="id_karyawan" placeholder="Masukan ID Karyawan" required>
+                    <input type="text" name="id_karyawan" maxlength="15" class="form-control" id="id_karyawan" placeholder="Masukan ID Karyawan" required>
                 </div>
                 <div class="form-group">
                     <label for="nama">Nama</label>
@@ -248,7 +248,7 @@ else {
               <form action="edit.php" method="post">
                 <div class="form-group">
                     <label for="id_karyawan">ID Karyawan</label>
-                    <input type="text" name="id_karyawan" class="form-control" id="id_karyawan" placeholder="Masukan ID Karyawan" required>
+                    <input type="text" name="id_karyawan" class="form-control" maxlength="15" id="id_karyawan" placeholder="Masukan ID Karyawan" required>
                 </div>
                 <div class="form-group">
                     <label for="nama">Nama</label>

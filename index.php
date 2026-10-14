@@ -738,6 +738,9 @@ function formatPriceLabel($harga) {
                         <a class="nav-link" href="#properti">Site Plan</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="history_rumah.php"><i class="bi bi-clock-history me-1 text-warning"></i>Progres Rumah</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#tentang-kami">Tentang Kami</a>
                     </li>
                     <li class="nav-item">
@@ -768,15 +771,20 @@ function formatPriceLabel($harga) {
             
             <div class="search-bar text-start">
                 <div class="row g-3 align-items-center mb-3">
-                    <div class="col-lg-9 col-md-8">
+                    <div class="col-lg-6 col-md-5">
                         <div class="input-group">
                             <span class="input-group-text bg-white border-end-0 text-muted ps-3"><i class="bi bi-search"></i></span>
                             <input type="text" id="filterKomplekInput" class="form-control border-start-0 ps-2" placeholder="Cari nama komplek atau lokasi perumahan..." onkeyup="filterSiteplanCards()">
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-4">
+                    <div class="col-lg-3 col-md-3">
                         <a href="#properti" class="btn btn-search w-100 text-center">
                             <i class="bi bi-map me-1"></i> Eksplorasi Site Plan
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <a href="history_rumah.php" class="btn w-100 text-center fw-bold" style="background-color: var(--mustrad-gold); color: var(--primary-navy); padding: 12px 15px; border-radius: 6px;">
+                            <i class="bi bi-clock-history me-1"></i> Cek Progres Rumah
                         </a>
                     </div>
                 </div>
@@ -1227,6 +1235,7 @@ function formatPriceLabel($harga) {
                     <ul class="footer-links">
                         <li><a href="index.php">Beranda</a></li>
                         <li><a href="#properti">Site Plan</a></li>
+                        <li><a href="history_rumah.php">Progres Rumah</a></li>
                         <li><a href="#tentang-kami">Tentang Kami</a></li>
                         <li><a href="#kontak">Kontak</a></li>
                         <li><a href="login.php">Login Staff</a></li>

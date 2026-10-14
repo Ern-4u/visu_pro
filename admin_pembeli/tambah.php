@@ -14,8 +14,9 @@ if (isset($_POST['btn_tambah'])) {
     $kontak = trim(mysqli_real_escape_string($conn, $_POST['kontak']));
     $id_karyawan = trim(mysqli_real_escape_string($conn, $_POST['id_karyawan']));
 
+    $panjang_nik = strlen($nik);
 
-    
+    if ($panjang_nik == 16) {
         $query_simpan = mysqli_query($conn, "INSERT INTO pembeli 
          VALUES 
          (null,
@@ -29,6 +30,12 @@ if (isset($_POST['btn_tambah'])) {
 
          echo '<script> alert("Data Berhasil Disimpan"); 
          window.location.href="index.php" </script>';
+    } else {
+        echo '<script> alert("Panjang NIK harus 16 digit"); 
+         window.location.href="index.php" </script>';
+    }
+    
+        
     
 }
 

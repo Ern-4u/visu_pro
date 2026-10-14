@@ -9,7 +9,7 @@ require_once('../database/config.php');
 if (isset($_POST['btn_tambah'])) {
     $username = trim(mysqli_real_escape_string($conn, $_POST['username']));
     $nama = trim(mysqli_real_escape_string($conn, $_POST['nama']));
-    $role = trim(mysqli_real_escape_string($conn, $_POST['peran']));
+    $role = 'A';
     $password = sha1($username);
     $pin = '123456';
 

@@ -1075,9 +1075,9 @@ function formatRupiah($angka) {
                                             <i class="bi bi-whatsapp"></i> Tanya Unit Ini
                                         </a>
                                     <?php else : ?>
-                                        <button class="btn btn-secondary btn-sm w-100 disabled" style="font-size: 0.8rem;">
-                                            Unit Sudah Terjual
-                                        </button>
+                                        <a href="history_rumah.php?id_rumah=<?= $rmh['id_rumah'] ?>" class="btn btn-outline-primary btn-sm w-100 fw-semibold" style="font-size: 0.8rem; border-color: var(--primary-navy); color: var(--primary-navy);" title="Pembeli dapat cek progres unit ini">
+                                            <i class="bi bi-clock-history me-1"></i> Cek Progres Pembangunan
+                                        </a>
                                     <?php endif; ?>
                                 </div>
                             </div>
