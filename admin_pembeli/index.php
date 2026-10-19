@@ -144,7 +144,7 @@ else {
                 <div class="form-group">
                     <input type="hidden" name="id_karyawan" value="<?= $_SESSION['username'] ?>">
                     <label for="no_transaksi">NIK</label>
-                    <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
+                    <input type="text" name="nik" class="form-control" id="nik" maxlength="20" placeholder="Masukan NIK calon Pembeli" required>
                 </div>
                 <div class="form-group">
                     <label for="nama_pembeli">Nama Pembeli</label>
@@ -156,7 +156,7 @@ else {
                 </div>
                 <div class="form-group">
                     <label for="kontak">Nomor Kontak</label>
-                    <input type="text" name="kontak" class="form-control" id="kontak" placeholder="Masukan Nomor Kontak Pembeli" required>
+                    <input type="number" name="kontak" class="form-control" maxlength="15" id="kontak" placeholder="Masukan Nomor Kontak Pembeli" required>
                 </div>
                 <div class="form-group">
                     <label for="pasangan">Pasangan</label>
@@ -220,7 +220,7 @@ else {
                 <input type="hidden" name="id_pembeli">
                <div class="form-group">
                     <label for="nik">NIK</label>
-                    <input type="text" name="nik" class="form-control" id="nik" placeholder="Masukan NIK calon Pembeli" required>
+                    <input type="text" name="nik" class="form-control" id="nik" maxlength="20" placeholder="Masukan NIK calon Pembeli" required>
                 </div>
                 <div class="form-group">
                     <label for="nama_pembeli">Nama Pembeli</label>
@@ -232,7 +232,7 @@ else {
                 </div>
                 <div class="form-group">
                     <label for="kontak">Nomor Kontak</label>
-                    <input type="text" name="kontak" class="form-control" id="kontak" placeholder="Masukan Nomor Kontak Pembeli" required>
+                    <input type="number" name="kontak" class="form-control" maxlength="15" id="kontak" placeholder="Masukan Nomor Kontak Pembeli" required>
                 </div>
                 <div class="form-group">
                     <label for="pasangan">Pasangan</label>

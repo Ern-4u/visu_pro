@@ -16,11 +16,11 @@ if (isset($_POST['btn_brosur'])) {
     $query_foto = mysqli_query($conn, "UPDATE site_plan SET brosur = '$nama_file' WHERE id_site_plan = '$id_site_plan'") or die(mysqli_error($conn));
     if  ($query_foto) {
 
-    echo '<script> alert("Foto Berhasil disimpan");
+    echo '<script> alert("Brosur Berhasil disimpan");
     window.location.href="index.php" </script>';
 
     } else {
-        echo '<script> alert("Foto Gagal disimpan");
+        echo '<script> alert("Brosur Gagal disimpan");
     window.location.href="index.php" </script>';
     }
 
@@ -41,11 +41,11 @@ if (isset($_POST['btn_edit_brosur'])) {
     $query_foto = mysqli_query($conn, "UPDATE site_plan SET brosur = '$nama_file' WHERE id_site_plan = '$id_site_plan'") or die(mysqli_error($conn));
     if  ($query_foto) {
 
-    echo '<script> alert("Foto Berhasil disimpan");
+    echo '<script> alert("Brosur Berhasil disimpan");
     window.location.href="index.php" </script>';
 
     } else {
-        echo '<script> alert("Foto Gagal disimpan");
+        echo '<script> alert("Brosur Gagal disimpan");
     window.location.href="index.php" </script>';
     }
 

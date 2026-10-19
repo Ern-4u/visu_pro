@@ -105,10 +105,48 @@ else {
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div class="card-tools">
-                  <button type="button" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button type="button" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
-                  <a href="export.php" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>  
+                <!-- INFORMASI SITE PLAN -->
+                <div class="row mb-3">
+                  <div class="col-lg-5 mb-3 mb-lg-0">
+                    <h6 class="text-uppercase text-muted font-weight-bold mb-3">Informasi Komplek</h6>
+                    <table class="table table-sm table-borderless mb-0">
+                      <tr>
+                        <th style="width: 35%;">Nama Komplek</th>
+                        <td style="width: 5%;">:</td>
+                        <td><?= htmlspecialchars($nm_st_pln['nama_site_plan']) ?></td>
+                      </tr>
+                      <tr>
+                        <th>Lokasi</th>
+                        <td>:</td>
+                        <td><?= htmlspecialchars($nm_st_pln['lokasi']) ?></td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div class="col-lg-7">
+                    <h6 class="text-uppercase text-muted font-weight-bold mb-3">Denah Komplek</h6>
+                    <a href="../assets/foto_site_plan/<?= htmlspecialchars($nm_st_pln['foto_site_plan']) ?>" target="_blank" title="Klik untuk memperbesar">
+                      <img src="../assets/foto_site_plan/<?= htmlspecialchars($nm_st_pln['foto_site_plan']) ?>"
+                          class="img-fluid img-thumbnail"
+                          style="max-height: 300px; width: 100%; object-fit: contain;"
+                          alt="Denah <?= htmlspecialchars($nm_st_pln['nama_site_plan']) ?>">
+                    </a>
+                  </div>
+                </div>
+
+                <hr>
+
+                <!-- TOMBOL AKSI -->
+                <div class="d-flex flex-wrap mb-3" style="gap: 6px;">
+                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah">
+                    <i class="fas fa-plus"></i> Tambah Data
+                  </button>
+                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import">
+                    <i class="fas fa-file-excel"></i> Import Excel
+                  </button>
+                  <a href="export.php" class="btn btn-sm" style="background-color: #001F3F; color: white;">
+                    <i class="fas fa-file-download"></i> Export Excel
+                  </a>
                 </div>
                 <table id="example1" class="table table-bordered table-striped text-center">
                   <thead>

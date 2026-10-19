@@ -187,7 +187,8 @@ else {
                 </div>
                 <div class="form-group">
                   <label for="kelamin">Jenis Kelamin</label>
-                  <select name="kelamin" class="form-control" id="kelamin">
+                  <select name="kelamin" class="form-control" required id="kelamin">
+                    <option value="">-- Pilih Jenis Kelamin --</option>
                     <option value="L">Laki-laki</option>
                     <option value="P">Perempuan</option>
                   </select>
@@ -256,7 +257,7 @@ else {
                 </div>
                 <div class="form-group">
                     <label for="kontak">Kontak</label>
-                    <input type="text" name="kontak" class="form-control" id="kontak" placeholder="Masukan Kontak" required>
+                    <input type="number" maxlength="15" name="kontak" class="form-control" id="kontak" placeholder="Masukan Kontak" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -264,7 +265,8 @@ else {
                 </div>
                 <div class="form-group">
                   <label for="kelamin">Jenis Kelamin</label>
-                  <select name="kelamin" class="form-control" id="kelamin">
+                  <select name="kelamin" class="form-control" required id="kelamin">
+                    <option value="">--Pilih Jenis Kelamin --</option>
                     <option value="L">Laki-laki</option>
                     <option value="P">Perempuan</option>
                   </select>

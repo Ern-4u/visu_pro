@@ -407,8 +407,15 @@ function formatPriceLabel($harga) {
             color: #8c6b1b;
             font-size: 0.73rem;
             font-weight: 600;
-            padding: 2px 8px;
+            padding: 3px 9px;
             border-radius: 4px;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+        .property-type-chip:hover {
+            background: var(--mustrad-gold);
+            color: var(--primary-navy);
+            transform: translateY(-1px);
         }
         .property-actions {
             margin-top: auto;
@@ -866,7 +873,7 @@ function formatPriceLabel($harga) {
                     $sp_tersedia = $sp_stat['tersedia'] ?? 0;
 
                     // Ambil beberapa tipe/kategori rumah yang ada di site plan ini
-                    $q_sp_kat = mysqli_query($conn, "SELECT DISTINCT k.nama_kategori 
+                    $q_sp_kat = mysqli_query($conn, "SELECT DISTINCT k.id_kategori, k.nama_kategori 
                         FROM kategori_rumah k 
                         JOIN rumah r ON k.id_kategori = r.id_kategori 
                         WHERE r.id_site_plan = '$sp_id' 
@@ -874,7 +881,7 @@ function formatPriceLabel($harga) {
                         LIMIT 3");
                     $kat_list = [];
                     while ($kl = mysqli_fetch_assoc($q_sp_kat)) {
-                        $kat_list[] = $kl['nama_kategori'];
+                        $kat_list[] = $kl;
                     }
 
                     $gambar_brosur = $site_plan['brosur'];
@@ -925,7 +932,7 @@ function formatPriceLabel($harga) {
                                 <?php if (!empty($kat_list)) : ?>
                                     <div class="property-type-tags">
                                         <?php foreach ($kat_list as $kn) : ?>
-                                            <span class="property-type-chip"><i class="bi bi-layers me-1"></i><?= htmlspecialchars($kn) ?></span>
+                                            <a href="detail_kategori.php?id=<?= $kn['id_kategori'] ?>" class="property-type-chip text-decoration-none" title="Lihat detail tipe <?= htmlspecialchars($kn['nama_kategori']) ?>"><i class="bi bi-layers me-1"></i><?= htmlspecialchars($kn['nama_kategori']) ?></a>
                                         <?php endforeach; ?>
                                     </div>
                                 <?php endif; ?>

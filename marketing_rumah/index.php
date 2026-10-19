@@ -16,10 +16,10 @@ else {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VISU Pro | Dashboard admin</title>
+  <title>VISU Pro | Dashboard MARKETING</title>
   <?php
     include '../layout_marketing/css.php';
-    $hal = 'admin_rumah';
+    $hal = 'rumah';
   ?>
   
 </head>
@@ -68,7 +68,7 @@ else {
                         $panggil_data_site_plan = mysqli_query($conn, "SELECT * FROM site_plan" )or die($conn);
                         ?>
                         <div class="form-group">                    
-                            <select class="form-control" name="id_site_plan" id="">
+                            <select class="form-control" name="id_site_plan" id="" required>
                               <option value="">-- Masukan Lokasi Perumahan --</option>
                                 <?php 
                                 while ($dt_st = mysqli_fetch_array($panggil_data_site_plan)){?>
@@ -101,22 +101,62 @@ else {
             <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
                 <h3 class="card-title">DAFTAR RUMAH KOMPLEK <?= strtoupper($nm_st_pln['nama_site_plan']) ?></h3>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div class="col-6">
-                  
+                <!-- INFORMASI SITE PLAN -->
+                <div class="row mb-3">
+                  <div class="col-lg-5 mb-3 mb-lg-0">
+                    <h6 class="text-uppercase text-muted font-weight-bold mb-3">Informasi Komplek</h6>
+                    <table class="table table-sm table-borderless mb-0">
+                      <tr>
+                        <th style="width: 35%;">Nama Komplek</th>
+                        <td style="width: 5%;">:</td>
+                        <td><?= htmlspecialchars($nm_st_pln['nama_site_plan']) ?></td>
+                      </tr>
+                      <tr>
+                        <th>Lokasi</th>
+                        <td>:</td>
+                        <td><?= htmlspecialchars($nm_st_pln['lokasi']) ?></td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div class="col-lg-7">
+                    <h6 class="text-uppercase text-muted font-weight-bold mb-3">Denah Komplek</h6>
+                    <a href="../assets/foto_site_plan/<?= htmlspecialchars($nm_st_pln['foto_site_plan']) ?>" target="_blank" title="Klik untuk memperbesar">
+                      <img src="../assets/foto_site_plan/<?= htmlspecialchars($nm_st_pln['foto_site_plan']) ?>"
+                          class="img-fluid img-thumbnail"
+                          style="max-height: 300px; width: 100%; object-fit: contain;"
+                          alt="Denah <?= htmlspecialchars($nm_st_pln['nama_site_plan']) ?>">
+                    </a>
+                  </div>
                 </div>
-                
-                    
-                <table id="example1" class="table table-bordered table-striped">
+
+                <hr>
+
+                <!-- TOMBOL AKSI -->
+                <div class="d-flex flex-wrap mb-3" style="gap: 6px;">
+                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah">
+                    <i class="fas fa-plus"></i> Tambah Data
+                  </button>
+                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import">
+                    <i class="fas fa-file-excel"></i> Import Excel
+                  </button>
+                  <a href="export.php" class="btn btn-sm" style="background-color: #001F3F; color: white;">
+                    <i class="fas fa-file-download"></i> Export Excel
+                  </a>
+                </div>
+                <table id="example1" class="table table-bordered table-striped text-center">
                   <thead>
                   <tr>
                     <th class="text-center" width="5%">No</th>
                     <th>Kode Blok</th>
                     <th>Kategori</th>
                     <th>Status</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Progres Pembangunan</th>
+                    <th class="text-center">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -130,20 +170,18 @@ else {
                       <td><?= $d['nama_kategori']; ?></td>
                       <td><?php
                       if ($d['status'] == 0) {
-                        echo 'Tersedia';
+                        ?><span class="btn btn-success btn-xs">Tersedia</span> <?php
                       } elseif ($d['status'] == 1) {
-                        echo 'Terjual Cash';
-                      } elseif ($d['status'] == 2) {
-                        echo 'Terjual Cash Tempo';
-                      } elseif ($d['status'] == 3) {
-                        echo 'Terjual Kredit';
-                      } elseif ($d['status'] == 4) {
-                        echo 'Terbooking';
-                      }
-                      ?>
+                        ?> <span class="btn btn-danger btn-xs">Tidak Tersedia</span> <?php
+                      }?>
+                      </td>
+                      <td class="text-center">
+                        <a href="progres_rumah.php?id=<?= $d['id_rumah'] ?>" 
+                        class="btn btn-xs btn-info"><i class="bi bi-clock-history"></i> Cek Progres</a>
                       </td>
                       <td class="text-center">
                         <a href="halaman_beli_rumah.php?id=<?= $d['id_rumah'] ?>" class="btn btn-xs btn-success"><i class="bi bi-cart-check-fill"></i> Beli Rumah</a>
+                        
                       </td>
                     </tr>
                      <?php } ?>

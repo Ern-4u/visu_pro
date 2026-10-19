@@ -79,6 +79,7 @@ else {
                     <th>Nama Perumahan</th>
                     <th>Lokasi</th>
                     <th>Kontak PJ</th>
+                    <th>Denah Komplek</th>
                     <th>Brosur</th>
                     <th>Sosial Media</th>
                     <th>Aksi</th>
@@ -95,6 +96,26 @@ else {
                       <td><a href="https://wa.me/<?= $d['penanggung_jawab']; ?>?text=Hai Bolehkah saya bertanya tentang Rumah?" target="_blank" type="button"  class="btn btn-success btn-xs">
                            <i class="bi bi-whatsapp"></i><?= $d['penanggung_jawab'];?>                           
                       </a></td>
+                      <td class="text-center">
+                        <?php if (!empty($d['foto_site_plan'])) { ?>
+                          <button type="button" class="btn btn-info btn-xs"
+                            data-toggle="modal" data-target="#modal-denah"
+                            data-foto="<?= htmlspecialchars($d['foto_site_plan']) ?>">
+                            <i class="fas fa-search-plus"></i> Lihat Denah
+                          </button>
+                          <button type="button" class="btn btn-warning btn-xs"
+                            data-toggle="modal" data-target="#modal-edit-denah"
+                            data-id_edit_denah="<?= $d['id_site_plan'] ?>">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                        <?php } else { ?>
+                          <button type="button" class="btn btn-default btn-xs"
+                            data-toggle="modal" data-target="#modal-tambah-denah"
+                            data-id_tambah_denah="<?= $d['id_site_plan'] ?>">
+                            <i class="fas fa-plus"></i> Tambah Denah
+                          </button>
+                        <?php } ?>
+                      </td>
                       <td class="text-center"> <?php if ($d['brosur']== '') {?>
                         <button type="button" class="btn btn-default btn-xs"
                         data-target="#modal-brosur"
@@ -310,6 +331,88 @@ else {
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal Brosur -->
+
+      <!-- modal Tambah Denah -->
+      <div class="modal fade" id="modal-tambah-denah">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">TAMBAH FOTO DENAH</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="denah.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <input type="hidden" name="id_tambah_denah" required>
+                    <label for="foto_denah">Pilih Foto Denah (.jpg, .jpeg, .png)</label>
+                    <input type="file" name="tambah_foto_site_plan" class="form-control" id="foto_site_plan" required accept=".jpg, .jpeg, .png">
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_tambah_denah" class="btn btn-success">Tambah Data</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Tambah Denah -->
+       <!-- modal Edit Denah -->
+      <div class="modal fade" id="modal-edit-denah">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">TAMBAH FOTO DENAH</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="denah.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <input type="hidden" name="id_edit_denah" required>
+                    <label for="foto_denah">Pilih Foto Denah (.jpg, .jpeg, .png)</label>
+                    <input type="file" name="edit_foto_site_plan" class="form-control" id="foto_site_plan" required accept=".jpg, .jpeg, .png">
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" name="btn_edit_denah" class="btn btn-success">Edit Data</button>
+              </div>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Tambah Denah -->
+
+      <!-- modal Lihat Denah -->
+      <div class="modal fade" id="modal-denah">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #001F3F; color: white;">
+              <h4 class="modal-title">FOTO DENAH</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <img id="img-denah" src="" alt="Denah" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal Lihat Denah -->
        
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -356,6 +459,33 @@ include '../layout_admin/js.php'
   
    $(e.currentTarget).find('input[name="id_site_plan"]').val(id_site_plan);
   
+  });
+
+  $('#modal-tambah-denah').on('show.bs.modal', function(e) {
+
+   var id_tambah_denah = $(e.relatedTarget).data('id_tambah_denah');
+  
+   $(e.currentTarget).find('input[name="id_tambah_denah"]').val(id_tambah_denah);
+  
+  });
+  $('#modal-edit-denah').on('show.bs.modal', function(e) {
+
+   var id_edit_denah = $(e.relatedTarget).data('id_edit_denah');
+  
+   $(e.currentTarget).find('input[name="id_edit_denah"]').val(id_edit_denah);
+  
+  });
+  $('#modal-denah').on('show.bs.modal', function(e) {
+
+   var id_site_plan = $(e.relatedTarget).data('id_site_plan');
+  
+   $(e.currentTarget).find('input[name="id_site_plan"]').val(id_site_plan);
+  
+  });
+
+  $('#modal-denah').on('show.bs.modal', function (e) {
+  var foto = $(e.relatedTarget).data('foto');
+  $('#img-denah').attr('src', '../assets/foto_site_plan/' + foto);
   });
  
 </script> 

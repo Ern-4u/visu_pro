@@ -41,7 +41,8 @@ if (isset($_POST['btn_tambah'])) {
          '$penanggung_jawab',
          '$ig',
          '$tiktok',
-         '$brosur'
+         '$brosur',
+         null
          )
          ") or die (mysqli_error($conn)) ;
 

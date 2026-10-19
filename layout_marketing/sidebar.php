@@ -60,6 +60,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="../marketing_keamanan/" class="nav-link <?=  ($hal == "keamanan") ? "active" : "" ?>">
+              <i class="nav-icon fas fa-user-shield"></i>
+              <p>Keamanan Akun</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="../logout.php" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Log Out</p>

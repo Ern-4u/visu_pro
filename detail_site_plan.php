@@ -793,8 +793,8 @@ function formatRupiah($angka) {
                         </div>
 
                         <?php 
-                        $gambar_brosur = $site_plan['brosur'];
-                        $path_brosur = 'assets/brosur/' . $gambar_brosur;
+                        $gambar_brosur = $site_plan['foto_site_plan'];
+                        $path_brosur = 'assets/foto_site_plan/' . $gambar_brosur;
                         $has_brosur = !empty($gambar_brosur) && file_exists($path_brosur);
                         ?>
 
@@ -903,20 +903,26 @@ function formatRupiah($angka) {
                         <div class="col-lg-4 col-md-6">
                             <div class="kategori-card">
                                 <div class="kategori-img-wrap">
-                                    <?php if ($has_foto) : ?>
-                                        <img src="<?= $foto_utama ?>" alt="<?= htmlspecialchars($kat['nama_kategori']) ?>">
-                                    <?php else : ?>
-                                        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-white bg-dark">
-                                            <i class="bi bi-house fs-1 text-warning mb-1"></i>
-                                            <span class="small text-white-50"><?= htmlspecialchars($kat['nama_kategori']) ?></span>
-                                        </div>
-                                    <?php endif; ?>
+                                    <a href="detail_kategori.php?id=<?= $kat['id_kategori'] ?>" class="d-block w-100 h-100">
+                                        <?php if ($has_foto) : ?>
+                                            <img src="<?= $foto_utama ?>" alt="<?= htmlspecialchars($kat['nama_kategori']) ?>">
+                                        <?php else : ?>
+                                            <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-white bg-dark">
+                                                <i class="bi bi-house fs-1 text-warning mb-1"></i>
+                                                <span class="small text-white-50"><?= htmlspecialchars($kat['nama_kategori']) ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                    </a>
                                     <div class="kategori-unit-badge">
                                         <?= $kat['tersedia_kategori'] ?> Unit Tersedia
                                     </div>
                                 </div>
                                 <div class="kategori-body">
-                                    <h4 class="kategori-title"><?= htmlspecialchars($kat['nama_kategori']) ?></h4>
+                                    <h4 class="kategori-title">
+                                        <a href="detail_kategori.php?id=<?= $kat['id_kategori'] ?>" class="text-decoration-none" style="color: var(--primary-navy);">
+                                            <?= htmlspecialchars($kat['nama_kategori']) ?>
+                                        </a>
+                                    </h4>
                                     
                                     <div class="spec-grid">
                                         <div class="spec-item">
@@ -953,9 +959,14 @@ function formatRupiah($angka) {
                                             </div>
                                         <?php endif; ?>
 
-                                        <button class="btn-filter-kategori" onclick="filterByKategori('<?= htmlspecialchars(addslashes($kat['nama_kategori'])) ?>')">
-                                            <i class="bi bi-search me-1"></i> Lihat Unit Tipe Ini (<?= $kat['total_unit_kategori'] ?> unit)
-                                        </button>
+                                        <div class="d-flex gap-2 mt-2">
+                                            <a href="detail_kategori.php?id=<?= $kat['id_kategori'] ?>" class="btn btn-outline-dark btn-sm w-50 py-2 fw-semibold">
+                                                <i class="bi bi-info-circle me-1"></i> Detail Tipe
+                                            </a>
+                                            <button class="btn btn-sm w-50 py-2 fw-semibold text-white" style="background-color: var(--primary-navy);" onclick="filterByKategori('<?= htmlspecialchars(addslashes($kat['nama_kategori'])) ?>')">
+                                                <i class="bi bi-search me-1"></i> Lihat Unit
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

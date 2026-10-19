@@ -84,7 +84,7 @@ else {
                     <th>Nomor Surat</th>
                     <th>Tanggal Surat</th>
                     <th>Nama Penerima</th>
-                    <th>File</th>
+                    <th>File (TTD)</th>
                     <th>Aksi</th>
                   </tr>
                   </thead>
@@ -105,12 +105,12 @@ else {
                           data-id="<?= $d['id_berita_acara'] ?>">
                             <i class="bi bi-file-earmark-arrow-up-fill"></i> Upload File</button>
                        <?php } else { ?>
-                           <a href="../assets/bast/<?= $d['file'] ?>" target="_blank" class="btn btn-xs btn-info"><i class="bi bi-file-earmark-arrow-down-fill"></i> Dwonload File</a>
+                           <a href="../assets/bast/<?= $d['file'] ?>" target="_blank" class="btn btn-xs btn-success"><i class="bi bi-file-earmark-arrow-down-fill"></i> Dwonload File</a>
                        <?php }
                         ?>
                       </td>
                       <td class="text-center">
-                        <a href="pdf.php?id=<?= $d['id_berita_acara'] ?>" class="btn btn-info btn-xs" target="_blank">Generate</a>
+                        <a href="pdf.php?id=<?= $d['id_berita_acara'] ?>" class="btn btn-info btn-xs" target="_blank"><i class="bi bi-file-earmark-pdf-fill"></i> Generate</a>
                         <a href="hapus.php?id=<?= $d['id_berita_acara']; ?>" 
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
