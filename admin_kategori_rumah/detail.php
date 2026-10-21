@@ -176,7 +176,8 @@ if ($authority != 'A') {
                                         <img class="card-img" src="../assets/fto_rumah/<?= $dt_f['foto'] ?>" alt="Foto Spek Rumah">
                                         <div class="card-img-overlay d-flex flex-column justify-content-end p-2">
                                             <h5 class="card-title"><b><?= $dt_f['keterangan_foto'] ?></b></h5>
-                                        </div>
+                                            <a href="hapus_foto.php?id=<?= $dt_f['id_foto_rumah'] ?>&id_kategori=<?= $id_kategori ?>" class="card-title"><span class="btn btn-xs btn-danger"><i class="fas fa-trash"></i>  Hapus</span></a>
+                                        </div> 
                                     </div>
                                 </div>
                             <?php } ?>
