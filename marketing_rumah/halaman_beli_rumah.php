@@ -90,7 +90,7 @@ $id_karyawan = $_SESSION['username'];
                     <div class="col-lg-4">
                         <div class="form-group">
                         <label for="">Pilih Data Pembeli</label>
-                        <select name="id_pembeli" id="" class="form-control select2" style="width: 100%;" >
+                        <select name="id_pembeli" id="" class="form-control select2bs4" style="width: 100%;" >
                             <option value="">-- Pilih Pembeli --</option>
                             <?php 
                             while ($dt_pbl = mysqli_fetch_array($ambil_data_pembeli)) { ?>
@@ -102,8 +102,20 @@ $id_karyawan = $_SESSION['username'];
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                        <label for="">Pilih Data Marketing</label>
-                        <input type="text" class="form-control" name="id_karyawan" readonly value="<?= $_SESSION['username'] ?>"> 
+                        <input type="hidden" class="form-control" name="id_karyawan" readonly value="<?= $_SESSION['username'] ?>"> 
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label for="">Rencana Pembelian</label>
+                        <select name="rencana_pembelian" class="form-control" style="width: 100%;" required>
+                            <option value="">-- Pilih Rencana Pembelian --</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cash Tempo">Cash Tempo</option>
+                            <option value="Kredit">Kredit</option>
+                        </select>
                         </div>
                     </div>
                 </div>

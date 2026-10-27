@@ -92,9 +92,14 @@ if ($authority != 'A') {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Kategori Rumah</a></li>
+                            <li class="breadcrumb-item"><a href="index.php">Kategori Rumah</a></li>
                             <li class="breadcrumb-item active"><?= $dt_k['nama_kategori'] ?></li>
                         </ol>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-6">
+                        <a href="index.php" class="btn btn-sm btn-default"><i class="bi bi-arrow-90deg-left"></i> Kembali</a>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -213,7 +218,7 @@ if ($authority != 'A') {
                                         <td><?= $dh['jenis_pembayaran']; ?></td>
                                         <td>Rp <?= number_format($dh['harga'] ?? 0, 0, ',', '.') ?></td>
                                         <td class="text-center">
-                                            <a href="hapus.php?id=<?= $dh['id_jenis_pembayaran']; ?>" 
+                                            <a href="hapus_pembayaran.php?id=<?= $dh['id_jenis_pembayaran']; ?>&id_kategori=<?= $id_kategori ?>" 
                                             class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                                             ><i class="fas fa-trash"></i></a>
                                             <button class="btn btn-warning btn-xs" type="submit" 

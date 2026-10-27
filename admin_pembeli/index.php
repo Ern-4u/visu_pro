@@ -69,7 +69,6 @@ else {
               <div class="card-body">
                 <div class="card-tools">
                   <button class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah"><i class="fas fa-plus"></i>Tambah Data</button>
-                  <button class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import"><i class="fas fa-file-excel"></i> Import Excel</button>
                   <a href="export.php" class="btn mb-3 btn-sm" style="background-color: #001F3F; color: white;"><i class="fas fa-file-download"></i> Export Excel</a>
                 </div>
                 <table id="example1" class="table table-bordered table-striped">
@@ -142,7 +141,6 @@ else {
             <div class="modal-body">
               <form action="tambah.php" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="hidden" name="id_karyawan" value="<?= $_SESSION['username'] ?>">
                     <label for="no_transaksi">NIK</label>
                     <input type="text" name="nik" class="form-control" id="nik" maxlength="20" placeholder="Masukan NIK calon Pembeli" required>
                 </div>
@@ -161,6 +159,18 @@ else {
                 <div class="form-group">
                     <label for="pasangan">Pasangan</label>
                     <input type="text" name="pasangan" class="form-control" id="pasangan" placeholder="Masukan Nama Pasangan Calon Pembeli">
+                </div>
+                <div class="form-group">
+                    <label for="id_karyawan">Pasangan</label>
+                    <select name="id_karyawan" id="" class="form-control select2bs4" style="width: 100%;" >
+                            <option value="">-- Pilih Marketing --</option>
+                            <?php
+                            $query_mark = mysqli_query($conn, "SELECT * FROM marketing")or die(mysqli_error($conn)); 
+                            while ($dt_mark = mysqli_fetch_array($query_mark)) { ?>
+                            <option value="<?= $dt_mark['id_karyawan'] ?>"><?= $dt_mark['nama'] ?> | <?= $dt_mark['kontak'] ?></option>
+                            <?php }
+                            ?>
+                    </select>
                 </div>
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -216,7 +226,6 @@ else {
             </div>
             <div class="modal-body">
                <form action="edit.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id_karyawan">
                 <input type="hidden" name="id_pembeli">
                <div class="form-group">
                     <label for="nik">NIK</label>
@@ -238,6 +247,18 @@ else {
                     <label for="pasangan">Pasangan</label>
                     <input type="text" name="pasangan" class="form-control" id="pasangan" placeholder="Masukan Nama Pasangan Calon Pembeli">
                 </div> 
+                <div class="form-group">
+                    <label for="id_karyawan">Marketing</label>
+                    <select name="id_karyawan" id="" class="form-control select2bs4" style="width: 100%;" >
+                            <option value="">-- Pilih Marketing --</option>
+                            <?php
+                            $query_mark = mysqli_query($conn, "SELECT * FROM marketing")or die(mysqli_error($conn)); 
+                            while ($dt_mark = mysqli_fetch_array($query_mark)) { ?>
+                            <option value="<?= $dt_mark['id_karyawan'] ?>"><?= $dt_mark['nama'] ?> | <?= $dt_mark['kontak'] ?></option>
+                            <?php }
+                            ?>
+                    </select>
+                </div>
                <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 <button type="submit" name="btn_edit" class="btn btn-primary">Simpan</button>
@@ -270,6 +291,9 @@ else {
 <?php
 include '../layout_admin/js.php'
 ?>
+
+
+</body>
 <script type="text/javascript">
    $('#modal-edit').on('show.bs.modal', function(e) {
 
@@ -280,11 +304,10 @@ include '../layout_admin/js.php'
    var pasangan = $(e.relatedTarget).data('pasangan');
    var alamat = $(e.relatedTarget).data('alamat');
    var kontak = $(e.relatedTarget).data('kontak');
-  
-
+   
   
     $(e.currentTarget).find('input[name="id_pembeli"]').val(id_pembeli);
-    $(e.currentTarget).find('input[name="id_karyawan"]').val(id_karyawan);
+    $(e.currentTarget).find('select[name="id_karyawan"]').val(id_karyawan);
     $(e.currentTarget).find('input[name="nama_pembeli"]').val(nama_pembeli);
     $(e.currentTarget).find('input[name="pasangan"]').val(pasangan);
     $(e.currentTarget).find('input[name="alamat"]').val(alamat);
@@ -292,19 +315,20 @@ include '../layout_admin/js.php'
     $(e.currentTarget).find('input[name="nik"]').val(nik); 
    });
 
+   $(document).ready(function() {
+    $('#modal-tambah .select2bs4').select2({
+        theme: 'bootstrap4',
+        dropdownParent: $('#modal-tambah')
+    });
 
-  $('#modal-brosur').on('show.bs.modal', function(e) {
-
-   var id_site_plan = $(e.relatedTarget).data('id_site_plan');
-  
-   $(e.currentTarget).find('input[name="id_site_plan"]').val(id_site_plan);
-  
-  });
+    $('#modal-edit .select2bs4').select2({
+        theme: 'bootstrap4',
+        dropdownParent: $('#modal-edit')
+    });
+});
  
 </script> 
 
-
-</body>
 </html>
 <?php 
 } ?>

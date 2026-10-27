@@ -27,11 +27,11 @@ if (isset($_POST['btn_import'])) {
         $gagal = 0;
 
         for($i = 1; $i < count($sheetData); $i++) {
-            $id_karyawan = mysqli_real_escape_string($conn, trim($sheetData[$i][0] ?? ''));
-            $nama        = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
-            $kontak      = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
-            $email       = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
-            $kelamin     = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
+            $id_karyawan = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
+            $nama        = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
+            $kontak      = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
+            $email       = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
+            $kelamin     = mysqli_real_escape_string($conn, trim($sheetData[$i][5] ?? ''));
 
             if(empty($id_karyawan) || empty($nama)) {
                 $gagal++;
@@ -41,6 +41,7 @@ if (isset($_POST['btn_import'])) {
             $query = "INSERT INTO marketing (id_karyawan, nama, kontak, email, kelamin) VALUES ('$id_karyawan', '$nama', '$kontak', '$email', '$kelamin')";
             if(mysqli_query($conn, $query)) {
                 $berhasil++;
+                $query = mysqli_query($conn, "INSERT INTO users (username, sandi, pin, peran, nama) VALUES ('$id_karyawan', '$id_karyawan', '123456', 'M', '$nama')") ;
             } else {
                 $gagal++;
             }

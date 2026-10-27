@@ -104,6 +104,21 @@ $ambil_data_rumah = mysqli_query($conn, "SELECT rumah.*,site_plan.*, kategori_ru
                         </td>
                       </tr>
                       <tr>
+                        <td width="20%"><b>Pilih Marketing</b></td>
+                        <td width="5%"><b>:</b></td>
+                        <td width="50%">
+                          <select name="id_karyawan" id="" class="form-control select2bs4" style="width: 100%;" >
+                            <option value="">-- Pilih Marketing --</option>
+                            <?php
+                            $query_mark = mysqli_query($conn, "SELECT * FROM marketing")or die(mysqli_error($conn)); 
+                            while ($dt_mark = mysqli_fetch_array($query_mark)) { ?>
+                            <option value="<?= $dt_mark['id_karyawan'] ?>"><?= $dt_mark['nama'] ?> | <?= $dt_mark['kontak'] ?></option>
+                            <?php }
+                            ?>
+                        </select>
+                        </td>
+                      </tr>
+                      <tr>
                         <td width="20%"><b>Pilih Rencana Bayar</b></td>
                         <td width="5%"><b>:</b></td>
                         <td width="50%">

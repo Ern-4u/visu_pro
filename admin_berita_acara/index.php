@@ -69,7 +69,7 @@ else {
     <div class="container-fluid">
       <div class="card">
               <div class="card-header" style="background-color: #001F3F; color: white;">
-                <h3 class="card-title">DATA PEMBELI</h3>
+                <h3 class="card-title">DATA BERITA ACARA</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

@@ -31,15 +31,14 @@ if (isset($_POST['btn_import'])) {
         for($i = 1; $i < count($sheetData); $i++) {
             
             // Menyesuaikan index array dengan urutan kolom di Excel
-            $nama_kategori = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
-            $luas_bangunan = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
-            $luas_tanah    = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
-            $jumlah_kamar  = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
-            $harga         = mysqli_real_escape_string($conn, trim($sheetData[$i][5] ?? ''));
-            $deskripsi     = mysqli_real_escape_string($conn, trim($sheetData[$i][6] ?? ''));
+            $nama_kategori = mysqli_real_escape_string($conn, trim($sheetData[$i][0] ?? ''));
+            $luas_bangunan = mysqli_real_escape_string($conn, trim($sheetData[$i][1] ?? ''));
+            $luas_tanah    = mysqli_real_escape_string($conn, trim($sheetData[$i][2] ?? ''));
+            $jumlah_kamar  = mysqli_real_escape_string($conn, trim($sheetData[$i][3] ?? ''));
+            $deskripsi     = mysqli_real_escape_string($conn, trim($sheetData[$i][4] ?? ''));
 
             // Validasi: Skip jika nama_kategori atau harga kosong
-            if(empty($nama_kategori) || empty($harga)) {
+            if(empty($nama_kategori) || empty($luas_bangunan) || empty($luas_tanah) || empty($jumlah_kamar)|| empty($deskripsi)) {
                 $gagal++;
                 continue;
             }
@@ -52,8 +51,8 @@ if (isset($_POST['btn_import'])) {
             }
 
             // Eksekusi query INSERT ke tabel kategori_rumah
-            $query = "INSERT INTO kategori_rumah (nama_kategori, luas_bangunan, luas_tanah, jumlah_kamar, harga, deskripsi) 
-                      VALUES ('$nama_kategori', '$luas_bangunan', '$luas_tanah', '$jumlah_kamar', '$harga', '$deskripsi')";
+            $query = "INSERT INTO kategori_rumah (nama_kategori, luas_bangunan, luas_tanah, jumlah_kamar, deskripsi) 
+                      VALUES ('$nama_kategori', '$luas_bangunan', '$luas_tanah', '$jumlah_kamar', '$deskripsi')";
             
             if(mysqli_query($conn, $query)) {
                 $berhasil++;

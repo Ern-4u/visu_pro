@@ -36,7 +36,7 @@ if (isset($_POST['btn_import'])) {
             $tiktok           = mysqli_real_escape_string($conn, trim($sheetData[$i][5] ?? ''));
 
             // Skip empty rows
-            if(empty($nama_site_plan) || empty($lokasi) || empty($penanggung_jawab)) {
+            if(empty($nama_site_plan) || empty($lokasi) || empty($penanggung_jawab) || empty($ig) || empty($tiktok)) {
                 $gagal++;
                 continue;
             }

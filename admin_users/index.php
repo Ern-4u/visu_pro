@@ -106,7 +106,7 @@ else {
                         class="btn btn-danger btn-xs" onclick="return confirm('Anda yakin akan menghapus data ini?')"
                         ><i class="fas fa-trash"></i></a>
                         <button class="btn btn-warning btn-xs" type="submit" data-target="#modal-edit" data-username="<?= $admin['username'] ?>" 
-                        data-nama="<?= $admin['nama']?>" data-peran="<?= $admin['peran']?> " data-toggle="modal">
+                        data-nama="<?= $admin['nama']?>" data-peran="<?= $admin['peran']?>" data-toggle="modal">
                         <i class="fas fa-edit"> </i>
                       </button>
                       </td>
@@ -175,6 +175,14 @@ else {
                     <label for="nama">Nama</label>
                     <input type="text" id="edit-nama" name="nama" class="form-control"  placeholder="Masukan username">
                 </div>
+                <div class="form-group">
+                    <label for="peran">Peran</label>
+                    <select name="peran" class="form-control" id="">
+                      <option value="">-- Edit Peran-- </option>
+                      <option value="A">Admin</option>
+                      <option value="M">Marketing</option>
+                    </select>
+                </div>
                 
                 <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -213,11 +221,13 @@ include '../layout_admin/js.php'
 
    var username = $(e.relatedTarget).data('username');
    var pin = $(e.relatedTarget).data('nama');
+   var peran = $(e.relatedTarget).data('peran');
   
 
   
   $(e.currentTarget).find('input[name="username"]').val(username);
   $(e.currentTarget).find('input[name="nama"]').val(pin);
+  $(e.currentTarget).find('select[name="peran"]').val(peran);
    
    });
  

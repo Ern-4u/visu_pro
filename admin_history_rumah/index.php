@@ -22,6 +22,8 @@ else {
   <?php
     include '../layout_admin/css.php';
     $hal = 'admin_rumah';
+    $mbli_dta_rumah = mysqli_query($conn, "SELECT * FROM rumah WHERE id_rumah = '$id_rumah'")or die(mysqli_error($conn));
+    $datarumah = mysqli_fetch_array($mbli_dta_rumah);
 
   ?>
   
@@ -54,7 +56,22 @@ else {
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">History Pembangunan Rumah</h1>
+             </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="../admin_rumah/">Rumah</a></li>
+                <li class="breadcrumb-item active">Blok <?= $datarumah['kode_blok'] ?></li>
+              </ol>
+            </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <a href="../admin_rumah" class="btn btn-sm btn-default"><i class="bi bi-arrow-90deg-left"></i> Kembali</a>
+              </div>
+            </div>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->

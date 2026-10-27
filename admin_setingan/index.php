@@ -107,7 +107,7 @@ else {
                     </div>
                     <div class="form-group">
                       <label for="logo">Ganti Logo</label><br>
-                      <input type="file" name="logo" accept=".jpg,.jpeg.png" class="form-control">
+                      <input type="file" name="logo" accept=".jpg,.jpeg,.png" class="form-control">
                     </div>
                   </div>
                   <!-- end col -->
@@ -166,16 +166,6 @@ else {
     echo "<script>alert('Terjadi kesalahan saat memperbarui data Web.'); window.location.href='../admin_setingan/';</script>";
   }
 
-    $file = $_FILES['logo']['name'];
-    $ekstensi = explode('.', $file);
-    $nama_file = 'marketing'.round(microtime(true)).'.'.end($ekstensi);
-
-    $alamat_tujuan = '../assets/logo/'.$nama_file;
-    $file_alamat_sumber = $_FILES['logo']['tmp_name'];
-
-    move_uploaded_file($file_alamat_sumber, $alamat_tujuan);
-
-    $query_foto = mysqli_query($conn, "UPDATE web SET logo = '$nama_file' WHERE id = '$id'") or die(mysqli_error($conn));
 }
 ?>
       

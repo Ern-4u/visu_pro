@@ -1,1 +1,3 @@
 /vendor/
+/database/config.php
+*.zip

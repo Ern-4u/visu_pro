@@ -122,7 +122,7 @@ else {
           </div>
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box shadow">
-              <span class="info-box-icon "style="background-color: #003366 ; color: white;"><i class="bi bi-cash-stack"></i></span>
+              <span class="info-box-icon "style="background-color: #003366 ; color: white;"><i class="bi bi-wallet2"></i></span>
                 <?php 
                 $query_jumlah_pend = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_pendapatan FROM detail_transaksi WHERE detail_transaksi.tanggal_pembayaran >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)")or die(mysqli_error($conn));
                 $jml_pend = mysqli_fetch_array($query_jumlah_pend);
@@ -174,8 +174,53 @@ else {
                 $jml_mar = mysqli_fetch_array($query_jumlah_mar);
                 ?>
               <div class="info-box-content">
-                <span class="info-box-text">Humlah Tim Marketing</span>
+                <span class="info-box-text">Jumlah Tim Marketing</span>
                 <span class="info-box-number"><?= $jml_mar['jml_mar']; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon" style="background-color: #003366 ; color: white;"><i class="bi bi-cash-stack"></i></span>
+                <?php 
+                $query_jumlah_cash = mysqli_query($conn, "SELECT COUNT(id_transaksi) AS jml_cash FROM transaksi WHERE rencana_pembelian = 'Cash'")or die(mysqli_error($conn));
+                $jml_cash = mysqli_fetch_array($query_jumlah_cash);
+                ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Rencana Pembelian Cash</span>
+                <span class="info-box-number"><?= $jml_cash['jml_cash']; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon" style="background-color: #1D4A7A ; color: white;"><i class="bi bi-cash-stack"></i></span>
+                <?php 
+                $query_jumlah_cashtemp = mysqli_query($conn, "SELECT COUNT(id_transaksi) AS jml_cashtemp FROM transaksi WHERE rencana_pembelian = 'Cash Tempo'")or die(mysqli_error($conn));
+                $jml_cashtemp = mysqli_fetch_array($query_jumlah_cashtemp);
+                ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Rencana Pembelian Cash Tempo</span>
+                <span class="info-box-number"><?= $jml_cashtemp['jml_cashtemp']; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon" style="background-color: #4A709C ; color: white;"><i class="bi bi-credit-card-2-back-fill"></i></span>
+                <?php 
+                $query_jumlah_kredit = mysqli_query($conn, "SELECT COUNT(id_transaksi) AS jml_kredit FROM transaksi WHERE rencana_pembelian = 'Kredit'")or die(mysqli_error($conn));
+                $jml_kredit = mysqli_fetch_array($query_jumlah_kredit);
+                ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Rencana Pembelian Kredit</span>
+                <span class="info-box-number"><?= $jml_kredit['jml_kredit']; ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>

@@ -89,13 +89,18 @@ else {
             if (isset($_POST['btn_cari'])){
             $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
 
-            $query_rumah = mysqli_query($conn, "SELECT rumah.*, kategori_rumah.*, site_plan.*
-            FROM rumah 
-            LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
-            LEFT JOIN site_plan ON rumah.id_site_plan = site_plan.id_site_plan
-            where rumah.id_site_plan = '$id_site_plan'
-            ") or die(mysqli_error($conn));
-            $nm_st_pln = mysqli_fetch_array($query_rumah);
+            $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
+
+              // 1. Ambil informasi site plan secara spesifik
+              $query_site_plan = mysqli_query($conn, "SELECT * FROM site_plan WHERE id_site_plan = '$id_site_plan'") or die(mysqli_error($conn));
+              $nm_st_pln = mysqli_fetch_array($query_site_plan);
+
+              // 2. Ambil daftar rumah berdasarkan site plan
+              $query_rumah = mysqli_query($conn, "SELECT rumah.*, kategori_rumah.* 
+              FROM rumah 
+              LEFT JOIN kategori_rumah ON rumah.id_kategori = kategori_rumah.id_kategori
+              WHERE rumah.id_site_plan = '$id_site_plan'
+              ") or die(mysqli_error($conn));
             ?>
 
             <div class="card">
@@ -141,9 +146,6 @@ else {
                   <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah">
                     <i class="fas fa-plus"></i> Tambah Data
                   </button>
-                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import">
-                    <i class="fas fa-file-excel"></i> Import Excel
-                  </button>
                   <a href="export.php" class="btn btn-sm" style="background-color: #001F3F; color: white;">
                     <i class="fas fa-file-download"></i> Export Excel
                   </a>
@@ -162,7 +164,6 @@ else {
                   <tbody>
                     <?php
                   $no = 1; 
-                  mysqli_data_seek($query_rumah, 0);
                   while ($d = mysqli_fetch_array($query_rumah)) { ?>
                     <tr>
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>

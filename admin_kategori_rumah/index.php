@@ -93,8 +93,8 @@ else {
                     <tr>
                       <td width="5%" class="text-center"><?=  $no++ ; ?></td>
                       <td><?= $d['nama_kategori']; ?></td>
-                      <td><?= $d['luas_bangunan']; ?></td>
-                      <td><?= $d['luas_tanah']; ?></td>
+                      <td><?= $d['luas_bangunan']; ?> m<sup>2</sup></td>
+                      <td><?= $d['luas_tanah']; ?> m<sup>2</sup></td>
                       <td><?= $d['deskripsi']; ?></td>
                       <?php 
                       $id_kategori = $d['id_kategori'];

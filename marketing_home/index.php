@@ -122,7 +122,7 @@ else {
           </div>
           <div class="col-md-3 col-sm-6 col-12">
             <div class="info-box shadow">
-              <span class="info-box-icon "style="background-color: #003366 ; color: white;"><i class="bi bi-cash-stack"></i></span>
+              <span class="info-box-icon "style="background-color: #003366 ; color: white;"><i class="bi bi-wallet2"></i></span>
                 <?php 
                 $query_jumlah_pend = mysqli_query($conn, "SELECT SUM(dibayarkan) AS total_pendapatan FROM detail_transaksi WHERE detail_transaksi.tanggal_pembayaran >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)")or die(mysqli_error($conn));
                 $jml_pend = mysqli_fetch_array($query_jumlah_pend);
@@ -174,8 +174,53 @@ else {
                 $jml_mar = mysqli_fetch_array($query_jumlah_mar);
                 ?>
               <div class="info-box-content">
-                <span class="info-box-text">Humlah Tim Marketing</span>
+                <span class="info-box-text">Jumlah Tim Marketing</span>
                 <span class="info-box-number"><?= $jml_mar['jml_mar']; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon" style="background-color: #003366 ; color: white;"><i class="bi bi-cash-stack"></i></span>
+                <?php 
+                $query_jumlah_cash = mysqli_query($conn, "SELECT COUNT(id_transaksi) AS jml_cash FROM transaksi WHERE rencana_pembelian = 'Cash'")or die(mysqli_error($conn));
+                $jml_cash = mysqli_fetch_array($query_jumlah_cash);
+                ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Rencana Pembelian Cash</span>
+                <span class="info-box-number"><?= $jml_cash['jml_cash']; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon" style="background-color: #1D4A7A ; color: white;"><i class="bi bi-cash-stack"></i></span>
+                <?php 
+                $query_jumlah_cashtemp = mysqli_query($conn, "SELECT COUNT(id_transaksi) AS jml_cashtemp FROM transaksi WHERE rencana_pembelian = 'Cash Tempo'")or die(mysqli_error($conn));
+                $jml_cashtemp = mysqli_fetch_array($query_jumlah_cashtemp);
+                ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Rencana Pembelian Cash Tempo</span>
+                <span class="info-box-number"><?= $jml_cashtemp['jml_cashtemp']; ?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon" style="background-color: #4A709C ; color: white;"><i class="bi bi-credit-card-2-back-fill"></i></span>
+                <?php 
+                $query_jumlah_kredit = mysqli_query($conn, "SELECT COUNT(id_transaksi) AS jml_kredit FROM transaksi WHERE rencana_pembelian = 'Kredit'")or die(mysqli_error($conn));
+                $jml_kredit = mysqli_fetch_array($query_jumlah_kredit);
+                ?>
+              <div class="info-box-content">
+                <span class="info-box-text">Rencana Pembelian Kredit</span>
+                <span class="info-box-number"><?= $jml_kredit['jml_kredit']; ?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -184,7 +229,7 @@ else {
       </div>
       <!-- End ROW -->
        <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <div class="card shadow" >
             <div class="card-header" style="background-color: #001F3F; color: white;">
               <h3 class="card-title">
@@ -235,49 +280,6 @@ else {
                            <i class="bi bi-whatsapp"></i> <?= $jj['kontak'];?>                           
                           </a>
                         </td>
-                      </tr>
-                    <?php }
-                    ?>
-                  </tbody>
-                  
-                </table>
-            </div>
-            <!-- /.card-body -->
-          </div>
-        </div>
-        <!-- end col -->
-         <div class="col-lg-6">
-          <div class="card shadow" >
-            <div class="card-header" style="background-color: #001F3F; color: white;">
-              <h3 class="card-title">
-                KARYAWAN DENGAN TRANSAKSI TERBANYAK
-              </h3>
-            </div>
-            <div class="card-body">
-                <table id="" class="table table-bordered table-striped text-center">
-                  <thead>
-                  <tr>
-                    <th class="text-center" width="5%">No</th>
-                    <th>Nama Karyawan</th>
-                    <th>Jumlah Transaksi</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <?php 
-                    $query_karyawan_teratas = mysqli_query($conn, "
-                          SELECT k.nama, COUNT(t.id_transaksi) AS total_transaksi
-                          FROM transaksi t
-                          LEFT JOIN marketing k ON t.id_karyawan = k.id_karyawan
-                          GROUP BY t.id_karyawan
-                          ORDER BY total_transaksi DESC
-                          LIMIT 5
-                      ") or die(mysqli_error($conn));
-                    $no = 1;
-                    while ($kt = mysqli_fetch_array($query_karyawan_teratas)) { ?>
-                      <tr>
-                        <td><?= $no++ ?></td>
-                        <td><?= $kt['nama'] ?></td>
-                        <td><?= $kt['total_transaksi'] ?></td>
                       </tr>
                     <?php }
                     ?>
