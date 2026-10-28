@@ -128,7 +128,7 @@ else {
                       } elseif ($d['status_transaksi'] == 'Selesai') {
                         ?> <span class="btn btn-success btn-sm">Selesai</span> <?php
                       } else {
-                        ?> <span class="btn btn-danger btn-sm"></span> <?php
+                        ?> <span class="btn btn-danger btn-sm">Gagal</span> <?php
                       }
                       ?></td>
                     <td class="text-center">
