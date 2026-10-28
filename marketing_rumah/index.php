@@ -138,12 +138,6 @@ else {
 
                 <!-- TOMBOL AKSI -->
                 <div class="d-flex flex-wrap mb-3" style="gap: 6px;">
-                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-tambah">
-                    <i class="fas fa-plus"></i> Tambah Data
-                  </button>
-                  <button type="button" class="btn btn-sm" style="background-color: #001F3F; color: white;" data-toggle="modal" data-target="#modal-import">
-                    <i class="fas fa-file-excel"></i> Import Excel
-                  </button>
                   <a href="export.php" class="btn btn-sm" style="background-color: #001F3F; color: white;">
                     <i class="fas fa-file-download"></i> Export Excel
                   </a>

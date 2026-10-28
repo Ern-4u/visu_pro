@@ -46,7 +46,8 @@ if (isset($_POST['btn_tambah'])) {
             '$no_berita_acara_generate', 
             '$id_transaksi',
             '$tanggal',
-            '$jml_kunci')
+            '$jml_kunci',
+            null)
             ") or die (mysqli_error($conn)) ;
 
             echo '<script> alert("Data Berhasil Disimpan"); 

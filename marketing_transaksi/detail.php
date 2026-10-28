@@ -757,9 +757,6 @@ else {
     });
 });
 </script>
-
-
-
 </body>
 <script>
   $(function () {

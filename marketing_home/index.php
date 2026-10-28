@@ -10,6 +10,7 @@ if ($authority != 'M') {
 
 else {
 
+$id_karyawan = $_SESSION['username']
 
 ?>
 <!DOCTYPE html>
@@ -248,14 +249,15 @@ else {
                   </thead>
                   <tbody>
                     <?php 
-                    $query_daftar_janji = mysqli_query($conn, "SELECT j.* , t.id_pembeli, p.*, r.*, s.*,k.*
+                    $query_daftar_janji = mysqli_query($conn, "SELECT j.* , t.id_pembeli, p.*, r.*, s.*,k.*,m.*
                                FROM janji_bayar j
                                LEFT JOIN transaksi t ON j.id_transaksi = t.id_transaksi
+                               LEFT JOIN marketing m ON t.id_karyawan = m.id_karyawan
                                LEFT JOIN pembeli p ON t.id_pembeli = p.id_pembeli
                                LEFT JOIN rumah r ON t.id_rumah = r.id_rumah
                                LEFT JOIN site_plan s ON r.id_site_plan = s.id_site_plan
                                LEFT JOIN kategori_rumah k ON r.id_kategori = k.id_kategori
-                               WHERE j.status = 'Aktif'") or die(mysqli_error($conn));
+                               WHERE j.status = 'Aktif' AND t.id_karyawan= '$id_karyawan' ") or die(mysqli_error($conn));
                     $no = 1;
                     while ($jj = mysqli_fetch_array($query_daftar_janji)) { ?>
                       <tr>

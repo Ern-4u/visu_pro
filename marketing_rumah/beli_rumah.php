@@ -5,6 +5,7 @@ if (isset($_POST['btn_tambah'])) {
     $id_pembeli = trim(mysqli_real_escape_string($conn, $_POST['id_pembeli']));
     $id_karyawan = trim(mysqli_real_escape_string($conn, $_POST['id_karyawan']));
     $id_rumah = trim(mysqli_real_escape_string($conn, $_POST['id_rumah']));
+    $rencana_bayar = trim(mysqli_real_escape_string($conn, $_POST['rencana_bayar']));
     $status_transaksi = 'Berlangsung';
     $total = 0;
 
@@ -42,12 +43,14 @@ if (isset($_POST['btn_tambah'])) {
          '$id_karyawan',
          '$id_rumah',
          '$status_transaksi',
-         '$tanggal'
+         '$tanggal',
+         '$rencana_bayar'
+
          )
          ") or die (mysqli_error($conn)) ;
          $id_transaksi = mysqli_insert_id($conn);
 
-        $update_status_rumah = mysqli_query($conn, "UPDATE rumah SET status = '4' WHERE id_rumah = '$id_rumah'") or die(mysqli_error($conn));
+        $update_status_rumah = mysqli_query($conn, "UPDATE rumah SET status = '1' WHERE id_rumah = '$id_rumah'") or die(mysqli_error($conn));
         
 
         echo '<script> alert("Data Berhasil Disimpan"); 

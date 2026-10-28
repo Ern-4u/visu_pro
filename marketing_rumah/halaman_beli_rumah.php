@@ -110,7 +110,7 @@ $id_karyawan = $_SESSION['username'];
                     <div class="col-lg-4">
                         <div class="form-group">
                         <label for="">Rencana Pembelian</label>
-                        <select name="rencana_pembelian" class="form-control" style="width: 100%;" required>
+                        <select name="rencana_bayar" class="form-control" style="width: 100%;" required>
                             <option value="">-- Pilih Rencana Pembelian --</option>
                             <option value="Cash">Cash</option>
                             <option value="Cash Tempo">Cash Tempo</option>

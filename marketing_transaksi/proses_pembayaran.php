@@ -8,10 +8,6 @@ require_once '../vendor/autoload.php';
 $query_web = mysqli_query($conn, "SELECT * FROM web WHERE id = '1'")or die(mysqli_error($conn));
   $web = mysqli_fetch_array($query_web); 
 
-if (@$_SESSION['peran'] != 'A') {
-    echo '<script> alert("Anda Tidak boleh masuk ke halaman ini!!!!"); window.location.href="../logout.php" </script>';
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
@@ -21,35 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tanggal_pembayaran = $_POST['tanggal_pembayaran'];
     $jenis_pembayaran   = $_POST['jenis_pembayaran'];
 
-    // $ambil_max_booking = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Booking Fee' ") or die(mysqli_error($conn));
-    // $ambil_max_rumah = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Pembangunan Rumah' ") or die(mysqli_error($conn));
-    // $ambil_max_pb = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Pajak Bangunan' ") or die(mysqli_error($conn));
-    // $ambil_max_ajb = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Akte Jual Beli' ") or die(mysqli_error($conn));
-    // $ambil_max_notaris = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Notaris' ") or die(mysqli_error($conn));
-    // $ambil_max_makam = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Lahan Makam' ") or die(mysqli_error($conn));
-    // $ambil_max_hook = mysqli_query($conn,  "SELECT harga FROM jenis_pembayaran WHERE id_transaksi = '$id_transaksi' AND jenis_pembayaran = 'Hook' ") or die(mysqli_error($conn));
-    
-    
-    // $max_booking = mysqli_fetch_array($ambil_max_booking);
-    // $max_rumah = mysqli_fetch_array($ambil_max_rumah);
-    // $max_pb = mysqli_fetch_array($ambil_max_pb);
-    // $max_ajb = mysqli_fetch_array($ambil_max_ajb);
-    // $max_notaris = mysqli_fetch_array($ambil_max_notaris);
-    // $max_makam = mysqli_fetch_array($ambil_max_makam);
-    // $max_hook = mysqli_fetch_array($ambil_max_hook);
+   
 
     // Hilangkan titik dari format rupiah JS agar bisa masuk ke kolom INT (dibayarakan)
     $dibayarakan = str_replace('.', '', $_POST['dibayarkan']); 
 
 
-    // if ($dibayarakan > $max_booking['harga'] & $jenis_pembayaran == 'Booking Fee' ) {
-    //     echo '<script> alert("Jumlah Pembayaran '.$jenis_pembayaran.' Tidak boleh Melebihi'.number_format($max_booking["dibayarkan"] ?? 0, 0, ",", ".").' "); window.location.href="detail.php?id='.$id_transaksi.'" </script>';
-    // } elseif ($dibayarakan > $max_rumah['harga'] & $jenis_pembayaran == 'Pembangunan Rumah') {
-    //     echo '<script> alert("Jumlah Pembayaran '.$jenis_pembayaran.' Tidak boleh Melebihi'.number_format($max_rumah["dibayarkan"] ?? 0, 0, ",", ".").' "); window.location.href="detail.php?id='.$id_transaksi.'" </script>';
-    // } elseif ($dibayarakan > $max_pb['harga'] & $jenis_pembayaran == 'Pajak Bangunan') {
-    //     echo '<script> alert("Jumlah Pembayaran '.$jenis_pembayaran.' Tidak boleh Melebihi'.number_format($max_rumah["dibayarkan"] ?? 0, 0, ",", ".").' "); window.location.href="detail.php?id='.$id_transaksi.'" </script>';
-    // }
-
+   
 
     
     // 2. AMBIL DATA TRANSAKSI UNTUK DI TAMPILKAN KE PDF
