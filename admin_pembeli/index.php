@@ -161,7 +161,7 @@ else {
                     <input type="text" name="pasangan" class="form-control" id="pasangan" placeholder="Masukan Nama Pasangan Calon Pembeli">
                 </div>
                 <div class="form-group">
-                    <label for="id_karyawan">Pasangan</label>
+                    <label for="id_karyawan">Karyawan</label>
                     <select name="id_karyawan" id="" class="form-control select2bs4" style="width: 100%;" >
                             <option value="">-- Pilih Marketing --</option>
                             <?php

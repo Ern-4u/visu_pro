@@ -9,10 +9,11 @@ require_once('../database/config.php');
 if (isset($_POST['btn_tambah'])) {
     $kode_blok = trim(mysqli_real_escape_string($conn, $_POST['kode_blok']));
     $id_kategori = trim(mysqli_real_escape_string($conn, $_POST['id_kategori']));
+    $id_site_plan = trim(mysqli_real_escape_string($conn, $_POST['id_site_plan']));
     $status = trim(mysqli_real_escape_string($conn, $_POST['status']));
     
 
-    $cek_kode = mysqli_query($conn, "SELECT kode_blok FROM rumah WHERE kode_blok = '$kode_blok' ") 
+    $cek_kode = mysqli_query($conn, "SELECT kode_blok FROM rumah WHERE kode_blok = '$kode_blok' AND id_site_plan = '$id_site_plan'") 
     or die (mysqli_error($conn));
     $rv_kategori = mysqli_num_rows($cek_kode);
 
@@ -27,7 +28,8 @@ if (isset($_POST['btn_tambah'])) {
          (null,
          '$kode_blok', 
          '$id_kategori',
-         '$status'
+         '$status',
+         '$id_site_plan'
          )
          ") or die (mysqli_error($conn)) ;
 
