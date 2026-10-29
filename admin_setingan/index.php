@@ -73,7 +73,7 @@ else {
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
-                    <label for="">Nama Proyek</label>
+                    <label for="">Nama PT</label>
                     <input type="text" value="<?= $result['nama_proyek'] ?>" name="nama_proyek" class="form-control">
                     </div>
                     <div class="form-group">

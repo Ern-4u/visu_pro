@@ -100,7 +100,7 @@ else {
                                                             FROM transaksi 
                                                             LEFT JOIN marketing ON transaksi.id_karyawan = marketing.id_karyawan
                                                             LEFT JOIN rumah ON transaksi.id_rumah = rumah.id_rumah
-                                                            LEFT JOIN pembeli ON transaksi.id_pembeli = pembeli.id_pembeli
+                                                            LEFT JOIN pembeli ON transaksi.id_pembeli = pembeli.id_pembeli ORDER BY id_transaksi DESC
                                                             ") or die(mysqli_error($conn));
                   $no = 1; 
                   while ($d = mysqli_fetch_array($data_transaksi)) { ?>

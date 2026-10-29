@@ -13,7 +13,7 @@
         WHERE id_detail_transaksi = '$id'")or die (mysqli_error($conn));
 
 
-        echo '<script>alert("Data Transaksi Berhasil Dihapus!!");
+        echo '<script>alert("Data Pembayaran Berhasil Dihapus!!");
         window.location.href="detail.php?id='.$id_transaksi.'";
         </script>';
         ?>

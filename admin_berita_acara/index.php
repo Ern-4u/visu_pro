@@ -105,7 +105,7 @@ else {
                           data-id="<?= $d['id_berita_acara'] ?>">
                             <i class="bi bi-file-earmark-arrow-up-fill"></i> Upload File</button>
                        <?php } else { ?>
-                           <a href="../assets/bast/<?= $d['file'] ?>" target="_blank" class="btn btn-xs btn-success"><i class="bi bi-file-earmark-arrow-down-fill"></i> Dwonload File</a>
+                           <a href="../assets/bast/<?= $d['file'] ?>" target="_blank" class="btn btn-xs btn-success"><i class="bi bi-file-earmark-arrow-down-fill"></i> Download File</a>
                        <?php }
                         ?>
                       </td>

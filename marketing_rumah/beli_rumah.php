@@ -53,7 +53,7 @@ if (isset($_POST['btn_tambah'])) {
         $update_status_rumah = mysqli_query($conn, "UPDATE rumah SET status = '1' WHERE id_rumah = '$id_rumah'") or die(mysqli_error($conn));
         
 
-        echo '<script> alert("Data Berhasil Disimpan"); 
+        echo '<script> alert("Transaksi Berhasil Disimpan"); 
         window.location.href="index.php" </script>';
     
 }

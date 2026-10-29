@@ -12,7 +12,7 @@
         WHERE id_foto_rumah = '$id'")or die (mysqli_error($conn));
 
 
-        echo '<script>alert("Data Kategori Berhasil Dihapus");
+        echo '<script>alert("Foto Kategori Rumah Berhasil Dihapus");
         window.location.href="detail.php?id='.$id_kategori.'";
         </script>';
         ?>

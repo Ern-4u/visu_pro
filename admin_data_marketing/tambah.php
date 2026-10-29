@@ -52,7 +52,7 @@ if (isset($_POST['btn_tambah'])) {
          null
          )") or die(mysqli_error($conn));
 
-         echo '<script> alert("Data Berhasil Disimpan"); 
+         echo '<script> alert("Data Marketing Berhasil Disimpan"); 
          window.location.href="index.php" </script>';
     }
 }

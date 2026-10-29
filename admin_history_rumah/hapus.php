@@ -13,7 +13,7 @@
         WHERE id_history_pembangunan = '$id'")or die (mysqli_error($conn));
 
 
-        echo '<script>alert("Data Kategori Berhasil Dihapus");
+        echo '<script>alert("Data Progers Rumah Berhasil Dihapus");
         window.location.href="index.php?id='.$id_rumah.'";
         </script>';
         ?>

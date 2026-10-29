@@ -17,11 +17,11 @@ if (isset($_POST['btn_bukti_bayar'])) {
     $query_foto = mysqli_query($conn, "UPDATE detail_transaksi SET bukti_pembayaran = '$nama_file' WHERE id_detail_transaksi = '$id_detail_transaksi'") or die(mysqli_error($conn));
     if  ($query_foto) {
 
-     echo '<script> alert("Foto Berhasil disimpan");
+     echo '<script> alert("Bukti Bayar Berhasil disimpan");
      window.location.href="detail.php?id='.$id_transaksi.'" </script>';
 
     } else {
-        echo '<script> alert("Foto Gagal disimpan");
+        echo '<script> alert("Bukti Bayar Gagal disimpan");
     window.location.href="detail.php?id='.$id_transaksi.'" </script>';
     }
 

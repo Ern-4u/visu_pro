@@ -13,7 +13,7 @@
 
         $hapus_data_pengguna = mysqli_query($conn, "DELETE FROM users WHERE username = '$id'") or die(mysqli_error($conn));
 
-        echo '<script>alert("Data Pengguna '.$id.' Berhasil Dihapus");
+        echo '<script>alert("Data Marketing '.$id.' Berhasil Dihapus");
         window.location.href="index.php"
         </script>';
         ?>

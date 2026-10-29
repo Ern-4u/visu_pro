@@ -13,7 +13,7 @@
         
 
 
-        echo '<script>alert("Data Kategori Berhasil Dihapus");
+        echo '<script>alert("Data Berhasil Dihapus");
         window.location.href="detail.php?id='.$detail_kategori.'";
         </script>';
         ?>

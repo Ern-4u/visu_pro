@@ -18,7 +18,7 @@ if (isset($_POST['btn_edit'])) {
   $query_user = mysqli_query($conn, "UPDATE users SET nama = '$nama' WHERE username='$id_karyawan'") or die(mysqli_error($conn));
 
   if ($result) {
-    echo "<script>alert('Data Karyawan berhasil diperbarui.'); window.location.href='index.php';</script>";
+    echo "<script>alert('Data Marketing berhasil diperbarui.'); window.location.href='index.php';</script>";
   } else {
     echo "<script>alert('Terjadi kesalahan saat memperbarui data karyawan.');</script>";
   }
