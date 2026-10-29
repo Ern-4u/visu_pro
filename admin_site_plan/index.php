@@ -44,7 +44,7 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_site_plan = mysqli_query($conn, "SELECT * FROM site_plan")or die(mysqli_error($conn));
+  $data_site_plan = mysqli_query($conn, "SELECT * FROM site_plan ORDER BY id_site_plan DESC")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->

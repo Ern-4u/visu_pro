@@ -45,7 +45,7 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_marketing = mysqli_query($conn, "SELECT * FROM marketing")or die(mysqli_error($conn));
+  $data_marketing = mysqli_query($conn, "SELECT * FROM marketing ORDER BY id_karyawan DESC")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->

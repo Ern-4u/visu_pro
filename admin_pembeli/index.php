@@ -45,7 +45,7 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli ")or die(mysqli_error($conn));
+  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli ORDER BY id_pembeli DESC")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->

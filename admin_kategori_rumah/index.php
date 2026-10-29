@@ -44,7 +44,7 @@ else {
   <?php
   include '../layout_admin/sidebar.php';
 
-  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah
+  $data_kategori_rumah = mysqli_query($conn, "SELECT * FROM kategori_rumah ORDER BY id_kategori DESC
             ") or die(mysqli_error($conn));
   ?>
 

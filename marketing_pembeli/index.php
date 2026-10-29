@@ -46,7 +46,7 @@ else {
   include '../layout_marketing/sidebar.php';
 
   $id_karyawan = $_SESSION['username'];
-  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli WHERE id_karyawan = '$id_karyawan' ")or die(mysqli_error($conn));
+  $data_pembeli = mysqli_query($conn, "SELECT * FROM pembeli WHERE id_karyawan = '$id_karyawan' ORDER BY id_pembeli DESC ")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->

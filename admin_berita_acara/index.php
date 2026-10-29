@@ -51,7 +51,7 @@ else {
                                       LEFT JOIN pembeli p ON t.id_pembeli = p.id_pembeli
                                       LEFT JOIN rumah r ON t.id_rumah = r.id_rumah
                                       LEFT JOIN kategori_rumah k ON r.id_kategori = k.id_kategori
-                                      LEFT JOIN site_plan s ON r.id_site_plan = s.id_site_plan ")or die(mysqli_error($conn));
+                                      LEFT JOIN site_plan s ON r.id_site_plan = s.id_site_plan ORDER BY id_berita_acara DESC")or die(mysqli_error($conn));
   ?>
 
   <!-- Content Wrapper. Contains page content -->
